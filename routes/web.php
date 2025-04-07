@@ -1,14 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SalleController;
-use App\Http\Controllers\SalleDetailsController;
-use App\Http\Controllers\ContactController;
+use App\Http\Controllers\frontendController;
 
-Route::get('/', function () {    return view('index');})->name('accueil');
 
-Route::get('/salle', [SalleController::class, 'liste_salle'])->name('salle');
-Route::get('/salle-details', [SalleDetailsController::class, 'salledetails'])->name('salledetails');
-Route::get('/contact', [ContactController::class, 'contact'])->name('contact');
+Route::get('/', function () {    return view('client.index');})->name('accueil');
+Route::get('/log-admin', function () {    return view('admin.index');})->name('dashboard');
+
+Route::get('/salle', [frontendController::class, 'liste_salle'])->name('salle');
+Route::get('/salle-details', [frontendController::class, 'salledetails'])->name('salledetails');
+Route::get('/contact', [frontendController::class, 'contact'])->name('contact');
 
 
