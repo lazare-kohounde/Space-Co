@@ -1,0 +1,1 @@
+<p>Bienvenue sur l'interface de la vue de gestionnaire</p>
