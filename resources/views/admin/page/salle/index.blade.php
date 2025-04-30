@@ -1,1 +1,0 @@
-<p>Bienvenue sur l'interface de la vue de salle</p>

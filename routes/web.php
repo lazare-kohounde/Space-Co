@@ -21,4 +21,4 @@ Route::get('/log-admin', function () {    return view('admin.index');})->name('d
 Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->name('categorie');
 Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->name('gestionnaire');
 Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');
-Route::get('/log-admin/salle', [adminController::class, 'salle'])->name('salle');
+Route::get('/log-admin/salle', [adminController::class, 'salle'])->name('salleAdmin');

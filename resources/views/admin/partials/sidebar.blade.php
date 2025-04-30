@@ -51,7 +51,7 @@
                     <a href="{{ Route('reservation') }}" class="waves-effect"><i class="mdi mdi-calendar-plus"></i>Reservation</a>
                 </li>
                 <li class="has-submenu">
-                    <a href="{{ Route('salle') }}" class="waves-effect"><i class="mdi mdi-home-variant"></i>Salle</a>
+                    <a href="{{ Route('salleAdmin') }}" class="waves-effect"><i class="mdi mdi-home-variant"></i>Salle</a>
                 </li>
             </ul>
         </div>

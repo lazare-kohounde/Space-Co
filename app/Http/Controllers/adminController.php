@@ -9,21 +9,21 @@ class adminController extends Controller
     }
 
     public function categorie(){
-        return view("admin.page.categorie.index");
+        return view("admin.page.categorie.categorie");
     }
 
     
     public function Gestionnaire(){
-        return view("admin.page.gestionnaire.index");
+        return view("admin.page.gestionnaire.gestionnaire");
     }
 
 
     
     public function Reservation(){
-        return view("admin.page.reservation.index");
+        return view("admin.page.reservation.reservation");
     }
     public function Salle(){
-        return view("admin.page.salle.index");
+        return view("admin.page.salle.salle");
     }
     
 }
