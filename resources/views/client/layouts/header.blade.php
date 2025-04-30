@@ -15,6 +15,7 @@
                       <li><a href="{{ route('salle') }}">Salle</a></li>
                       <li><a href="{{ route('salledetails') }}">Salle details</a></li>
                       <li><a href="{{ route('contact') }}">Contact</a></li>
+                      <li><a href="#">Panier</a></li>
                       <li><a href="#"><i class="fa fa-user"></i>Espace Membre</a></li>
                   </ul>
                     <a class='menu-trigger'>

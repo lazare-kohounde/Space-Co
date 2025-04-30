@@ -137,7 +137,7 @@ https://templatemo.com/tm-591-villa-agency
                 <div class="accordion-body">
                     Notre plateforme est simple et intuitive :
 
-                    Recherchez un espace de coworking ou un bureau privé selon votre localisation et vos préférences.
+                    Recherchez un espace de coworking ou un bureau privé selon vos préférences.
 
                     Sélectionnez l’option qui vous convient (durée, services inclus, etc.).
 
@@ -223,24 +223,19 @@ https://templatemo.com/tm-591-villa-agency
         <div class="col-lg-12">
           <div class="wrapper">
             <div class="row">
-              <div class="col-lg-4">
+              <div class="col-lg-6">
                 <div class="counter">
-                  <h2 class="timer count-title count-number" data-to="34" data-speed="1000"></h2>
+                  <h2 class="timer count-title count-number" data-to="8" data-speed="1000"></h2>
                    <p class="count-text ">Salles<br>Prête à l'emploi</p>
                 </div>
               </div>
-              <div class="col-lg-4">
+              <div class="col-lg-6">
                 <div class="counter">
-                  <h2 class="timer count-title count-number" data-to="12" data-speed="1000"></h2>
+                  <h2 class="timer count-title count-number" data-to="2" data-speed="1000"></h2>
                   <p class="count-text ">Années<br>d'Experience</p>
                 </div>
               </div>
-              <div class="col-lg-4">
-                <div class="counter">
-                  <h2 class="timer count-title count-number" data-to="24" data-speed="1000"></h2>
-                  <p class="count-text ">Nombre<br>de réservations</p>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
