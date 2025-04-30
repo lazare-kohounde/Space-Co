@@ -10,8 +10,7 @@
     <meta content="Mannatthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <link rel="shortcut icon" href="admin/assets/images/favicon.ico">
-
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
     <link href={{ asset('admin/assets/css/bootstrap.min.css') }} rel="stylesheet" type="text/css">
     <link href={{ asset('admin/assets/css/icons.css') }} rel="stylesheet" type="text/css">
     <link href={{ asset('admin/assets/css/style.css') }} rel="stylesheet" type="text/css">

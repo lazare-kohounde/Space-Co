@@ -7,9 +7,9 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <div class="text-center bg-logo">
-            {{-- <a href="index.html" class="logo"><i class="mdi mdi-bowling text-success"></i> Dash
-                Space-co</a> --}}
-            <a href="index.html" class="logo"><img src="{{ asset('assets/images/logo.png') }}" height="50"
+
+          
+            <a href="{{ route('accueil') }}" class="logo"><img src="{{ asset('assets/images/logo.png') }}" height="50"
                     alt="logo"></a>
         </div>
     </div>
