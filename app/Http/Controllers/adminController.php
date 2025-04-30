@@ -2,9 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class adminController extends Controller
 {
-    //
+    public function index(){
+        return view("admin.index");
+    }
+
+    public function categorie(){
+        return view("admin.page.categorie.categorie");
+    }
+
+    
+    public function Gestionnaire(){
+        return view("admin.page.gestionnaire.gestionnaire");
+    }
+
+
+    
+    public function Reservation(){
+        return view("admin.page.reservation.reservation");
+    }
+    public function Salle(){
+        return view("admin.page.salle.salle");
+    }
+    
 }
+
+
+
