@@ -37,7 +37,7 @@
 
 
         <!-- Start right Content here -->
-        <div class="content-page">
+        <div class="content-page" >
             <!-- Start content -->
             <div class="content">
 
@@ -70,7 +70,7 @@
                         <!-- end page title end breadcrumb -->
 
                         <!-- Contenu proprement dit -->
-                        <div class="row mt-2">
+                        <div class="row mt-2" style="padding-top: 70px;">
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-body">

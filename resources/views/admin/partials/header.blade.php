@@ -1,4 +1,5 @@
-<div class="topbar">
+<div class="topbar" style="position: fixed;  width: 100%; z-index: 9999;">
+<!--style="position: fixed;  width: 100%; z-index: 9999;"-->
 
     <nav class="navbar-custom">
 
@@ -126,4 +127,9 @@
 
         <div class="clearfix"></div>
     </nav>
+</div>
+<div class="topbar" style="height: 2cm">
+<!--style="position: fixed;  width: 100%; z-index: 9999;"-->
+
+    
 </div>
