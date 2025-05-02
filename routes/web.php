@@ -1,7 +1,7 @@
 <?php
-
-use App\Http\Controllers\adminController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\adminController;
 use App\Http\Controllers\clientController;
 
 
@@ -22,3 +22,22 @@ Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->name(
 Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->name('gestionnaire');
 Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');
 Route::get('/log-admin/salle', [adminController::class, 'salle'])->name('salleAdmin');
+
+
+
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
