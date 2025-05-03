@@ -76,35 +76,36 @@ https://templatemo.com/tm-591-villa-agency
           </div>
         </div>
         <div class="col-lg-6">
-          <form id="contact-form" action="" method="post">
+          <!-- Session Status -->
+          <x-auth-session-status class="mb-4" :status="session('status')" />
+          <form id="contact-form" method="POST" action="{{ route('login') }}">
             <div class="row">
+              <!-- Email Address -->
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="name">Full Name</label>
-                  <input type="name" name="name" id="name" placeholder="Your Name..." autocomplete="on" required>
+                  <label for="email">Adresse Email</label>
+                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your E-mail..." required>
                 </fieldset>
               </div>
+              <!-- Password -->
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="email">Email Address</label>
-                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your E-mail..." required="">
+                  <label for="subject">Mot de passe</label>
+                  <input type="password" name="password" id="subject" placeholder="Mot de passe..." autocomplete="on" required>
                 </fieldset>
               </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <label for="subject">Subject</label>
-                  <input type="subject" name="subject" id="subject" placeholder="Subject..." autocomplete="on" >
-                </fieldset>
+
+              <!-- Remember Me -->
+              <div class="block mt-4">
+                  <label for="remember_me" class="inline-flex items-center">
+                      <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember" required>
+                      <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                  </label>
               </div>
+              
               <div class="col-lg-12">
                 <fieldset>
-                  <label for="message">Message</label>
-                  <textarea name="message" id="message" placeholder="Your Message"></textarea>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <button type="submit" id="form-submit" class="orange-button">Send Message</button>
+                  <button type="submit" id="form-submit" class="orange-button">Se connecter</button>
                 </fieldset>
               </div>
             </div>
