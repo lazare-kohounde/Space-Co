@@ -42,9 +42,9 @@
                             <a href="#" class="">Panier</a>
                         </li>
                         <li>
-                        <a href="#" class="">
-                            <i class="fa fa-user" style="background-color: #f35525; color: white; display: inline-block; width: 40px; height: 40px; text-align: center; line-height: 40px; margin-right: 10px; border-radius: 50%; margin-left: -1px;"></i>
-                        </a>
+                            <a href="{{ route('login_register') }}" class="{{ request()->routeIs('login_register') ? 'active' : '' }}"><i class="fa fa-user" style="background-color: #f35525; color: white; display: inline-block; width: 40px; height: 40px; text-align: center; line-height: 40px; margin-right: 10px; border-radius: 50%; margin-left: -1px;"></i></a>
+                        </li>
+                        
 
 
                         </li>
@@ -57,6 +57,8 @@
                     </a>
                     <!-- ***** Menu End ***** -->
                 </nav>
+
+
             </div>
         </div>
     </div>

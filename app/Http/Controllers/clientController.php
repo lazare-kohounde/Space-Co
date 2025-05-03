@@ -20,4 +20,10 @@ class clientController extends Controller
 
         return view('client.contact');
     }
+
+    //
+    public function login_register () {
+
+        return view('client.login_register');
+    }
 }

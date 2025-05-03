@@ -11,6 +11,7 @@ Route::get('/', function () {    return view('client.index');})->name('accueil')
 Route::get('/salle', [clientController::class, 'liste_salle'])->name('salle');
 Route::get('/salle-details', [clientController::class, 'salledetails'])->name('salledetails');
 Route::get('/contact', [clientController::class, 'contact'])->name('contact');
+Route::get('/login_register', [clientController::class, 'login_register'])->name('login_register');
 
 
 
