@@ -19,6 +19,7 @@ Route::get('/login_register', [clientController::class, 'login_register'])->name
 // roote admin
 
 Route::get('/log-admin', function () {    return view('admin.index');})->name('dashboard');
+Route::get('/log-admin/profil', function () {    return view('admin.profil');})->name('profil');
 Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->name('categorie');
 Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->name('gestionnaire');
 Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');

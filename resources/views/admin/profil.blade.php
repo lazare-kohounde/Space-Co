@@ -52,7 +52,7 @@
                             <div class="col-sm-12">
                                 <div class="page-title-box">
 
-                                    <h4 class="page-title">Profil utilisateur</h4>
+                                    <h4 class="page-title">Profil gestionnaire</h4>
                                 </div>
                             </div>
                         </div>
@@ -73,13 +73,11 @@
                                                     <p class="text-muted mb-1">Full Stack Developer</p>
                                                     <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
                                                     <!-- Bouton d'action edit infos et profil -->
-                                                    <div class="d-flex justify-content-center mb-2 ">
+                                                    <div class="d-flex justify-content-center mb-2" style="">
                                                         <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                            class="btn btn-primary">Changer mon profil
+                                                            class="btn btn-primary">Modifier mon profil
                                                         </button>
-                                                        <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                                            class="btn btn-outline-primary ">Modifier mes informations
-                                                        </button>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

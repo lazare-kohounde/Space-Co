@@ -8,6 +8,10 @@ class adminController extends Controller
         return view("admin.index");
     }
 
+    public function profil(){
+        return view("admin.profil");
+    }
+
     public function categorie(){
         return view("admin.page.categorie.categorie");
     }

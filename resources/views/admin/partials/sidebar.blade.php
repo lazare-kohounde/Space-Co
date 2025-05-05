@@ -20,7 +20,7 @@
         <p class=" online-icon text-dark"><i class="mdi mdi-record text-success"></i>en ligne</p>
         <ul class="list-unstyled list-inline mb-0 mt-2">
             <li class="list-inline-item">
-                <a href="#" class="" data-toggle="tooltip" data-placement="top" title="Profil"><i
+                <a href="{{ route('profil') }}" class="" data-toggle="tooltip" data-placement="top" title="Profil"><i
                         class="dripicons-user text-purple"></i></a>
             </li>
             <li class="list-inline-item">
