@@ -21,6 +21,16 @@ class clientController extends Controller
         return view('client.contact');
     }
 
+    public function panier () {
+
+        return view('client.panier');
+    }
+
+    public function paiement () {
+
+        return view('client.paiement');
+    }
+
     //
     public function login_register () {
 

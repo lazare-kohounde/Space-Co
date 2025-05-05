@@ -16,6 +16,9 @@ class adminController extends Controller
         return view("admin.page.categorie.categorie");
     }
 
+    public function profil(){
+        return view("admin.profil");
+    }
     
     public function Gestionnaire(){
         return view("admin.page.gestionnaire.gestionnaire");

@@ -12,6 +12,8 @@ Route::get('/salle', [clientController::class, 'liste_salle'])->name('salle');
 Route::get('/salle-details', [clientController::class, 'salledetails'])->name('salledetails');
 Route::get('/contact', [clientController::class, 'contact'])->name('contact');
 Route::get('/login_register', [clientController::class, 'login_register'])->name('login_register');
+Route::get('/panier', [clientController::class, 'panier'])->name('panier');
+Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
 
 
 
