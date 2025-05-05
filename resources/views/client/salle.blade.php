@@ -252,7 +252,7 @@ https://templatemo.com/tm-591-villa-agency
     </div>
   </div>
 
-  @include('client.layouts.footer');
+  @include('client.layouts.footer')
 
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
@@ -262,6 +262,26 @@ https://templatemo.com/tm-591-villa-agency
   <script src={{asset("assets/js/owl-carousel.js")}}></script>
   <script src={{asset("assets/js/counter.js")}}></script>
   <script src={{asset("assets/js/custom.js")}}></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const showRegisterLink = document.getElementById('showRegisterForm');
+    const showLoginLink = document.getElementById('showLoginForm');
+
+    showRegisterLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      registerForm.style.display = 'block';
+    });
+
+    showLoginLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      registerForm.style.display = 'none';
+      loginForm.style.display = 'block';
+    });
+  });
+</script>
 
   </body>
 </html>

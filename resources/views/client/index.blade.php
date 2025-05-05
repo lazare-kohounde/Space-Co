@@ -31,6 +31,7 @@
     <link rel="stylesheet" href={{asset("assets/css/owl.css")}}>
     <link rel="stylesheet" href={{asset("assets/css/animate.css")}}>
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    
 <!--
 
 TemplateMo 591 villa agency
@@ -275,10 +276,10 @@ https://templatemo.com/tm-591-villa-agency
                     <div class="col-lg-3">
                       <div class="info-table">
                         <ul>
-                          <li>Surface totale plate <span>185 m2</span></li>
-                          <li>Numéro de la Salle <span>26th</span></li>
-                          <li>Nombre de siège <span>4</span></li>
-                          <li>Stationnement disponible <span>Oui</span></li>
+                          <li>Surface totale plate <span>5 m2</span></li>
+                          <li>Equipement Professionnel </li>
+                          <li>Espace café </li>
+                          <li>Stationnement disponible </li>
                           <li>Moyen de paiement <span>MoMo</span></li>
                         </ul>
                       </div>
@@ -291,7 +292,7 @@ https://templatemo.com/tm-591-villa-agency
                       <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                       <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                       <div class="icon-button">
-                        <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>                      </div>
+                        <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> Voire plus</a> </div>
                     </div>
                   </div>
                 </div>
@@ -300,12 +301,12 @@ https://templatemo.com/tm-591-villa-agency
                     <div class="col-lg-3">
                       <div class="info-table">
                         <ul>
-                            <li>Surface totale plate <span>185 m2</span></li>
-                            <li>Numéro de la Salle <span>26th</span></li>
-                            <li>Nombre de siège <span>4</span></li>
-                            <li>Stationnement disponible <span>Oui</span></li>
-                            <li>Moyen de paiement <span>MoMo</span></li>
-                          </ul>
+                          <li>Surface totale plate <span>5 m2</span></li>
+                          <li>Equipement Professionnel </li>
+                          <li>Espace café </li>
+                          <li>Stationnement disponible </li>
+                          <li>Moyen de paiement <span>MoMo</span></li>
+                        </ul>
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -316,7 +317,7 @@ https://templatemo.com/tm-591-villa-agency
                         <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                         <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                         <div class="icon-button">
-                          <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>                      </div>
+                          <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> Voire plus</a>                      </div>
                       </div>
                   </div>
                 </div>
@@ -325,12 +326,12 @@ https://templatemo.com/tm-591-villa-agency
                     <div class="col-lg-3">
                       <div class="info-table">
                         <ul>
-                            <li>Surface totale plate <span>185 m2</span></li>
-                            <li>Numéro de la Salle <span>26th</span></li>
-                            <li>Nombre de siège <span>4</span></li>
-                            <li>Stationnement disponible <span>Oui</span></li>
-                            <li>Moyen de paiement <span>MoMo</span></li>
-                          </ul>
+                          <li>Surface totale plate <span>5 m2</span></li>
+                          <li>Equipement Professionnel </li>
+                          <li>Espace café </li>
+                          <li>Stationnement disponible </li>
+                          <li>Moyen de paiement <span>MoMo</span></li>
+                        </ul>
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -341,7 +342,7 @@ https://templatemo.com/tm-591-villa-agency
                         <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                         <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                         <div class="icon-button">
-                          <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>                      </div>
+                          <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>                      </div>
                       </div>
                   </div>
                 </div>
@@ -368,96 +369,66 @@ https://templatemo.com/tm-591-villa-agency
           <div class="item">
             <a href="property-details.html"><img src="assets/images/property-01.jpg" alt=""></a>
             <span class="category">Bureau</span>
-            <h6>264.000 FCFA / H</h6>
-            <h4><a href="property-details.html">18 New Street Miami, OR 97219</a></h4>
-            <ul>
-              <li>Salle: <span>8</span></li>
-              <li>Internet: <span>Oui</span></li>
-              <li>Superficie: <span>545m2</span></li>
-              <li>Parking: <span>Oui</span></li>
-            </ul>
+            <h6>2.000 XOF</h6>
+            <h4><a href="property-details.html">Street Miami, OR 97219</a></h4>
+            
             <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>            </div>
+                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="item">
             <a href="property-details.html"><img src="assets/images/property-02.jpg" alt=""></a>
             <span class="category">Bureau</span>
-            <h6>1.180.000 FCFA / H</h6>
-            <h4><a href="property-details.html">54 Mid Street Florida, OR 27001</a></h4>
-            <ul>
-                <li>Salle: <span>8</span></li>
-                <li>Internet: <span>Oui</span></li>
-                <li>Superficie: <span>545m2</span></li>
-                <li>Parking: <span>Oui</span></li>
-              </ul>
+            <h6>18.000 XOF</h6>
+            <h4><a href="property-details.html">Street Florida, OR 27001</a></h4>
+            
             <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>            </div>
+                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> Voire plus</a>            </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="item">
             <a href="property-details.html"><img src="assets/images/property-03.jpg" alt=""></a>
             <span class="category">Bureau</span>
-            <h6>1.460.000 FCFA / H</h6>
-            <h4><a href="property-details.html">26 Old Street Miami, OR 38540</a></h4>
-            <ul>
-                <li>Salle: <span>8</span></li>
-                <li>Internet: <span>Oui</span></li>
-                <li>Superficie: <span>545m2</span></li>
-                <li>Parking: <span>Oui</span></li>
-              </ul>
+            <h6>46.000 XOF</h6>
+            <h4><a href="property-details.html">Street Miami, OR 38540</a></h4>
+            
             <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>            </div>
+                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="item">
             <a href="property-details.html"><img src="assets/images/property-04.jpg" alt=""></a>
             <span class="category">Salle de conférence</span>
-            <h6>584.500 FCFA / H</h6>
-            <h4><a href="property-details.html">12 New Street Miami, OR 12650</a></h4>
-            <ul>
-                <li>Salle: <span>8</span></li>
-                <li>Internet: <span>Oui</span></li>
-                <li>Superficie: <span>545m2</span></li>
-                <li>Parking: <span>Oui</span></li>
-              </ul>
+            <h6>584.500 XOF</h6>
+            <h4><a href="property-details.html">Street Miami, OR 12650</a></h4>
+            
             <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>            </div>
+                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="item">
             <a href="property-details.html"><img src="assets/images/property-05.jpg" alt=""></a>
             <span class="category">Salle de conférence</span>
-            <h6>925.600 FCFA / H</h6>
-            <h4><a href="property-details.html">34 Beach Street Miami, OR 42680</a></h4>
-            <ul>
-                <li>Salle: <span>8</span></li>
-                <li>Internet: <span>Oui</span></li>
-                <li>Superficie: <span>545m2</span></li>
-                <li>Parking: <span>Oui</span></li>
-              </ul>
+            <h6>25.600 XOF</h6>
+            <h4><a href="property-details.html">Street Miami, OR 42680</a></h4>
+            
             <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>            </div>
+                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="item">
             <a href="property-details.html"><img src="assets/images/property-06.jpg" alt=""></a>
             <span class="category">Salle de Coworking</span>
-            <h6>450.000 FCFA / H</h6>
-            <h4><a href="property-details.html">22 New Street Portland, OR 16540</a></h4>
-            <ul>
-                <li>Salle: <span>8</span></li>
-                <li>Internet: <span>Oui</span></li>
-                <li>Superficie: <span>545m2</span></li>
-                <li>Parking: <span>Oui</span></li>
-              </ul>
+            <h6>45.000 XOF</h6>
+            <h4><a href="property-details.html">Street Portland, OR 16540</a></h4>
+            
             <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> En savoire plus</a>            </div>
+                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
           </div>
         </div>
       </div>
@@ -467,7 +438,7 @@ https://templatemo.com/tm-591-villa-agency
 
 
 
-  @include('client.layouts.footer');
+  @include('client.layouts.footer')
 
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
@@ -477,6 +448,27 @@ https://templatemo.com/tm-591-villa-agency
   <script src={{asset("assets/js/owl-carousel.js")}}></script>
   <script src={{asset("assets/js/counter.js")}}></script>
   <script src={{asset("assets/js/custom.js")}}></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const showRegisterLink = document.getElementById('showRegisterForm');
+    const showLoginLink = document.getElementById('showLoginForm');
+
+    showRegisterLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      registerForm.style.display = 'block';
+    });
+
+    showLoginLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      registerForm.style.display = 'none';
+      loginForm.style.display = 'block';
+    });
+  });
+</script>
+
 
 
   </body>

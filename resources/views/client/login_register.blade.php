@@ -105,7 +105,7 @@ https://templatemo.com/tm-591-villa-agency
               
               <div class="col-lg-12">
                 <fieldset>
-                  <button type="submit" id="form-submit" class="orange-button">Se connecter</button>
+                  <button type="" id="form-submit" class="orange-button">Se connecter</button>
                 </fieldset>
               </div>
             </div>
@@ -116,7 +116,7 @@ https://templatemo.com/tm-591-villa-agency
     </div>
   </div>
 
-  @include('client.layouts.footer');
+  @include('client.layouts.footer')
 
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->

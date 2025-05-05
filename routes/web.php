@@ -12,6 +12,8 @@ Route::get('/salle', [clientController::class, 'liste_salle'])->name('salle');
 Route::get('/salle-details', [clientController::class, 'salledetails'])->name('salledetails');
 Route::get('/contact', [clientController::class, 'contact'])->name('contact');
 Route::get('/login_register', [clientController::class, 'login_register'])->name('login_register');
+Route::get('/panier', [clientController::class, 'panier'])->name('panier');
+Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
 
 
 
@@ -19,6 +21,7 @@ Route::get('/login_register', [clientController::class, 'login_register'])->name
 // roote admin
 
 Route::get('/log-admin', function () {    return view('admin.index');})->name('dashboard');
+Route::get('/log-profil', function () {    return view('admin.profil');})->name('profil');
 Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->name('categorie');
 Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->name('gestionnaire');
 Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');
