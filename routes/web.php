@@ -21,7 +21,6 @@ Route::get('/connexion', [clientController::class, 'connexion'])->name('connexio
 
 // roote admin
 
-Route::get('/log-admin', function () {    return view('admin.index');})->name('dashboard');
 Route::get('/log-profil', function () {    return view('admin.profil');})->name('profil');
 Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->name('categorie');
 Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->name('gestionnaire');
@@ -35,8 +34,8 @@ Route::get('/log-admin/salle', [adminController::class, 'salle'])->name('salleAd
 //    return view('welcome');
 //});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/log-admin', function () {
+    return view('admin.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
