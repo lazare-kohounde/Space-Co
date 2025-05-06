@@ -32,6 +32,7 @@
     <link rel="stylesheet" href={{asset("assets/css/animate.css")}}>
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     
+    
 <!--
 
 TemplateMo 591 villa agency
@@ -57,6 +58,7 @@ https://templatemo.com/tm-591-villa-agency
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
 

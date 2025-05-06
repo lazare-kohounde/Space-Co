@@ -41,11 +41,20 @@
                         <li>
                             <a href="#" class="">Panier</a>
                         </li>
+                        
+                        @auth
                         <li>
-  <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-    <i class="fa fa-user" style="background-color: #f35525; color: white; display: inline-block; width: 40px; height: 40px; text-align: center; line-height: 40px; margin-right: 10px; border-radius: 50%; margin-left: -1px;"></i>
-  </a>
-</li>
+                            <a href="{{ route('membre') }}" >
+                              <i class="fa fa-user" style="background-color: #f35525; color: white; display: inline-block; width: 40px; height: 40px; text-align: center; line-height: 40px; margin-right: 10px; border-radius: 50%; margin-left: -1px;"></i>
+                            </a>
+                        </li>
+                        @else
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                              <i class="fa fa-user" style="background-color: #f35525; color: white; display: inline-block; width: 40px; height: 40px; text-align: center; line-height: 40px; margin-right: 10px; border-radius: 50%; margin-left: -1px;"></i>
+                            </a>
+                        </li>
+                        @endauth
                         
                         
 

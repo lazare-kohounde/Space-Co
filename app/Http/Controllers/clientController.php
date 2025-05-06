@@ -31,6 +31,11 @@ class clientController extends Controller
         return view('client.paiement');
     }
 
+    public function membre () {
+
+        return view('client.membre');
+    }
+
     //
     public function login_register () {
 
