@@ -13,8 +13,8 @@ Route::get('/salle-details', [clientController::class, 'salledetails'])->name('s
 Route::get('/contact', [clientController::class, 'contact'])->name('contact');
 Route::get('/login_register', [clientController::class, 'login_register'])->name('login_register');
 Route::get('/panier', [clientController::class, 'panier'])->name('panier');
-Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
-Route::get('/membre', [clientController::class, 'membre'])->name('membre');
+Route::get('/connexion', [clientController::class, 'connexion'])->name('connexion');
+
 
 
 
@@ -40,6 +40,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
+    Route::get('/membre', [clientController::class, 'membre'])->name('membre');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

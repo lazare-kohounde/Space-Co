@@ -26,6 +26,11 @@ class clientController extends Controller
         return view('client.panier');
     }
 
+    public function connexion () {
+
+        return view('client.connexion');
+    }
+
     public function paiement () {
 
         return view('client.paiement');

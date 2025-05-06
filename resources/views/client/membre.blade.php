@@ -54,6 +54,34 @@
       padding: 2rem;
       min-height: 400px;
     }
+    .form-label {
+      font-weight: 600;
+    }
+    .profile-summary {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #f35525;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+      overflow: hidden;
+      object-fit: cover;
+    }
+    @media (max-width: 576px) {
+      .profile-summary { flex-direction: column; align-items: flex-start; }
+      .profile-avatar { margin-bottom: 1rem; }
+    }
   </style>
 </head>
 
@@ -100,33 +128,66 @@
         <div class="col-lg-10">
           <!-- Profil -->
           <div class="dashboard-content" id="profilContent" role="tabpanel" tabindex="0">
-            <h4 class="mb-4" style="color: #f35525">Informations du profil</h4>
-            <div class="row mb-4">
-              <div class="col-md-6">
-                <p><strong>Nom complet :</strong> John Doe</p>
-                <p><strong>Email :</strong> john.doe@example.com</p>
-                <p><strong>Téléphone :</strong> +229 97 00 00 00</p>
-              </div>
-              <div class="col-md-6">
-                <p><strong>Date d'inscription :</strong> 01/01/2024</p>
-                <p><strong>Dernière connexion :</strong> 06/05/2025</p>
+            <h4 class="mb-4" style="color: #f35525">Mon Profil</h4>
+
+            <!-- Volet résumé profil -->
+            <div class="profile-summary mb-4">
+              @php
+                  $user = auth()->user();
+                  // Avatar image si tu en as, sinon initiales
+                  $avatar = $user->avatar ?? null; // à adapter si tu stockes une image
+                  $initiales = strtoupper(mb_substr($user->name, 0, 1));
+              @endphp
+              @if($avatar)
+                <img src="{{ asset('storage/avatars/'.$avatar) }}" alt="Avatar" class="profile-avatar">
+              @else
+                <div class="profile-avatar">{{ $initiales }}</div>
+              @endif
+              <div>
+                <h5 class="mb-1">{{ $user->name }}</h5>
+                <p class="mb-1"><i class="fa fa-envelope me-2"></i>{{ $user->email }}</p>
+                <p class="mb-1"><i class="fa fa-phone me-2"></i>{{ $user->phone ?? 'Non renseigné' }}</p>
+                <p class="mb-0 text-muted"><i class="fa fa-calendar me-2"></i>Inscrit le {{ $user->created_at->format('d/m/Y') }}</p>
               </div>
             </div>
-            <h5 class="mt-4 mb-3">Modifier le profil</h5>
-            <form>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="fullname" class="form-label">Nom complet</label>
-                  <input type="text" id="fullname" class="form-control" value="John Doe" />
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="phone" class="form-label">Téléphone</label>
-                  <input type="text" id="phone" class="form-control" value="+229 97 00 00 00" />
-                </div>
-                <div class="col-md-12">
-                  <button class="btn btn-orange" type="button">Mettre à jour</button>
-                </div>
+
+            <!-- Formulaire de modification -->
+            <h5 class="mb-3">Modifier mes informations</h5>
+
+            {{-- Affichage des erreurs --}}
+            @if ($errors->any())
+              <div class="alert alert-danger">
+                <ul class="mb-0">
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
               </div>
+            @endif
+
+            {{-- Message succès --}}
+            @if (session('status') == 'profile-updated')
+              <div class="alert alert-success">
+                Profil mis à jour avec succès.
+              </div>
+            @endif
+
+            <form method="POST" action="{{ route('profile.update') }}">
+              @csrf
+              @method('PATCH')
+              <div class="mb-3">
+                <label for="name" class="form-label">Nom complet</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $user->name) }}" required autofocus>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Adresse email</label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label">Téléphone</label>
+                <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone', $user->phone ?? '') }}">
+              </div>
+              <button type="submit" class="btn btn-orange">Mettre à jour</button>
             </form>
           </div>
 
@@ -148,21 +209,21 @@
                   <tr>
                     <td>#12345</td>
                     <td>15/04/2025</td>
-                    <td>John Doe</td>
+                    <td>{{ $user->name }}</td>
                     <td><span class="badge bg-success">Terminée</span></td>
                     <td><a href="#" class="btn btn-sm btn-orange">Détails</a></td>
                   </tr>
                   <tr>
                     <td>#12346</td>
                     <td>10/03/2025</td>
-                    <td>John Doe</td>
+                    <td>{{ $user->name }}</td>
                     <td><span class="badge bg-warning text-dark">En cours</span></td>
                     <td><a href="#" class="btn btn-sm btn-orange">Détails</a></td>
                   </tr>
                   <tr>
                     <td>#12347</td>
                     <td>05/02/2025</td>
-                    <td>John Doe</td>
+                    <td>{{ $user->name }}</td>
                     <td><span class="badge bg-secondary">Annulée</span></td>
                     <td><a href="#" class="btn btn-sm btn-orange">Détails</a></td>
                   </tr>
@@ -209,5 +270,4 @@
     });
   </script>
 </body>
-
 </html>
