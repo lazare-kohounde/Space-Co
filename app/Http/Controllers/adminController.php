@@ -15,17 +15,12 @@ class adminController extends Controller
     public function categorie(){
         return view("admin.page.categorie.categorie");
     }
-
-    public function profil(){
-        return view("admin.profil");
-    }
     
     public function Gestionnaire(){
         return view("admin.page.gestionnaire.gestionnaire");
     }
 
 
-    
     public function Reservation(){
         return view("admin.page.reservation.reservation");
     }
