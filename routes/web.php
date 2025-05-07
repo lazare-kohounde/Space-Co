@@ -21,11 +21,11 @@ Route::get('/connexion', [clientController::class, 'connexion'])->name('connexio
 
 // roote admin
 
-Route::get('/log-profil', function () {    return view('admin.profil');})->name('profil');
-Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->name('categorie');
-Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->name('gestionnaire');
-Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');
-Route::get('/log-admin/salle', [adminController::class, 'salle'])->name('salleAdmin');
+Route::get('/log-admin/profil', function () {    return view('admin.profil');})->middleware(['auth', 'verified'])->name('profil');
+Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->middleware(['auth', 'verified'])->name('categorie');
+Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->middleware(['auth', 'verified'])->name('gestionnaire');
+Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->middleware(['auth', 'verified'])->name('reservation');
+Route::get('/log-admin/salle', [adminController::class, 'salle'])->middleware(['auth', 'verified'])->name('salleAdmin');
 
 
 

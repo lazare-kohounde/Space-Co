@@ -7,7 +7,7 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <div class="text-center bg-logo">
-            <a href="{{ route('accueil') }}" class="logo">
+            <a href="#" class="logo">
                 <img src="{{ asset('assets/images/logo.png') }}" height="50" alt="logo">
             </a>
         </div>
