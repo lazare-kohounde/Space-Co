@@ -154,7 +154,7 @@
                         </button>
                     </form>
                     <div class="text-center mt-3">
-                        <img src="https://cdn.fedapay.com/img/logo.svg" alt="FedaPay" style="height:32px;">
+                        <img src="https://docs-v1.fedapay.com/assets/feda-logo-blue-321eee300a4d16670cbaf7d5be77f632632781529e018009a77b7aaffdfb9a4e.svg" alt="FedaPay" style="height:32px;">
                         <p class="text-muted small mb-0">Paiement sécurisé via FedaPay</p>
                     </div>
                 </div>
@@ -185,8 +185,8 @@ function handleFedaPay(event) {
     var telephone = document.getElementById('telephone').value;
 
     // Appel du widget FedaPay (mode test)
-    FedaPay.init({
-        public_key: "pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx", // Remplace par ta clé publique sandbox
+    FedaPay.init('#fedapay-btn', {
+        public_key: "pk_sandbox_1l6bRH8oSU0oei0VTTB0MvxE", // Remplace par ta clé publique sandbox
         transaction: {
             amount: 70000,
             currency: {

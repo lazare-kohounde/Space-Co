@@ -13,19 +13,19 @@ Route::get('/salle-details', [clientController::class, 'salledetails'])->name('s
 Route::get('/contact', [clientController::class, 'contact'])->name('contact');
 Route::get('/login_register', [clientController::class, 'login_register'])->name('login_register');
 Route::get('/panier', [clientController::class, 'panier'])->name('panier');
-Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
+Route::get('/connexion', [clientController::class, 'connexion'])->name('connexion');
+
 
 
 
 
 // roote admin
 
-Route::get('/log-admin', function () {    return view('admin.index');})->name('dashboard');
-Route::get('/log-admin/profil', function () {    return view('admin.profil');})->name('profil');
-Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->name('categorie');
-Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->name('gestionnaire');
-Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');
-Route::get('/log-admin/salle', [adminController::class, 'salle'])->name('salleAdmin');
+Route::get('/log-admin/profil', function () {    return view('admin.profil');})->middleware(['auth', 'verified'])->name('profil');
+Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->middleware(['auth', 'verified'])->name('categorie');
+Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->middleware(['auth', 'verified'])->name('gestionnaire');
+Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->middleware(['auth', 'verified'])->name('reservation');
+Route::get('/log-admin/salle', [adminController::class, 'salle'])->middleware(['auth', 'verified'])->name('salleAdmin');
 
 
 
@@ -34,11 +34,13 @@ Route::get('/log-admin/salle', [adminController::class, 'salle'])->name('salleAd
 //    return view('welcome');
 //});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/log-admin', function () {
+    return view('admin.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
+    Route::get('/membre', [clientController::class, 'membre'])->name('membre');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

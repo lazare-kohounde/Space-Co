@@ -73,7 +73,7 @@
                                                     <div class="icon-contain">
                                                         <div class="row">
                                                             <div class="col-2 align-self-center">
-                                                                <i class="fas fa-tasks text-gradient-success"></i>
+                                                                <i class="fas fa-calendar-alt text-gradient-danger"></i>
                                                             </div>
                                                             <div class="col-10 text-right">
                                                                 <h5 class="mt-0 mb-1">190</h5>
@@ -90,11 +90,11 @@
                                                     <div class="icon-contain">
                                                         <div class="row">
                                                             <div class="col-2 align-self-center">
-                                                                <i class="far fa-gem text-gradient-danger"></i>
+                                                                <i class="far fa-building text-gradient-success"></i>
                                                             </div>
                                                             <div class="col-10 text-right">
-                                                                <h5 class="mt-0 mb-1">62</h5>
-                                                                <p class="mb-0 font-12 text-muted">Project</p>
+                                                                <h5 class="mt-0 mb-1">12</h5>
+                                                                <p class="mb-0 font-12 text-muted">Salles</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -107,11 +107,11 @@
                                                     <div class="icon-contain">
                                                         <div class="row">
                                                             <div class="col-2 align-self-center">
-                                                                <i class="fas fa-users text-gradient-warning"></i>
+                                                                <i class="fas fa-layer-group text-gradient-warning"></i>
                                                             </div>
                                                             <div class="col-10 text-right">
-                                                                <h5 class="mt-0 mb-1">14</h5>
-                                                                <p class="mb-0 font-12 text-muted">Gestionnaire</p>
+                                                                <h5 class="mt-0 mb-1">4</h5>
+                                                                <p class="mb-0 font-12 text-muted">Catégories</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -124,11 +124,11 @@
                                                     <div class="icon-contain">
                                                         <div class="row">
                                                             <div class="col-2 align-self-center">
-                                                                <i class="fas fa-database text-gradient-primary"></i>
+                                                                <i class="fas fa-dollar-sign text-gradient-primary"></i>
                                                             </div>
                                                             <div class="col-10 text-right">
-                                                                <h5 class="mt-0 mb-1">$15562</h5>
-                                                                <p class="mb-0 font-12 text-muted">Budget</p>
+                                                                <h5 class="mt-0 mb-1">315562 <span>XOF</span></h5>
+                                                                <p class="mb-0 font-12 text-muted">Recette Globales</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -139,16 +139,9 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                                                <label class="btn btn-primary btn-sm active">
-                                                    <input type="radio" name="options" id="option1"
-                                                        checked="">
-                                                    Cette semaine
-                                                </label>
-                                                <label class="btn btn-primary btn-sm">
-                                                    <input type="radio" name="options" id="option2">Mois passé
-                                                </label>
+                                                
                                             </div>
-                                            <h5 class="header-title mb-4 mt-0">Record de la semaine</h5>
+                                            <h5 class="header-title mb-4 mt-0">Statistiques</h5>
                                             <canvas id="lineChart" height="82"></canvas>
                                         </div>
                                     </div>
@@ -166,7 +159,7 @@
                                                 <li class="mb-2 list-inline-item text-muted font-13"><i
                                                         class="mdi mdi-label text-success mr-2"></i>Active</li>
                                                 <li class="mb-2 list-inline-item text-muted font-13"><i
-                                                        class="mdi mdi-label text-danger mr-2"></i>Complete</li>
+                                                        class="mdi mdi-label text-danger mr-2"></i>Complet</li>
                                                 <li class="mb-2 list-inline-item text-muted font-13"><i
                                                         class="mdi mdi-label text-warning mr-2"></i>En cours</li>
                                             </ul>
@@ -177,11 +170,11 @@
                                             <div class="row mb-3">
                                                 <div class="col-sm-6">
                                                     <p class="mb-0 text-muted font-13"><i
-                                                            class="mdi mdi-album mr-2 text-warning"></i>New Leads</p>
+                                                            class="mdi mdi-album mr-2 text-warning"></i>Nouveau prospects</p>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <p class="mb-0 text-muted font-13"><i
-                                                            class="mdi mdi-album mr-2 text-danger"></i>New Leads Target
+                                                            class="mdi mdi-album mr-2 text-danger"></i>Objectif de nouveau prospects
                                                     </p>
                                                 </div>
                                             </div>

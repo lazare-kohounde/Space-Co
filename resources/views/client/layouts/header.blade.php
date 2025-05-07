@@ -41,13 +41,30 @@
                         <li>
                             <a href="#" class="">Panier</a>
                         </li>
+                        
+                        @auth
                         <li>
-  <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-    <i class="fa fa-user" style="background-color: #f35525; color: white; display: inline-block; width: 40px; height: 40px; text-align: center; line-height: 40px; margin-right: 10px; border-radius: 50%; margin-left: -1px;"></i>
-  </a>
-</li>
+                            <a href="{{ route('membre') }}" >
+                              <i class="fa fa-user" style="background-color: #f35525; color: white; display: inline-block; width: 40px; height: 40px; text-align: center; line-height: 40px; margin-right: 10px; border-radius: 50%; margin-left: -1px;"></i>
+                            </a>
+                        </li>
+                        @else
+                        <li>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                              <i class="fa fa-user" style="background-color: #f35525; color: white; display: inline-block; width: 40px; height: 40px; text-align: center; line-height: 40px; margin-right: 10px; border-radius: 50%; margin-left: -1px;"></i>
+                            </a>
+                        </li>
+                        @endauth
                         
-                        
+                        @if(request()->has('show_login_modal'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+    });
+</script>
+@endif
+
 
 
                         </li>
@@ -118,44 +135,63 @@
         </form>
 
         <!-- Formulaire Inscription -->
-        <form method="POST" action="{{ route('register') }}" id="registerForm" style="display: none;">
-          @csrf
-          <h5>S'inscrire</h5>
-          <hr>
+<form method="POST" action="{{ route('register') }}" id="registerForm" style="display: none;">
+    @csrf
+    <h5 class="mb-3 text-center">S'inscrire</h5>
+    <hr>
 
-          <div class="mb-3">
-            <label for="registerName" class="form-label">Nom complet</label>
-            <input id="registerName" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" 
-                   class="form-control @error('name') is-invalid @enderror">
-            @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-          </div>
+    <div class="mb-3">
+        <label for="registerName" class="form-label">Nom complet</label>
+        <input id="registerName" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" class="form-control @error('name') is-invalid @enderror">
+        @error('name')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
-          <div class="mb-3">
-            <label for="registerEmail" class="form-label">Adresse email</label>
-            <input id="registerEmail" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" 
-                   class="form-control @error('email') is-invalid @enderror">
-            @error('email')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-          </div>
+    <div class="mb-3">
+        <label for="registerEmail" class="form-label">Adresse email</label>
+        <input id="registerEmail" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" class="form-control @error('email') is-invalid @enderror">
+        @error('email')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
-          <div class="mb-3">
-            <label for="registerPassword" class="form-label">Mot de passe</label>
-            <input id="registerPassword" type="password" name="password" required autocomplete="new-password" 
-                   class="form-control @error('password') is-invalid @enderror">
-            @error('password')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-          </div>
+    <!-- Nouveau champ téléphone -->
+    <div class="mb-3">
+        <label for="registerPhone" class="form-label">Numéro de téléphone</label>
+        <input id="registerPhone"type="tel" name="phone" value="{{ old('phone') }}" autocomplete="tel" pattern="^[0-9+\-\s]*$" title="Veuillez entrer un numéro de téléphone valide (chiffres, +, -, espaces uniquement)" class="form-control @error('phone') is-invalid @enderror">
+        @error('phone')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
-          <div class="mb-3">
-            <label for="registerPasswordConfirmation" class="form-label">Confirmer le mot de passe</label>
-            <input id="registerPasswordConfirmation" type="password" name="password_confirmation" required autocomplete="new-password" 
-                   class="form-control">
-          </div>
+    <!-- Nouveau champ sexe -->
+    <div class="mb-3">
+        <label for="registerSexe" class="form-label">Sexe</label>
+        <select id="registerSexe" name="sexe" class="form-select @error('sexe') is-invalid @enderror" required>
+            <option value="" disabled {{ old('sexe') ? '' : 'selected' }}>Choisir...</option>
+            <option value="Masculin" {{ old('sexe') == 'Masculin' ? 'selected' : '' }}>Masculin</option>
+            <option value="Féminin" {{ old('sexe') == 'Féminin' ? 'selected' : '' }}>Féminin</option>
+        </select>
+        @error('sexe')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
+    <div class="mb-3">
+        <label for="registerPassword" class="form-label">Mot de passe</label>
+        <input id="registerPassword" type="password" name="password" required autocomplete="new-password" class="form-control @error('password') is-invalid @enderror">
+        @error('password')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
+    <div class="mb-3">
+        <label for="registerPasswordConfirmation" class="form-label">Confirmer le mot de passe</label>
+        <input id="registerPasswordConfirmation" type="password" name="password_confirmation" required autocomplete="new-password" class="form-control">
+    </div>
+
+    
           <button type="submit" class="btn w-100" 
             style="background-color: #000; border-color: #000; color: #fff;"
             onmouseover="this.style.backgroundColor='#f35525'; this.style.borderColor='#f35525'; this.style.color='#fff';"

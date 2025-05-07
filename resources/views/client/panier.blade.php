@@ -185,7 +185,6 @@
 <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
 <script src="{{ asset('assets/js/counter.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
-<script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -208,6 +207,5 @@
   });
 </script>
     
-</script>
 </body>
 </html>
