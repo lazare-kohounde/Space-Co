@@ -105,7 +105,7 @@
                 </button>
             </li>
             <li class="hide-phone app-search">
-               
+            <h6 class="header-title mb-2 pt-1">Version 1.0</h6>
             </li>
         </ul>
 
