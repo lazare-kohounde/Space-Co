@@ -34,6 +34,27 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    // Relations
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    public function manager()
+    {
+        return $this->hasOne(Manager::class);
+    }
+
+    public function superadmin()
+    {
+        return $this->hasOne(Superadmin::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

@@ -14,6 +14,11 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    protected $observers = [
+        \App\Models\DetailReservation::class => \App\Observers\DetailReservationObserver::class,
+    ];
+    
+
     /**
      * Bootstrap any application services.
      */
