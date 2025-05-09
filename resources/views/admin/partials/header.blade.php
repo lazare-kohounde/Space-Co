@@ -1,4 +1,4 @@
-<div class="topbar" style="position: fixed;  width: 100%; z-index: 9999;">
+<div class="topbar" >
 <!--style="position: fixed;  width: 100%; z-index: 9999;"-->
 
     <nav class="navbar-custom">
@@ -95,20 +95,7 @@
                 </div>
             </li>
 
-            <li class="list-inline-item dropdown notification-list">
-                <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown"
-                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ asset('admin/assets/images/admin.png') }}" alt="user" class="rounded-circle">
-                </a>
-                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                    <!-- item-->
-                    <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i>
-                        Profil</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="mdi mdi-logout m-r-5 text-muted"></i>
-                        Déconnection</a>
-                </div>
-            </li>
+            
         </ul>
 
         <ul class="list-inline menu-left mb-0">
@@ -118,18 +105,16 @@
                 </button>
             </li>
             <li class="hide-phone app-search">
-                <form role="search" class="">
-                    <input type="text" placeholder="Recherche..." class="form-control">
-                    <a href=""><i class="fas fa-search"></i></a>
-                </form>
+               
             </li>
         </ul>
 
         <div class="clearfix"></div>
     </nav>
 </div>
-<div class="topbar" style="height: 2cm">
-<!--style="position: fixed;  width: 100%; z-index: 9999;"-->
+<!--<div class="topbar" style="height: 2cm">
+style="position: fixed;  width: 100%; z-index: 9999;"
+style="position: fixed;  width: 100%; z-index: 9999;"
 
     
-</div>
+</div>-->
