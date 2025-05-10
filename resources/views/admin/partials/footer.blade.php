@@ -1,3 +1,3 @@
 <footer class="footer">
-    © 2025 Dashboard by Space-co.
+    Copyright © 2025 Space-Co . Tous droits réservés.
 </footer>

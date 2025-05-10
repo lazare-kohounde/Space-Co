@@ -60,7 +60,7 @@
 <div class="single-property section">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
+            <div class="col-lg-12">
                 <div class="card shadow-sm p-4">
                     <h5 class="mb-4" style="color: #f35525">Liste des salles ajoutées au panier</h5>
 
