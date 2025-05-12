@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public const USERTYPES = ['user', 'manager', 'admin'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'sexe'
+        'sexe',
+        'usertype',
     ];
 
     /**
@@ -33,6 +36,19 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    
+
+    /**
+     * Vérifie si un usertype est valide.
+     *
+     * @param string $usertype
+     * @return bool
+     */
+    public static function isValidUsertype(string $usertype): bool
+    {
+        return in_array($usertype, self::USERTYPES);
+    }
 
     // Relations
     public function reservations()

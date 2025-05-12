@@ -2,7 +2,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\ManagerController;
+use App\Http\Controllers\categoriesController;
 use App\Http\Controllers\clientController;
+
 
 
 // roote client
@@ -22,14 +25,29 @@ Route::get('/connexion', [clientController::class, 'connexion'])->name('connexio
 // roote admin
 
 Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
-    Route::get('/log-admin/profil', function () {
-        return view('admin.profil');
-    })->name('profil');
+    Route::get('/log-admin/profil', function () { return view('admin.profil'); })->name('profil');
 
-    Route::get('/log-admin/categorie', [adminController::class, 'categorie'])->name('categorie');
-    Route::get('/log-admin/gestionnaire', [adminController::class, 'gestionnaire'])->name('gestionnaire');
+    Route::get('/log-admin/categorie', [categoriesController::class, 'index'])->name('categorie');
+    Route::get('/log-admin/gestionnaire', [ManagerController::class, 'index'])->name('gestionnaire');
     Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');
     Route::get('/log-admin/salle', [adminController::class, 'salle'])->name('salleAdmin');
+    
+
+    
+
+    Route::get('/categories', [categoriesController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [categoriesController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{id}', [categoriesController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [categoriesController::class, 'destroy'])->name('categories.destroy');
+
+    
+    Route::get('/managers', [ManagerController::class, 'index'])->name('managers.index');
+    Route::post('/managers', [ManagerController::class, 'store'])->name('managers.store');
+    Route::put('/managers/{id}', [ManagerController::class, 'update'])->name('managers.update');
+    Route::delete('/managers/{id}', [ManagerController::class, 'destroy'])->name('managers.destroy');
+
+    
+
 });
 
 
@@ -42,7 +60,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
 
 Route::get('/log-admin', function () {
     return view('admin.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'is_admin'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
