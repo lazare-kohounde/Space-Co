@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\categories;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 
-class categoriesController extends Controller
+class CategorieController extends Controller
 {
     public function index()
 {
-    $categories = categories::all();
+    $categories = Categorie::all();
     return view('admin.page.categorie.categorie', compact('categories'));
 }
 
@@ -21,7 +21,7 @@ class categoriesController extends Controller
             'description' => 'required'
         ]);
 
-        categories::create($validated);
+        Categorie::create($validated);
 
         return redirect()->route('categories.index')->with('success', 'Catégorie créée avec succès');
     }
@@ -33,7 +33,7 @@ class categoriesController extends Controller
             'description' => 'required'
         ]);
 
-        $category = categories::findOrFail($id);
+        $category = Categorie::findOrFail($id);
         $category->update($validated);
 
         return redirect()->route('categories.index')->with('success', 'Catégorie mise à jour avec succès');
@@ -41,7 +41,7 @@ class categoriesController extends Controller
 
     public function destroy($id)
     {
-        $category = categories::findOrFail($id);
+        $category = Categorie::findOrFail($id);
         $category->delete();
 
         return redirect()->route('categories.index')->with('success', 'Catégorie supprimée avec succès');
