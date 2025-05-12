@@ -10,14 +10,17 @@ use App\Http\Controllers\RoomController;
 
 
 // roote client
+Route::get('/salle/{id}', [RoomController::class, 'show'])->name('salledetails');
 
-Route::get('/', function () {    return view('client.index');})->name('accueil');
-Route::get('/salle', [clientController::class, 'liste_salle'])->name('salle');
-Route::get('/salle-details', [clientController::class, 'salledetails'])->name('salledetails');
+
+Route::get('/', [RoomController::class, 'accueilliste'])->name('accueil');
+Route::get('/salle', [RoomController::class, 'sallliste'])->name('salle');
+//Route::get('/salle-details', [clientController::class, 'salledetails'])->name('salledetails');
 Route::get('/contact', [clientController::class, 'contact'])->name('contact');
 Route::get('/login_register', [clientController::class, 'login_register'])->name('login_register');
 Route::get('/panier', [clientController::class, 'panier'])->name('panier');
 Route::get('/connexion', [clientController::class, 'connexion'])->name('connexion');
+Route::get('/salles/{id}', [RoomController::class, 'salledetail'])->name('salledetails');
 
 
 

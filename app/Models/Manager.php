@@ -4,13 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class clients extends Model
+class Manager extends Model
 {
     //
-    protected $fillable = [
-        'user_id',
-        'address',
-    ];
+    protected $fillable = ['user_id'];
 
     public function user()
     {
