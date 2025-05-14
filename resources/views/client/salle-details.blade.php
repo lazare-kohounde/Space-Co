@@ -125,16 +125,20 @@
                             {{ number_format($room->price, 0, ',', ' ') }} XOF
                         </div>
                     </div>
-                    <form action="" method="POST">
+                    <form action="{{ route('panier.ajouter') }}" method="POST">
                         @csrf
+
+                        <!-- Champs à remplir par l'utilisateur -->
                         <div class="mb-3">
                             <label for="date_debut" class="form-label">Date de début</label>
                             <input type="datetime-local" class="form-control" id="date_debut" name="date_debut" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="date_fin" class="form-label">Date de fin</label>
                             <input type="datetime-local" class="form-control" id="date_fin" name="date_fin" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="option" class="form-label">Option</label>
                             <select class="form-select" id="option" name="option" required>
@@ -143,8 +147,17 @@
                                 <option value="non_equipée">Non equipée</option>
                             </select>
                         </div>
+
+                        <!-- Champs cachés -->
+                        <input type="hidden" name="id" value="{{ $room->id }}">
+                        <input type="hidden" name="nom" value="{{ $room->name }}">
+                        <input type="hidden" name="adresse" value="Arconville / Space-Co">
+                        <input type="hidden" name="montant" value="{{ $room->price }}">
+                        <input type="hidden" name="image" value="{{ asset($img) }}">
+
                         <button type="submit" class="btn btn-orange w-100">Ajouter au panier</button>
                     </form>
+
                 </div>
             </div>
             <!-- Fin bloc réservation -->

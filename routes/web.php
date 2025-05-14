@@ -6,6 +6,7 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\clientController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\PanierController;
 
 
 
@@ -18,11 +19,14 @@ Route::get('/salle', [RoomController::class, 'sallliste'])->name('salle');
 //Route::get('/salle-details', [clientController::class, 'salledetails'])->name('salledetails');
 Route::get('/contact', [clientController::class, 'contact'])->name('contact');
 Route::get('/login_register', [clientController::class, 'login_register'])->name('login_register');
-Route::get('/panier', [clientController::class, 'panier'])->name('panier');
+Route::get('/paniers', [clientController::class, 'panier'])->name('panier');
 Route::get('/connexion', [clientController::class, 'connexion'])->name('connexion');
 Route::get('/salles/{id}', [RoomController::class, 'salledetail'])->name('salledetails');
 
 
+Route::get('/panier', [PanierController::class, 'index'])->name('panier');
+Route::post('/panier/ajouter', [PanierController::class, 'ajouterAuPanier'])->name('panier.ajouter');
+Route::delete('/panier/supprimer/{id}', [PanierController::class, 'supprimer'])->name('panier.supprimer');
 
 
 

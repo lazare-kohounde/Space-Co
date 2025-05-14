@@ -34,10 +34,10 @@
                         </li>
                         
                         <li>
-                            <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
+                            <a href="{{ route('panier') }}" class="{{ request()->routeIs('panier') ? 'active' : '' }}">Panier</a>
                         </li>
                         <li>
-                            <a href="#" class="">Panier</a>
+                            <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
                         </li>
                         
                         @auth
