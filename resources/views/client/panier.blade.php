@@ -57,6 +57,22 @@
     </div>
 </div>
 
+
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show container mt-4" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show container mt-4" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+
 <div class="single-property section">
     <div class="container">
         <div class="row justify-content-center">
@@ -64,7 +80,7 @@
                 <div class="card shadow-sm p-4">
                     <h5 class="mb-4" style="color: #f35525">Liste des salles ajoutées au panier</h5>
 
-                    {{-- @if(isset($panier) && count($panier) > 0) --}}
+                    @if(isset($panier) && count($panier) > 0)
                     <div class="table-responsive">
                         <table class="table align-middle">
                             <thead>
@@ -78,70 +94,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach($panier as $item) --}}
-                                <!-- Données fictives -->
+                            @forelse($panier as $item)
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/single-property.jpg') }}" alt="Salle" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;">
+                                            <img src="{{ asset($item['image']) }}" alt="Salle" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;">
                                             <div>
-                                                <strong>Bureau Prestige</strong>
-                                                <div class="text-muted small">24 New Street Miami</div>
+                                                <strong>{{ $item['nom'] }}</strong>
+                                                <div class="text-muted small">{{ $item['adresse'] }}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>12/05/2025 09:00</td>
-                                    <td>12/05/2025 18:00</td>
-                                    <td>Bureau équipé</td>
-                                    <td class="fw-bold" style="color:#f35525">20 000 XOF</td>
+                                    <td>{{ $item['date_debut'] }}</td>
+                                    <td>{{ $item['date_fin'] }}</td>
+                                    <td>{{ $item['option'] }}</td>
+                                    <td class="fw-bold" style="color:#f35525">{{ number_format($item['montant'], 0, ',', ' ') }} XOF</td>
                                     <td>
-                                        {{-- 
-                                        <form action="{{ route('panier.remove', $item->id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('panier.supprimer', $item['id']) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Retirer du panier"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger delete-button" title="Retirer du panier"><i class="fa fa-trash"></i></button>
                                         </form>
-                                        --}}
-                                        <button class="btn btn-sm btn-outline-danger" title="Retirer du panier" disabled><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
+                                @empty
                                 <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/deal-02.jpg') }}" alt="Salle" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;">
-                                            <div>
-                                                <strong>Salle de Conférence</strong>
-                                                <div class="text-muted small">Avenue Business City</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>15/05/2025 14:00</td>
-                                    <td>15/05/2025 17:00</td>
-                                    <td>Salle de conférence</td>
-                                    <td class="fw-bold" style="color:#f35525">35 000 XOF</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-danger" title="Retirer du panier" disabled><i class="fa fa-trash"></i></button>
-                                    </td>
+                                    <td colspan="6" class="text-center">Votre panier est vide.</td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/deal-03.jpg') }}" alt="Salle" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;">
-                                            <div>
-                                                <strong>Salle Coworking</strong>
-                                                <div class="text-muted small">Tech Park, Plateau</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>20/05/2025 08:00</td>
-                                    <td>20/05/2025 18:00</td>
-                                    <td>Coworking</td>
-                                    <td class="fw-bold" style="color:#f35525">15 000 XOF</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-danger" title="Retirer du panier" disabled><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                                {{-- @endforeach --}}
+                                @endforelse
+
                             </tbody>
                         </table>
                     </div>
@@ -153,23 +134,23 @@
                         </h4>
                     </div>
                     <div class="d-flex justify-content-end mt-4 gap-2">
-                        <a href="{{ route('accueil') }}" class="btn btn-outline-secondary">
+                        <a href="{{ route('salle') }}" class="btn btn-outline-secondary">
                          Continuer mes réservations
                         </a>
                         {{-- <a href="{{ route('checkout') }}" class="btn btn-orange">Valider la réservation</a> --}}
                         <a href="{{ route('paiement') }}"><button class="btn btn-orange">Valider la réservation</button></a>
                     </div>
 
-                    {{-- 
+                    
                     @else
                     <div class="alert alert-info">
                         Votre panier est vide.
                     </div>
                     <div class="d-flex justify-content-center mt-4">
-                        <a href="{{ route('accueil') }}" class="btn btn-orange">Continuer mes réservations</a>
+                        <a href="{{ route('salle') }}" class="btn btn-orange">Continuer mes réservations</a>
                     </div>
                     @endif
-                    --}}
+                    
                 </div>
             </div>
         </div>
@@ -206,6 +187,24 @@
     });
   });
 </script>
+<!-- scripte de confirmation de suppression de salle de panier -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Empêche l'envoi immédiat
+
+                if (confirm('Voulez-vous vraiment supprimer cette salle du panier ?')) {
+                    // Soumettre le formulaire parent
+                    this.closest('form').submit();
+                }
+            });
+        });
+    });
+</script>
+
     
 </body>
 </html>

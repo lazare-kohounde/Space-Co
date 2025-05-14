@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class rooms extends Model
+class Room extends Model
 {
     //
     protected $fillable = [
@@ -19,11 +19,17 @@ class rooms extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Categorie::class);
     }
 
     public function detailReservations()
     {
         return $this->hasMany(DetailReservation::class);
     }
+
+    // Dans app/Models/Room.php
+    protected $casts = [
+        'image' => 'array'
+    ];
+
 }

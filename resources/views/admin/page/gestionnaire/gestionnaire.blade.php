@@ -8,290 +8,253 @@
     <title>Gestionnaire</title>
     <meta content="Admin Dashboard" name="description" />
     <meta content="Mannatthemes" name="author" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
-    <link href={{ asset('admin/assets/css/bootstrap.min.css') }} rel="stylesheet" type="text/css">
-    <link href={{ asset('admin/assets/css/icons.css') }} rel="stylesheet" type="text/css">
-    <link href={{ asset('admin/assets/css/style.css') }} rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/assets/css/icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/assets/css/style.css') }}" rel="stylesheet" type="text/css">
 </head>
-
 
 <body class="fixed-left">
 
-    <!-- Loader -->
     <div id="preloader">
         <div id="status">
             <div class="spinner"></div>
         </div>
     </div>
 
-
-    <!-- Begin page -->
     <div id="wrapper">
 
-        {{-- sidebar --}}
         @include ('admin.partials.sidebar')
-        {{-- sidebar --}}
 
-
-        <!-- Start right Content here -->
-        <div class="content-page" >
-            <!-- Start content -->
+        <div class="content-page">
             <div class="content">
-
-                <!-- Top Bar Start -->
                 @include ('admin.partials.header')
-                <!-- Top Bar End -->
 
                 <div class="page-content-wrapper ">
-
                     <div class="container-fluid">
-                        <!-- page title and breadcrumb -->
+
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-title-box">
                                     <div class="btn-group float-right">
                                         <ol class="breadcrumb hide-phone p-0 m-0">
-                                            <!--Bouton du modal -->
                                             <button type="button" class="btn btn-primary waves-effect waves-light"
                                                 data-toggle="modal" data-animation="bounce"
-                                                data-target=".bs-example-modal-lg">Ajouter</button>
-                                            <!-- end Bouton modal -->
-                                            <li class="breadcrumb-item"></a></li>
-
+                                                data-target="#addManagerModal">Ajouter</button>
+                                            <li class="breadcrumb-item"></li>
                                         </ol>
                                     </div>
                                     <h4 class="page-title">Gestionnaire</h4>
                                 </div>
                             </div>
                         </div>
-                        <!-- end page title end breadcrumb -->
 
-                        <!-- Contenu proprement dit -->
+                        <!-- Messages Laravel -->
+                        @if(session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="row mt-2">
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="flex justify-between">
-                                            <h5 class="header-title pb-3 mt-0">Listes des gestionnaies
-                                            </h5>
-
-                                        </div>
+                                        <h5 class="header-title pb-3 mt-0">Listes des gestionnaires</h5>
                                         <div class="table-responsive">
                                             <table class="table table-hover mb-0">
                                                 <thead>
-                                                    <tr class="align-self-center">
+                                                    <tr>
                                                         <th>Nom</th>
-                                                        <th>Prenom</th>
+                                                        <th>Sexe</th>
                                                         <th>Email</th>
-                                                        <th>numéro</th>
+                                                        <th>Numéro</th>
+                                                        <th>Usertype</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @foreach($managers as $manager)
                                                     <tr>
-                                                        <td>Agnawale </td>
-                                                        <td>Esdras</td>
-                                                        <td>esdras@gmail.com</td>
-                                                        <td>+2290190705060</td>
+                                                        <td>{{ $manager->name }}</td>
+                                                        <td>{{ $manager->sexe }}</td>
+                                                        <td>{{ $manager->email }}</td>
+                                                        <td>{{ $manager->phone }}</td>
+                                                        <td>{{ $manager->usertype }}</td>
                                                         <td>
-                                                            <button type="button" class="btn btn-sm btn-success"><i
-                                                                    class="fas fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                                    class="fas fa-trash-alt"></i></button>
+                                                            <!-- Edit button -->
+                                                            <button type="button" class="btn btn-sm btn-success"
+                                                                data-toggle="modal"
+                                                                data-target="#editManagerModal{{ $manager->id }}">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <!-- Delete form -->
+                                                            <form action="{{ route('managers.destroy', $manager->id) }}" method="POST" style="display:inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-sm btn-danger"
+                                                                    onclick="return confirm('Voulez-vous vraiment supprimer ce gestionnaire ?')">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                            </form>
                                                         </td>
                                                     </tr>
 
-                                                    <tr>
-                                                        <td>Agnawale </td>
-                                                        <td>Esdras</td>
-                                                        <td>esdras@gmail.com</td>
-                                                        <td>+2290190705060</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-success"><i
-                                                                    class="fas fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                                    class="fas fa-trash-alt"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Agnawale </td>
-                                                        <td>Esdras</td>
-                                                        <td>esdras@gmail.com</td>
-                                                        <td>+2290190705060</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-success"><i
-                                                                    class="fas fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                                    class="fas fa-trash-alt"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Agnawale </td>
-                                                        <td>Esdras</td>
-                                                        <td>esdras@gmail.com</td>
-                                                        <td>+2290190705060</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-success"><i
-                                                                    class="fas fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                                    class="fas fa-trash-alt"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Agnawale </td>
-                                                        <td>Esdras</td>
-                                                        <td>esdras@gmail.com</td>
-                                                        <td>+2290190705060</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-success"><i
-                                                                    class="fas fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                                    class="fas fa-trash-alt"></i></button>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>Agnawale </td>
-                                                        <td>Esdras</td>
-                                                        <td>esdras@gmail.com</td>
-                                                        <td>+2290190705060</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-success"><i
-                                                                    class="fas fa-edit"></i></button>
-                                                            <button type="button" class="btn btn-sm btn-danger"><i
-                                                                    class="fas fa-trash-alt"></i></button>
-                                                        </td>
-                                                    </tr>
+                                                    <!-- Edit Modal -->
+                                                    <div class="modal fade" id="editManagerModal{{ $manager->id }}" tabindex="-1" role="dialog" aria-labelledby="editManagerModalLabel{{ $manager->id }}" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="editManagerModalLabel{{ $manager->id }}">Modifier Gestionnaire</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form action="{{ route('managers.update', $manager->id) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <div class="form-group">
+                                                                            <label>Nom complet</label>
+                                                                            <input type="text" name="name" class="form-control" value="{{ $manager->name }}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Sexe</label>
+                                                                            <select name="sexe" class="form-control" required>
+                                                                                <option value="Masculin" {{ $manager->sexe == 'Masculin' ? 'selected' : '' }}>Masculin</option>
+                                                                                <option value="Féminin" {{ $manager->sexe == 'Féminin' ? 'selected' : '' }}>Féminin</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Email</label>
+                                                                            <input type="email" name="email" class="form-control" value="{{ $manager->email }}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Numéro</label>
+                                                                            <input type="text" name="phone" class="form-control" value="{{ $manager->phone }}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Usertype</label>
+                                                                            <select name="usertype" class="form-control" required>
+                                                                                <option value="manager" {{ $manager->usertype == 'manager' ? 'selected' : '' }}>Manager</option>
+                                                                                <option value="user" {{ $manager->usertype == 'user' ? 'selected' : '' }}>User</option>
+                                                                                <option value="admin" {{ $manager->usertype == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Nouveau mot de passe (laisser vide pour ne pas changer)</label>
+                                                                            <input type="password" name="password" class="form-control" placeholder="Nouveau mot de passe">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Confirmer le mot de passe</label>
+                                                                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirmez le mot de passe">
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                                            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
-                                        </div><!--end table-responsive-->
-                                        <div class="pt-3 border-top text-right">
-                                            <a href="#" class="text-primary">Tous voir <i
-                                                    class="mdi mdi-arrow-right"></i></a>
+                                            <div class="pt-3 border-top text-right">
+                                            <a href="#" class="text-primary">Tous voir <i class="mdi mdi-arrow-right"></i></a>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- modal -->
-                            <div class="modal fade bs-example-modal-lg mt-4" tabindex="-1" role="dialog"
-                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <!-- Add Manager Modal -->
+                            <div class="modal fade" id="addManagerModal" tabindex="-1" role="dialog" aria-labelledby="addManagerModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title mt-0" id="myLargeModalLabel">Nouveau gestionnaie</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">×</button>
+                                            <h5 class="modal-title" id="addManagerModalLabel">Nouveau gestionnaire</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="" action="#">
-                                                <!-- nom catégorie -->
+                                            <form action="{{ route('managers.store') }}" method="POST">
+                                                @csrf
                                                 <div class="form-group">
-                                                    <label>Nom</label>
-                                                    <div>
-                                                        <input data-parsley-type="alphanum" type="text"
-                                                            class="form-control" required
-                                                            placeholder="Enter le nom du gestionnaie" />
-                                                    </div>
+                                                    <label>Nom complet</label>
+                                                    <input type="text" name="name" class="form-control" required placeholder="Entrez le nom complet">
                                                 </div>
-                                                <!-- nom catégorie -->
-
-                                                <!-- prenom gestionnaire -->
                                                 <div class="form-group">
-                                                    <label>Prenom</label>
-                                                    <div>
-                                                        <input data-parsley-type="alphanum" type="text"
-                                                            class="form-control" required
-                                                            placeholder="Enter le prenom du gestionnaire" />
-                                                    </div>
+                                                    <label>Sexe</label>
+                                                    <select name="sexe" class="form-control" required>
+                                                        <option value="">-- Sélectionnez --</option>
+                                                        <option value="Masculin">Masculin</option>
+                                                        <option value="Féminin">Féminin</option>
+                                                    </select>
                                                 </div>
-                                                <!-- fin prenom gestionnaie -->
-
-                                                <!-- email gestionnaie-->
                                                 <div class="form-group">
                                                     <label>Email</label>
-                                                    <div>
-                                                        <input data-parsley-type="alphanum" type="email"
-                                                            class="form-control" required
-                                                            placeholder="Enter l'email du gestionnaire" />
-                                                    </div>
+                                                    <input type="email" name="email" class="form-control" required placeholder="Adresse email">
                                                 </div>
-                                                <!-- fin email gestionnaie -->
-
-                                                <!-- numéro gestionnaie-->
                                                 <div class="form-group">
-                                                    <label>numéro</label>
-                                                    <div>
-                                                        <input data-parsley-type="number" type="number"
-                                                            class="form-control" required
-                                                            placeholder="Enter le numéro du gestionnaie" />
-                                                    </div>
+                                                    <label>Numéro</label>
+                                                    <input type="text" name="phone" class="form-control" required placeholder="Numéro de téléphone">
                                                 </div>
-                                                <!-- fin numéro gestionnaie -->
-
-                                                <!-- Actions -->
-                                                <div class="form-group mb-0">
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Annuler</button>
-                                                        <button type="submit"
-                                                            class="btn btn-primary">Enregistre</button>
-                                                    </div>
+                                                <div class="form-group">
+                                                    <label>Usertype</label>
+                                                    <select name="usertype" class="form-control" required>
+                                                        <option value="">-- Sélectionnez --</option>
+                                                        <option value="manager" selected>Manager</option>
+                                                        <option value="user">User</option>
+                                                        <option value="admin">Admin</option>
+                                                    </select>
                                                 </div>
-                                                <!-- fin actions -->
+                                                <div class="form-group">
+                                                    <label>Mot de passe</label>
+                                                    <input type="password" name="password" class="form-control" required placeholder="Mot de passe">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Confirmer le mot de passe</label>
+                                                    <input type="password" name="password_confirmation" class="form-control" required placeholder="Confirmez le mot de passe">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
-                                    <!-- /.modal-content -->
                                 </div>
-                                <!-- /.modal-dialog -->
                             </div>
-                            <!-- /.modal -->
+                            <!-- End Add Manager Modal -->
                         </div>
-                        <!-- Contenu proprement dit -->
-
                     </div>
-                    <!-- container -->
                 </div>
-                <!-- Page content Wrapper -->
-
             </div>
-            <!-- content -->
-
-
-
-            {{-- footer --}}
             @include ('admin.partials.footer')
-            {{-- footer --}}
-
         </div>
-        <!-- End Right content here -->
-
-
     </div>
-    <!-- END wrapper -->
 
-    <!-- jQuery  -->
-    <script src={{ asset('admin/assets/js/jquery.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/popper.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/bootstrap.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/modernizr.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/waves.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.slimscroll.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.nicescroll.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.scrollTo.min.js') }}></script>
-
-    <!-- KNOB JS -->
-    <script src={{ asset('admin/assets/plugins/jquery-knob/excanvas.js') }}></script>
-    <script src={{ asset('admin/assets/plugins/jquery-knob/jquery.knob.js') }}></script>
-    <script src={{ asset('admin/assets/plugins/chart.js/chart.min.js') }}></script>
-    <script src={{ asset('admin/assets/pages/dashboard.js') }}></script>
-
-    <!-- App js -->
-    <script src={{ asset('admin/assets/js/app.js') }}></script>
+    <!-- JS -->
+    <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/waves.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery.nicescroll.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery.scrollTo.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/jquery-knob/excanvas.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/chart.js/chart.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/pages/dashboard.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/app.js') }}"></script>
 
 </body>
-
 </html>

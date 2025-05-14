@@ -11,292 +11,285 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
-    <link href={{ asset('admin/assets/css/bootstrap.min.css') }} rel="stylesheet" type="text/css">
-    <link href={{ asset('admin/assets/css/icons.css') }} rel="stylesheet" type="text/css">
-    <link href={{ asset('admin/assets/css/style.css') }} rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/assets/css/icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/assets/css/style.css') }}" rel="stylesheet" type="text/css">
 </head>
-
 
 <body class="fixed-left">
 
-    <!-- Loader -->
     <div id="preloader">
         <div id="status">
             <div class="spinner"></div>
         </div>
     </div>
 
-
-    <!-- Begin page -->
     <div id="wrapper">
 
         {{-- sidebar --}}
         @include ('admin.partials.sidebar')
         {{-- sidebar --}}
 
-
-        <!-- Start right Content here -->
-        <div class="content-page" >
-            <!-- Start content -->
+        <div class="content-page">
             <div class="content">
-
-                <!-- Top Bar Start -->
                 @include ('admin.partials.header')
-                <!-- Top Bar End -->
 
-                <div class="page-content-wrapper ">
-
+                <div class="page-content-wrapper">
                     <div class="container-fluid">
                         <!-- page title and breadcrumb -->
-                        <di>
+                        <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-title-box">
                                     <div class="btn-group float-right">
                                         <ol class="breadcrumb hide-phone p-0 m-0">
-                                            <!--Bouton du modal -->
                                             <button type="button" class="btn btn-primary waves-effect waves-light"
                                                 data-toggle="modal" data-animation="bounce"
-                                                data-target=".bs-example-modal-lg">Ajouter</button>
-                                            <!-- end Bouton modal -->
-                                            <li class="breadcrumb-item"></a></li>
-
+                                                data-target="#addModal">Ajouter</button>
+                                            <li class="breadcrumb-item"></li>
                                         </ol>
                                     </div>
                                     <h4 class="page-title">Salle</h4>
                                 </div>
                             </div>
-                    </div>
-                    <!-- end page title end breadcrumb -->
+                        </div>
+                        <!-- end page title end breadcrumb -->
 
-                    <!-- Contenu proprement dit -->
-                    <div class="row mt-2" >
-                        <div class="col-xl-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="flex justify-between">
-                                        <h5 class="header-title pb-3 mt-0">Listes des salles
-                                        </h5>
+                        <!-- Messages Laravel -->
+                        @if(session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
-                                    </div>
-                                    <div class="table-responsive">
-                                        <table class="table table-hover mb-0">
-                                            <thead>
-                                                <tr class="align-self-center">
-                                                    <th>Libelle</th>
-                                                    <th> Equipement</th>
-                                                    <th>Prix</th>
-                                                    <td>Actions</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        Salle Merane
-                                                    </td>
-                                                    <td>Oui</td>
-                                                    <td>2018</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-success"><i
-                                                                class="fas fa-edit"></i></button>
-                                                        <button type="button" class="btn btn-sm btn-danger"><i
-                                                                class="fas fa-trash-alt"></i></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Frank M. Lyons
-                                                    </td>
-                                                    <td>Oui</td>
-                                                    <td>2019</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-success"><i
-                                                                class="fas fa-edit"></i></button>
-                                                        <button type="button" class="btn btn-sm btn-danger"><i
-                                                                class="fas fa-trash-alt"></i></button>
-                                                    </td>
-                                                </tr>
+                        <!-- Contenu proprement dit -->
+                        <div class="row mt-2">
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="header-title pb-3 mt-0">Listes des salles</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr class="align-self-center">
+                                                        <th>Nom</th>
+                                                        <th>Catégorie</th>
+                                                        <th>Prix</th>
+                                                        <th>Équipements</th>
+                                                        <th>Images</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($rooms as $room)
+                                                    <tr>
+                                                        <td>{{ $room->name }}</td>
+                                                        <td>{{ $room->category->name }}</td>
+                                                        <td>{{ number_format($room->price, 2, ',', ' ') }} XOF</td>
+                                                        <td>
+                                                            @if($room->options === 'oui')
+                                                                Oui
+                                                            @elseif($room->options === 'non')
+                                                                Non
+                                                            @else
+                                                                Aucun
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($room->image)
+                                                                @foreach(json_decode($room->image) as $image)
+                                                                    <img src="{{ $image }}" width="50" class="img-thumbnail m-1">
+                                                                @endforeach
+                                                            @else
+                                                                Aucune image
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" 
+                                                                data-target="#editModal{{ $room->id }}">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" style="display:inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-sm btn-danger" 
+                                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td>
-                                                        Angelo Butler
-                                                    </td>
-                                                    <td>Non</td>
-                                                    <td>2018</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-success"><i
-                                                                class="fas fa-edit"></i></button>
-                                                        <button type="button" class="btn btn-sm btn-danger"><i
-                                                                class="fas fa-trash-alt"></i></button>
-                                                    </td>
-                                                </tr>
+                                                    <!-- Edit Modal -->
+                                                    <div class="modal fade" id="editModal{{ $room->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Modifier la salle</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                </div>
+                                                                <form action="{{ route('rooms.update', $room->id) }}" method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group">
+                                                                            <label>Nom</label>
+                                                                            <input type="text" name="name" class="form-control" value="{{ $room->name }}" required>
+                                                                        </div>
+                                                                        
+                                                                        <div class="form-group">
+                                                                            <label>Catégorie</label>
+                                                                            <select name="category_id" class="form-control" required>
+                                                                                @foreach(App\Models\Categorie::all() as $category)
+                                                                                    <option value="{{ $category->id }}" {{ $room->category_id == $category->id ? 'selected' : '' }}>
+                                                                                        {{ $category->name }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
 
-                                                <tr>
-                                                    <td>
-                                                        Phillip Morse
-                                                    </td>
-                                                    <td>Non</td>
-                                                    <td>2018</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-success"><i
-                                                                class="fas fa-edit"></i></button>
-                                                        <button type="button" class="btn btn-sm btn-danger"><i
-                                                                class="fas fa-trash-alt"></i></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Kevin Heal
-                                                    </td>
-                                                    <td>Non</td>
-                                                    <td>2018</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-success"><i
-                                                                class="fas fa-edit"></i></button>
-                                                        <button type="button" class="btn btn-sm btn-danger"><i
-                                                                class="fas fa-trash-alt"></i></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Frank M. Lyons
-                                                    </td>
-                                                    <td>Non</td>
-                                                    <td>2018</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-success"><i
-                                                                class="fas fa-edit"></i></button>
-                                                        <button type="button" class="btn btn-sm btn-danger"><i
-                                                                class="fas fa-trash-alt"></i></button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div><!--end table-responsive-->
-                                    <div class="pt-3 border-top text-right">
-                                        <a href="#" class="text-primary">Tous voir <i
-                                                class="mdi mdi-arrow-right"></i></a>
+                                                                        <div class="form-group">
+                                                                            <label>Prix</label>
+                                                                            <input type="number" step="0.01" name="price" class="form-control" value="{{ $room->price }}" required>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Équipements</label>
+                                                                            <select name="options" class="form-control" required>
+                                                                                <option value="oui" {{ $room->options === 'oui' ? 'selected' : '' }}>Oui</option>
+                                                                                <option value="non" {{ $room->options === 'non' ? 'selected' : '' }}>Non</option>
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Description</label>
+                                                                            <textarea name="description" class="form-control" rows="3" required>{{ $room->description }}</textarea>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Images actuelles</label>
+                                                                            <div class="row">
+                                                                                @if($room->image)
+                                                                                    @foreach(json_decode($room->image) as $image)
+                                                                                        <div class="col-md-3 mb-2">
+                                                                                            <img src="{{ $image }}" class="img-fluid">
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Nouvelles images (laisser vide pour conserver les images actuelles)</label>
+                                                                            <input type="file" name="images[]" class="form-control-file" multiple>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="pt-3 border-top text-right">
+                                            <a href="#" class="text-primary">Tous voir <i class="mdi mdi-arrow-right"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- modal -->
-                        <div class="modal fade bs-example-modal-lg mt-4" tabindex="-1" role="dialog"
-                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title mt-0" id="myLargeModalLabel">Nouvelle catégorie</h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-hidden="true">×</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form class="" action="#">
-                                            <!-- libelle salle -->
-                                            <div class="form-group">
-                                                <label>Libelle</label>
-                                                <div>
-                                                    <input data-parsley-type="alphanum" type="text"
-                                                        class="form-control" required
-                                                        placeholder="Entrer le libelle de la salle" />
+                            <!-- Add Modal -->
+                            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Nouvelle Salle</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <form action="{{ route('rooms.store') }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label>Nom</label>
+                                                    <input type="text" name="name" class="form-control" required placeholder="Entrez le nom de la salle">
                                                 </div>
-                                            </div>
-                                            <!-- fin libelle salle -->
-
-                                            <!-- type salle -->
-                                            <div class="form-group">
-                                                <label>Equipement</label>
-                                                <div>
-                                                    <select class="form-control">
-                                                        <option>Oui</option>
-                                                        <option>Non</option>
+                                                
+                                                <div class="form-group">
+                                                    <label>Catégorie</label>
+                                                    <select name="category_id" class="form-control" required>
+                                                        <option value="">-- Sélectionnez une catégorie --</option>
+                                                        @foreach(App\Models\Categorie::all() as $category)
+                                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <!-- fin type salle -->
 
+                                                <div class="form-group">
+                                                    <label>Prix</label>
+                                                    <input type="number" step="0.01" name="price" class="form-control" required placeholder="Entrez le prix de la salle">
+                                                </div>
 
-                                            <!-- description salle -->
-                                            <div class="form-group">
-                                                <label>Description</label>
-                                                <div>
-                                                    <textarea required class="form-control" rows="5"></textarea>
+                                                <div class="form-group">
+                                                    <label>Équipements</label>
+                                                    <select name="options" class="form-control" required>
+                                                        <option value="">-- Sélectionnez --</option>
+                                                        <option value="oui">Oui</option>
+                                                        <option value="non">Non</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <textarea name="description" class="form-control" rows="3" required placeholder="Description de la salle"></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Images</label>
+                                                    <input type="file" name="images[]" class="form-control-file" multiple required>
+                                                    <small class="form-text text-muted">Vous pouvez sélectionner plusieurs images à la fois.</small>
                                                 </div>
                                             </div>
-                                            <!-- fin description salle -->
-
-                                            <!-- prix salle -->
-                                            <div class="form-group">
-                                                <label>Prix</label>
-                                                <div>
-                                                    <input data-parsley-type="number" type="number"
-                                                        class="form-control" required
-                                                        placeholder="Entrer le prix de la salle" />
-                                                </div>
-                                            </div>
-                                            <!-- fin prix salle -->
-
-
-                                            <!-- Actions -->
-                                            <div class="form-group mb-0">
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-primary">Enregistre</button>
-                                                </div>
-                                                <!-- fin actions -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <button type="submit" class="btn btn-primary">Enregistrer</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                <!-- fin modal-content -->
                             </div>
-                            <!-- fin modal-dialog -->
+                            <!-- End Add Modal -->
                         </div>
-                        <!-- fin modal -->
                     </div>
-                    <!-- Contenu proprement dit -->
-
                 </div>
-                <!-- container -->
             </div>
-            <!-- Page content Wrapper -->
-
+            @include ('admin.partials.footer')
         </div>
-        <!-- content -->
-
-
-
-        {{-- footer --}}
-        @include ('admin.partials.footer')
-        {{-- footer --}}
-
     </div>
-    <!-- End Right content here -->
 
-
-    </div>
-    <!-- END wrapper -->
-
-    <!-- jQuery  -->
-    <script src={{ asset('admin/assets/js/jquery.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/popper.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/bootstrap.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/modernizr.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/waves.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.slimscroll.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.nicescroll.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.scrollTo.min.js') }}></script>
-
-    <!-- KNOB JS -->
-    <script src={{ asset('admin/assets/plugins/jquery-knob/excanvas.js') }}></script>
-    <script src={{ asset('admin/assets/plugins/jquery-knob/jquery.knob.js') }}></script>
-    <script src={{ asset('admin/assets/plugins/chart.js/chart.min.js') }}></script>
-    <script src={{ asset('admin/assets/pages/dashboard.js') }}></script>
-
-    <!-- App js -->
-    <script src={{ asset('admin/assets/js/app.js') }}></script>
-
+    <!-- JS -->
+    <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/waves.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery.nicescroll.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery.scrollTo.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/jquery-knob/excanvas.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/chart.js/chart.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/pages/dashboard.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/app.js') }}"></script>
 </body>
-
 </html>

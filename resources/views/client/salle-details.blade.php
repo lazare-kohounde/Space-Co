@@ -1,39 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <title>Space-Co</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
-    <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/templatemo-villa-agency.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     <style>
-.btn-orange {
-  background-color: #000 !important;
-  border-color: #000 !important;
-  color: #fff !important;
-}
-.btn-orange:hover, .btn-orange:focus {
-  background-color: #f35525 !important;
-  border-color: #f35525 !important;
-  color: #fff !important;
-}
-</style>
-
+      .btn-orange {
+        background-color: #000 !important;
+        border-color: #000 !important;
+        color: #fff !important;
+      }
+      .btn-orange:hover, .btn-orange:focus {
+        background-color: #f35525 !important;
+        border-color: #f35525 !important;
+        color: #fff !important;
+      }
+      /* --- Owl Carousel Nav Custom --- */
+      .main-image { position: relative; }
+      .main-image .owl-nav {
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        top: 45%;
+        left: 0;
+        width: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+      .main-image .owl-nav button.owl-prev,
+      .main-image .owl-nav button.owl-next {
+        background: rgba(0,0,0,0.7) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        font-size: 2rem !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: all;
+        transition: background 0.2s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      }
+      .main-image .owl-nav button.owl-prev:hover,
+      .main-image .owl-nav button.owl-next:hover {
+        background: #f35525 !important;
+        color: #fff !important;
+      }
+      .main-image .owl-nav button span,
+      .main-image .owl-nav button i {
+        font-size: 2rem;
+        line-height: 1;
+      }
+    </style>
 </head>
 
 <body>
-
 <!-- ***** Preloader Start ***** -->
 <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -64,53 +96,68 @@
 <div class="single-property section">
     <div class="container">
         <div class="row">
+            <!-- Carrousel et détails -->
             <div class="col-lg-8">
-                <div class="main-image">
-                    <img src="assets/images/single-property.jpg" alt="">
+                <!-- Carrousel Owl Carousel -->
+                <div class="main-image owl-carousel owl-theme">
+                    @foreach($images as $img)
+                        <div class="item">
+                            <img src="{{ asset($img) }}" alt="Image de la salle {{ $room->name }}" style="width:100%; border-radius:10px;">
+                        </div>
+                    @endforeach
                 </div>
-                <div class="main-content">
-                    <div class="ligne" style="display: flex; flex-direction: row; align-items: end;justify-content: space-between;">
-                        <span class="category">Bureau</span><h6>2.000 XOF</h6>
+                <div class="main-content mt-4">
+                    <div class="ligne d-flex flex-row align-items-end justify-content-between">
+                        <span class="category">{{ $room->category->name ?? 'Catégorie inconnue' }}</span>
+                        <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF</h6>
                     </div>
-                    <h4>24 New Street Miami, OR 24560</h4>
-                    <p>
-                        Get <strong>the best villa agency</strong> HTML CSS Bootstrap Template for your company website. TemplateMo provides you the <a href="https://www.google.com/search?q=best+free+css+templates" target="_blank">best free CSS templates</a> in the world. Please tell your friends about it. Thank you. Cloud bread kogi bitters pitchfork shoreditch tumblr yr succulents single-origin coffee schlitz enamel pin you probably haven't heard of them ugh hella.
-                        <br><br>
-                        When you look for free CSS templates, you can simply type TemplateMo in any search engine website. In addition, you can type TemplateMo Digital Marketing, TemplateMo Corporate Layouts, etc. Master cleanse +1 intelligentsia swag post-ironic, slow-carb chambray knausgaard PBR&B DSA poutine neutra cardigan hoodie pop-up.
-                    </p>
+                    <h4>{{ $room->name }}</h4>
+                    <p>{{ $room->description }}</p>
                 </div>
-                
             </div>
             <!-- Bloc réservation -->
             <div class="col-lg-4">
                 <div class="card p-4 shadow-sm">
                     <h5 class="mb-3" style="color: #f35525">Réserver cette salle</h5>
-                    <!-- Montant affiché, non modifiable -->
                     <div class="mb-3">
                         <label class="form-label">Montant</label>
-                        <div class="form-control-plaintext fw-bold" style="font-size:1.2em;">2.000 XOF</div>
+                        <div class="form-control-plaintext fw-bold" style="font-size:1.2em;">
+                            {{ number_format($room->price, 0, ',', ' ') }} XOF
+                        </div>
                     </div>
-                    <form action="" method="POST">
+                    <form action="{{ route('panier.ajouter') }}" method="POST">
                         @csrf
+
+                        <!-- Champs à remplir par l'utilisateur -->
                         <div class="mb-3">
                             <label for="date_debut" class="form-label">Date de début</label>
                             <input type="datetime-local" class="form-control" id="date_debut" name="date_debut" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="date_fin" class="form-label">Date de fin</label>
                             <input type="datetime-local" class="form-control" id="date_fin" name="date_fin" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="option" class="form-label">Option</label>
                             <select class="form-select" id="option" name="option" required>
-                                <option>Sélectionner une option</option>
+                                <option value="">Sélectionner une option</option>
                                 <option value="equipée">Equipée</option>
                                 <option value="non_equipée">Non equipée</option>
                             </select>
                         </div>
-                        <!--<button type="submit" class="btn btn-orange w-100">Ajouter au panier</button>-->
+
+                        <!-- Champs cachés -->
+                        <input type="hidden" name="id" value="{{ $room->id }}">
+                        <input type="hidden" name="nom" value="{{ $room->name }}">
+                        <input type="hidden" name="adresse" value="Arconville / Space-Co">
+                        <input type="hidden" name="montant" value="{{ $room->price }}">
+                        <input type="hidden" name="image" value="{{ asset($img) }}">
+
+                        <button type="submit" class="btn btn-orange w-100">Ajouter au panier</button>
                     </form>
-                    <a href="{{ route('panier') }}"><button type="submit" class="btn btn-orange w-100">Ajouter au panier</button></a>
+
                 </div>
             </div>
             <!-- Fin bloc réservation -->
@@ -118,6 +165,7 @@
     </div>
 </div>
 
+<!-- SECTION BEST DEAL (inchangée) -->
 <div class="section best-deal">
     <div class="container">
         <div class="row">
@@ -158,14 +206,14 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <img src="assets/images/deal-01.jpg" alt="">
+                                        <img src={{asset("assets/images/deal-01.jpg")}} alt="">
                                     </div>
                                     <div class="col-lg-3">
                                         <h4>Informations supplémentaires sur le Bureau</h4>
                                         <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                                             <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                                         <div class="icon-button">
-                                            <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> Voire plus</a>
+                                            <a href="{{ route('salle') }}"><i class="fa fa-eye"></i> Voire plus</a>
                                         </div>
                                     </div>
                                 </div>
@@ -191,7 +239,7 @@
                                         <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                                             <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                                         <div class="icon-button">
-                                            <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> Voire plus</a>
+                                            <a href="{{ route('salle') }}"><i class="fa fa-eye"></i> Voire plus</a>
                                         </div>
                                     </div>
                                 </div>
@@ -217,7 +265,7 @@
                                         <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                                             <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                                         <div class="icon-button">
-                                            <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>
+                                            <a href="{{ route('salle') }}"><i class="fa fa-eye"></i>Voire plus</a>
                                         </div>
                                     </div>
                                 </div>
@@ -239,8 +287,29 @@
 <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
 <script src="{{ asset('assets/js/counter.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
-// Bloquer les dates antérieures pour les champs datetime-local
+<!-- Initialiser Owl Carousel pour le carrousel d'images -->
+<script>
+$(document).ready(function(){
+    $('.main-image.owl-carousel').owlCarousel({
+        items:1,
+        loop:true,
+        margin:10,
+        nav:true,
+        dots:true,
+        autoplay:true,
+        autoplayTimeout:4000,
+        autoplayHoverPause:true,
+        navText: [
+            '<i class="fa fa-chevron-left"></i>',
+            '<i class="fa fa-chevron-right"></i>'
+        ]
+    });
+});
+</script>
+
+<!-- Bloquer les dates antérieures pour les champs datetime-local -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     function getNowLocalDatetime() {
@@ -257,7 +326,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('date_debut').setAttribute('min', minDate);
     document.getElementById('date_fin').setAttribute('min', minDate);
 
-    // Empêcher date_fin < date_debut
     document.getElementById('date_debut').addEventListener('change', function() {
         document.getElementById('date_fin').setAttribute('min', this.value);
     });
@@ -270,22 +338,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const registerForm = document.getElementById('registerForm');
     const showRegisterLink = document.getElementById('showRegisterForm');
     const showLoginLink = document.getElementById('showLoginForm');
-
-    showRegisterLink.addEventListener('click', function (e) {
-      e.preventDefault();
-      loginForm.style.display = 'none';
-      registerForm.style.display = 'block';
-    });
-
-    showLoginLink.addEventListener('click', function (e) {
-      e.preventDefault();
-      registerForm.style.display = 'none';
-      loginForm.style.display = 'block';
-    });
+    if(showRegisterLink && showLoginLink && loginForm && registerForm){
+      showRegisterLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+      });
+      showLoginLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        registerForm.style.display = 'none';
+        loginForm.style.display = 'block';
+      });
+    }
   });
 </script>
-
-
-
 </body>
 </html>

@@ -294,7 +294,7 @@ https://templatemo.com/tm-591-villa-agency
                       <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                       <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                       <div class="icon-button">
-                        <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> Voire plus</a> </div>
+                        <a href="{{ route('salle') }}"><i class="fa fa-eye"></i> Voire plus</a> </div>
                     </div>
                   </div>
                 </div>
@@ -319,7 +319,7 @@ https://templatemo.com/tm-591-villa-agency
                         <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                         <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                         <div class="icon-button">
-                          <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> Voire plus</a>                      </div>
+                          <a href="{{ route('salle') }}"><i class="fa fa-eye"></i> Voire plus</a>                      </div>
                       </div>
                   </div>
                 </div>
@@ -344,7 +344,7 @@ https://templatemo.com/tm-591-villa-agency
                         <p>Profitez d’un espace de travail privé, entièrement meublé et équipé, offrant une connexion Internet haut débit et un accès sécurisé 24/7.
                         <br><br>Situé dans un quartier dynamique, l’emplacement offre une proximité immédiate avec des restaurants, cafés et autres commodités essentielles.</p>
                         <div class="icon-button">
-                          <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>                      </div>
+                          <a href="{{ route('salle') }}"><i class="fa fa-eye"></i>Voire plus</a>                      </div>
                       </div>
                   </div>
                 </div>
@@ -357,85 +357,45 @@ https://templatemo.com/tm-591-villa-agency
   </div>
 
   <div class="properties section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 offset-lg-4">
-          <div class="section-heading text-center">
-            <h6>| Salles</h6>
-            <h2>L'idéale à votre portée.</h2>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 col-md-6">
-          <div class="item">
-            <a href="property-details.html"><img src="assets/images/property-01.jpg" alt=""></a>
-            <span class="category">Bureau</span>
-            <h6>2.000 XOF</h6>
-            <h4><a href="property-details.html">Street Miami, OR 97219</a></h4>
-            
-            <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="item">
-            <a href="property-details.html"><img src="assets/images/property-02.jpg" alt=""></a>
-            <span class="category">Bureau</span>
-            <h6>18.000 XOF</h6>
-            <h4><a href="property-details.html">Street Florida, OR 27001</a></h4>
-            
-            <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i> Voire plus</a>            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="item">
-            <a href="property-details.html"><img src="assets/images/property-03.jpg" alt=""></a>
-            <span class="category">Bureau</span>
-            <h6>46.000 XOF</h6>
-            <h4><a href="property-details.html">Street Miami, OR 38540</a></h4>
-            
-            <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="item">
-            <a href="property-details.html"><img src="assets/images/property-04.jpg" alt=""></a>
-            <span class="category">Salle de conférence</span>
-            <h6>584.500 XOF</h6>
-            <h4><a href="property-details.html">Street Miami, OR 12650</a></h4>
-            
-            <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="item">
-            <a href="property-details.html"><img src="assets/images/property-05.jpg" alt=""></a>
-            <span class="category">Salle de conférence</span>
-            <h6>25.600 XOF</h6>
-            <h4><a href="property-details.html">Street Miami, OR 42680</a></h4>
-            
-            <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-          <div class="item">
-            <a href="property-details.html"><img src="assets/images/property-06.jpg" alt=""></a>
-            <span class="category">Salle de Coworking</span>
-            <h6>45.000 XOF</h6>
-            <h4><a href="property-details.html">Street Portland, OR 16540</a></h4>
-            
-            <div class="main-button">
-                <a href="{{ route('salledetails') }}"><i class="fa fa-eye"></i>Voire plus</a>            </div>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 offset-lg-4">
+        <div class="section-heading text-center">
+          <h6>| Salles</h6>
+          <h2>L'idéale à votre portée.</h2>
         </div>
       </div>
     </div>
+    <div class="row">
+      @foreach($rooms as $room)
+      <div class="col-lg-4 col-md-6">
+        <div class="item">
+          <a href="{{ route('salledetails', ['id' => $room->id]) }}">
+            @php
+              $images = json_decode($room->image);
+              $firstImage = $images && count($images) > 0 ? $images[0] : 'assets/images/default.jpg';
+            @endphp
+            <img src="{{ $firstImage }}" alt="Image de la salle {{ $room->name }}">
+          </a>
+          <span class="category">{{ $room->category->name ?? 'Catégorie inconnue' }}</span>
+          <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF</h6>
+          <h4>
+            <a href="{{ route('salledetails', ['id' => $room->id]) }}">{{ $room->name }}</a>
+          </h4>
+          <ul>
+              <li>Espace <span>café</span></li>
+              <li>Wifi <span>Haut débit</span></li>
+              <li>Equipée..<span></span></li>
+            </ul>
+          <div class="main-button">
+            <a href="{{ route('salledetails', ['id' => $room->id]) }}"><i class="fa fa-eye"></i> Voir plus de détail</a>
+          </div>
+        </div>
+      </div>
+      @endforeach
+    </div>
   </div>
+</div>
 
 
 

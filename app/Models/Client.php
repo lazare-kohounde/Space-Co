@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class superadmins extends Model
+class Client extends Model
 {
     //
-    protected $fillable = ['user_id'];
+    protected $fillable = [
+        'user_id',
+        'address',
+    ];
 
     public function user()
     {

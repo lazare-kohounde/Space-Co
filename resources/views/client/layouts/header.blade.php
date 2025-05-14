@@ -19,7 +19,7 @@
                     <!-- ***** Logo Start ***** -->
                     <a href="{{ route('accueil') }}" class="logo">
                         <h1 style="font-family: Bradley Hand, cursive; font-style: italic;">
-                            <img src="assets/images/logo.png" style="height: 1.5cm; width: 4cm" alt="">
+                            <img src={{asset("assets/images/logo.png")}} style="height: 1.5cm; width: 4cm" alt="">
                             <samp></samp>
                         </h1>
                     </a>
@@ -32,14 +32,12 @@
                         <li>
                             <a href="{{ route('salle') }}" class="{{ request()->routeIs('salle') ? 'active' : '' }}">Salle</a>
                         </li>
+                        
                         <li>
-                            <a href="{{ route('salledetails') }}" class="{{ request()->routeIs('salledetails') ? 'active' : '' }}">Salle détails</a>
+                            <a href="{{ route('panier') }}" class="{{ request()->routeIs('panier') ? 'active' : '' }}">Panier</a>
                         </li>
                         <li>
                             <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
-                        </li>
-                        <li>
-                            <a href="#" class="">Panier</a>
                         </li>
                         
                         @auth
