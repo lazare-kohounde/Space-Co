@@ -147,13 +147,17 @@
                                 <option value="non_equipée">Non equipée</option>
                             </select>
                         </div>
+                        @php
+                                    $images = json_decode($room->image);
+                                    $firstImage = $images && count($images) > 0 ? $images[0] : asset('assets/images/default.jpg');
+                                @endphp
 
                         <!-- Champs cachés -->
                         <input type="hidden" name="id" value="{{ $room->id }}">
                         <input type="hidden" name="nom" value="{{ $room->name }}">
                         <input type="hidden" name="adresse" value="Arconville / Space-Co">
                         <input type="hidden" name="montant" value="{{ $room->price }}">
-                        <input type="hidden" name="image" value="{{ asset($img) }}">
+                        <input type="hidden" name="image" value="{{ asset($firstImage) }}">
 
                         <button type="submit" class="btn btn-orange w-100">Ajouter au panier</button>
                     </form>
