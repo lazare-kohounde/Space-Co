@@ -67,7 +67,7 @@
                                     $images = json_decode($room->image);
                                     $firstImage = $images && count($images) > 0 ? $images[0] : asset('assets/images/default.jpg');
                                 @endphp
-                                <img src="{{ $firstImage }}" alt="Image de la salle {{ $room->name }}">
+                                <img src="{{ asset($firstImage) }}" alt="Image de la salle {{ $room->name }}">
                             </a>
                             <span class="category">{{ $room->category->name ?? 'Catégorie inconnue' }}</span>
                             <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF</h6>

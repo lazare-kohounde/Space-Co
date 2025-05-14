@@ -14,6 +14,23 @@
     <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/assets/css/style.css') }}" rel="stylesheet" type="text/css">
+    <style>
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    height: 30px;
+    width: 30px;
+    background-color: rgba(0, 0, 0, 0.9); /* Fond sombre semi-transparent */
+    border-radius: 50%;
+    padding: 10px;
+    background-size: 70% 70%; /* Pour que l’icône ne déborde pas */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%; /* Réduit la zone de clic pour éviter les conflits */
+}
+</style>
+
 </head>
 
 <body class="fixed-left">
@@ -103,13 +120,50 @@
                                                         </td>
                                                         <td>
                                                             @if($room->image)
-                                                                @foreach(json_decode($room->image) as $image)
-                                                                    <img src="{{ $image }}" width="50" class="img-thumbnail m-1">
-                                                                @endforeach
+                                                                <a href="#" data-toggle="modal" data-target="#carouselModal{{ $room->id }}">
+                                                                    @foreach(json_decode($room->image) as $image)
+                                                                        <img src="{{ asset($image) }}" width="50" class="img-thumbnail m-1">
+                                                                    @endforeach
+                                                                </a>
+
+                                                                <!-- Modal avec Carousel -->
+                                                                <div class="modal fade" id="carouselModal{{ $room->id }}" tabindex="-1" role="dialog" aria-labelledby="carouselLabel{{ $room->id }}" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-lg" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">Images de la salle : {{ $room->name }}</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div id="carousel{{ $room->id }}" class="carousel slide" data-ride="carousel">
+                                                                                    <div class="carousel-inner">
+                                                                                        @foreach(json_decode($room->image) as $key => $image)
+                                                                                            <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                                                                                                <img class="d-block w-100" src="{{ asset($image) }}" alt="Image {{ $key + 1 }}">
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </div>
+                                                                                    <a class="carousel-control-prev" href="#carousel{{ $room->id }}" role="button" data-slide="prev">
+                                                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                                        <span class="sr-only">Précédent</span>
+                                                                                    </a>
+                                                                                    <a class="carousel-control-next" href="#carousel{{ $room->id }}" role="button" data-slide="next">
+                                                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                                        <span class="sr-only">Suivant</span>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             @else
                                                                 Aucune image
                                                             @endif
                                                         </td>
+
+
                                                         <td>
                                                             <button type="button" class="btn btn-sm btn-success" data-toggle="modal" 
                                                                 data-target="#editModal{{ $room->id }}">

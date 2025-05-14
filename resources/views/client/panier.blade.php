@@ -126,13 +126,17 @@
                             </tbody>
                         </table>
                     </div>
+                    @php
+                        $total = collect($panier)->sum('montant');
+                    @endphp
+
                     <div class="d-flex justify-content-end align-items-center mt-3">
                         <h5 class="me-3 mb-0">Total :</h5>
                         <h4 class="mb-0 fw-bold" style="color:#f35525">
-                            {{-- {{ number_format($panier->sum('montant'), 0, ',', ' ') }} XOF --}}
-                            70 000 XOF
+                            {{ number_format($total, 0, ',', ' ') }} XOF
                         </h4>
                     </div>
+
                     <div class="d-flex justify-content-end mt-4 gap-2">
                         <a href="{{ route('salle') }}" class="btn btn-outline-secondary">
                          Continuer mes réservations
