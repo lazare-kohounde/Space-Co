@@ -126,6 +126,12 @@
 
         <!-- Contenu Dashboard -->
         <div class="col-lg-10">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show container mt-4" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
           <!-- Profil -->
           <div class="dashboard-content" id="profilContent" role="tabpanel" tabindex="0">
             <h4 class="mb-4" style="color: #f35525">Mon Profil</h4>

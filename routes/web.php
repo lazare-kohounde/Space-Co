@@ -7,6 +7,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\clientController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\PanierController;
+use App\Http\Controllers\PaymentController;
 
 
 
@@ -91,6 +92,10 @@ Route::get('/log-admin', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
+    Route::get('/payment/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
+    // Route::get('/paiement', [PaiementController::class, 'callback'])->name('payment.callback');
+
+
     Route::get('/membre', [clientController::class, 'membre'])->name('membre');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -378,7 +378,7 @@ https://templatemo.com/tm-591-villa-agency
             <img src="{{ $firstImage }}" alt="Image de la salle {{ $room->name }}">
           </a>
           <span class="category">{{ $room->category->name ?? 'Catégorie inconnue' }}</span>
-          <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF</h6>
+          <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF / h</h6>
           <h4>
             <a href="{{ route('salledetails', ['id' => $room->id]) }}">{{ $room->name }}</a>
           </h4>

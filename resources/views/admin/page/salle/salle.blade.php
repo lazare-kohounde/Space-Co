@@ -108,7 +108,7 @@
                                                     <tr>
                                                         <td>{{ $room->name }}</td>
                                                         <td>{{ $room->category->name }}</td>
-                                                        <td>{{ number_format($room->price, 2, ',', ' ') }} XOF</td>
+                                                        <td>{{ number_format($room->price, 2, ',', ' ') }} XOF / h</td>
                                                         <td>
                                                             @if($room->options === 'oui')
                                                                 Oui
