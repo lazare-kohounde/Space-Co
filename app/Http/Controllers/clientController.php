@@ -132,7 +132,15 @@ class clientController extends Controller
 
     public function membre () {
 
-        return view('client.membre');
+        // Récupérer l'utilisateur connecté
+        $user = Auth::user();
+        
+        // Récupérer ses réservations (triées par date de création, les plus récentes d'abord)
+        $reservations = \App\Models\Reservation::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('client.membre', compact('user', 'reservations'));
     }
 
     //

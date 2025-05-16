@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Espace Membre - Space-Co</title>
+  <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}" sizes="16x16">
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
@@ -206,37 +207,44 @@
                   <tr>
                     <th>ID Réservation</th>
                     <th>Date</th>
-                    <th>Utilisateur</th>
+                    <th>Montant</th>
                     <th>Statut</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>#12345</td>
-                    <td>15/04/2025</td>
-                    <td>{{ $user->name }}</td>
-                    <td><span class="badge bg-success">Terminée</span></td>
-                    <td><a href="#" class="btn btn-sm btn-orange">Détails</a></td>
-                  </tr>
-                  <tr>
-                    <td>#12346</td>
-                    <td>10/03/2025</td>
-                    <td>{{ $user->name }}</td>
-                    <td><span class="badge bg-warning text-dark">En cours</span></td>
-                    <td><a href="#" class="btn btn-sm btn-orange">Détails</a></td>
-                  </tr>
-                  <tr>
-                    <td>#12347</td>
-                    <td>05/02/2025</td>
-                    <td>{{ $user->name }}</td>
-                    <td><span class="badge bg-secondary">Annulée</span></td>
-                    <td><a href="#" class="btn btn-sm btn-orange">Détails</a></td>
-                  </tr>
+                  @if($reservations->count() > 0)
+                    @foreach($reservations as $reservation)
+                      <tr>
+                        <td>#{{ $reservation->id }}</td>
+                        <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('d/m/Y') }}</td>
+                        <td>{{ number_format($reservation->total_amount, 0, ',', ' ') }} XOF</td>
+                        <td>
+                          @if($reservation->status == 'pending')
+                            <span class="badge bg-warning text-dark">En attente</span>
+                          @elseif($reservation->status == 'completed')
+                            <span class="badge bg-success">Terminée</span>
+                          @elseif($reservation->status == 'cancelled')
+                            <span class="badge bg-secondary">Annulée</span>
+                          @else
+                            <span class="badge bg-info">{{ $reservation->status }}</span>
+                          @endif
+                        </td>
+                        <td>
+                          <a href="#" class="btn btn-sm btn-orange">Détails</a>
+                        </td>
+                      </tr>
+                    @endforeach
+                  @else
+                    <tr>
+                      <td colspan="5" class="text-center">Aucune réservation trouvée</td>
+                    </tr>
+                  @endif
                 </tbody>
               </table>
             </div>
           </div>
+
         </div>
       </div>
     </div>
