@@ -1,8 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
+use App\Models\Reservation;
+use App\Models\DetailReservation;
+use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class clientController extends Controller
 {
@@ -39,7 +45,7 @@ class clientController extends Controller
     // }
     public function paiement(Request $request)
     {
-
+        
 
         $status = $request->query('transaction-status'); // ou $request->input('transaction-status')
         $prenom = $request->query('prenom');
@@ -51,12 +57,70 @@ class clientController extends Controller
         // logger()->info('Callback reçu', $request->all());
 
         if ($status === 'approved') {
-            // Ici tu peux vider la session panier si besoin :
-            session()->forget('panier');
+            
+            // stockage des données dans la base :
+
+            // 1. Récupérer le panier et l'utilisateur
+            $panier = session('panier'); // tableau des salles réservées
+            $user = Auth::user();            
+
+            // 2. Récupérer le statut et infos paiement depuis FedaPay (callback)
+            $amountPaid = array_sum(array_column($panier, 'montant')); // ou récupéré depuis la session 
+            $paymentMethod = 'FEDAPay';
+            
+            // 3. Calculer le total du panier si besoin
+            $total = array_sum(array_column($panier, 'montant'));
+            // 4. Transaction pour garantir l'intégrité
+            DB::beginTransaction();
+            try {
+                // a. Créer la réservation
+                $reservation = Reservation::create([
+                    'status' => "pending", // ou selon ta logique
+                    'total_amount' => $total,
+                    'reservation_date' => Carbon::now(),
+                    'user_id' => $user->id,
+                ]);
+                
+                // b. Créer les détails de réservation
+                foreach ($panier as $item) {
+                    DetailReservation::create([
+                        'reservation_id' => $reservation->id,
+                        'room_id'        => $item['id'],
+                        'start_date'     => $item['date_debut'],
+                        'end_date'       => $item['date_fin'],
+                        'price'          => $item['montant'],
+                        'option'         => $item['option'],
+                    ]);
+                }
+                
+                // c. Créer le paiement
+                Payment::create([
+                    'reservation_id' => $reservation->id,
+                    'amount_paid'    => $amountPaid,
+                    'status'         => $status,
+                    'payment_method' => $paymentMethod,
+                    'payment_date'   => Carbon::now(),
+                ]);
+
+                DB::commit();
+                // dd($total);
 
 
-            // Rediriger vers le profil avec un message de succès
-            return redirect()->route('membre')->with('success', 'Paiement approuvé. Bienvenue, ' . $prenom . ' !');
+
+
+                // Ici tu peux vider la session panier si besoin :
+                session()->forget('panier'); 
+
+
+                // Rediriger vers le profil avec un message de succès
+                return redirect()->route('membre')->with('success', 'Paiement réussi, cliquez sur Historique Réservations pour autres actions. , ' . $prenom . ' !');
+
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    
+                }
+        
+        
         }
 
         $panier = session('panier', []);
