@@ -8,12 +8,12 @@ class adminController extends Controller
         return view("admin.index");
     }
 
-    public function categorie(){
-        return view("admin.page.categorie.categorie");
-    }
-
     public function profil(){
         return view("admin.profil");
+    }
+
+    public function categorie(){
+        return view("admin.page.categorie.categorie");
     }
     
     public function Gestionnaire(){
@@ -21,7 +21,6 @@ class adminController extends Controller
     }
 
 
-    
     public function Reservation(){
         return view("admin.page.reservation.reservation");
     }
