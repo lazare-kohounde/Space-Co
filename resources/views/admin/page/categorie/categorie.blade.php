@@ -74,7 +74,7 @@
                         @endif
 
                         <!-- Contenu proprement dit -->
-                        <div class="row mt-2" style="padding-top: 70px;">
+                        <div class="row mt-2">
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-body">

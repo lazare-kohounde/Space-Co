@@ -27,7 +27,7 @@
             <li class="list-inline-item">
                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                     @csrf
-                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline" data-toggle="tooltip" data-placement="top" title="Déconnexion" style="color: inherit;">
+                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline" data-toggle="tooltip" data-placement="top" title="Deconnexion" >
                         <i class="dripicons-power text-danger" style="cursor:pointer;"></i>
                     </button>
                 </form>

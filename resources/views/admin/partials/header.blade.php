@@ -3,8 +3,8 @@
 
     <nav class="navbar-custom">
 
-        <ul class="list-inline float-right mb-0">
-            <li class="list-inline-item dropdown notification-list">
+        <ul class="list-inline float-right mb-0 mr-3">
+            <li class="list-inline-item dropdown notification-list" data-toggle="tooltip" data-placement="top" title="Message">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="dripicons-mail noti-icon"></i>
@@ -50,7 +50,7 @@
                 </div>
             </li>
 
-            <li class="list-inline-item dropdown notification-list">
+            <li class="list-inline-item dropdown notification-list" data-toggle="tooltip" data-placement="top" title="Notification">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="dripicons-bell noti-icon"></i>
@@ -94,18 +94,16 @@
 
                 </div>
             </li>
-
-            
         </ul>
 
         <ul class="list-inline menu-left mb-0">
-            <li class="float-left">
+            <li class="float-left" >
                 <button class="button-menu-mobile open-left waves-light waves-effect">
                     <i class="mdi mdi-menu"></i>
                 </button>
             </li>
-            <li class="hide-phone app-search">
-            <h6 class="header-title mb-2 pt-1">Version 1.0</h6>
+            <li class="hide-phone app-search ">
+            <h6 class="header-title mb-2 pt-1 ms-2">Version 1.0</h6>
             </li>
         </ul>
 
