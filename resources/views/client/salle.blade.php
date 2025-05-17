@@ -35,7 +35,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <span class="breadcrumb"><a href="{{ route('accueil') }}">Accueil</a> / Salles</span>
                     <h3>Salles</h3>
                 </div>
             </div>
@@ -67,7 +66,7 @@
                                     $images = json_decode($room->image);
                                     $firstImage = $images && count($images) > 0 ? $images[0] : asset('assets/images/default.jpg');
                                 @endphp
-                                <img src="{{ asset($firstImage) }}" alt="Image de la salle {{ $room->name }}">
+                                <img src="{{ asset($firstImage) }}" alt="Image de la salle {{ $room->name }}" style="height: 250px">
                             </a>
                             <span class="category">{{ $room->category->name ?? 'Catégorie inconnue' }}</span>
                             <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF / h</h6>

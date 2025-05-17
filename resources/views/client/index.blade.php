@@ -228,8 +228,8 @@ https://templatemo.com/tm-591-villa-agency
             <div class="row">
               <div class="col-lg-6">
                 <div class="counter">
-                  <h2 class="timer count-title count-number" data-to="8" data-speed="1000"></h2>
-                   <p class="count-text ">Salles<br>Prête à l'emploi</p>
+                  <h2 class="timer count-title count-number" data-to="3" data-speed="1000"></h2>
+                   <p class="count-text ">Catégories de<br>Salles Prête à l'emploi</p>
                 </div>
               </div>
               <div class="col-lg-6">
@@ -375,7 +375,7 @@ https://templatemo.com/tm-591-villa-agency
               $images = json_decode($room->image);
               $firstImage = $images && count($images) > 0 ? $images[0] : 'assets/images/default.jpg';
             @endphp
-            <img src="{{ $firstImage }}" alt="Image de la salle {{ $room->name }}">
+            <img src="{{ $firstImage }}" alt="Image de la salle {{ $room->name }}" style="height: 250px">
           </a>
           <span class="category">{{ $room->category->name ?? 'Catégorie inconnue' }}</span>
           <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF / h</h6>

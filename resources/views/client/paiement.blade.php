@@ -61,6 +61,10 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
+            <div class="alert alert-danger alert-dismissible fade show container mt-4" role="alert">
+                Vous payez la moitié du montant total pour valider votre réservation et solder la moitié restant le jour d'usage de la propriété
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
                 <div class="card shadow-sm p-4 mb-4">
                     <h5 class="mb-4" style="color: #f35525">Récapitulatif de votre panier</h5>
                     <div class="table-responsive">
@@ -171,7 +175,7 @@ function handleFedaPay(event) {
     FedaPay.init('#fedapay-btn', {
         public_key: "pk_sandbox_1l6bRH8oSU0oei0VTTB0MvxE", // Remplace par ta clé publique sandbox
         transaction: {
-            amount: parseFloat("{{ $total }}"),
+            amount: parseFloat("{{ $total }}") / 2,
             currency: {
                 iso: "XOF"
             },
