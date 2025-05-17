@@ -61,6 +61,10 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
+            <div class="alert alert-danger alert-dismissible fade show container mt-4" role="alert">
+                Vous payez la moitié du montant total pour valider votre réservation et solder la moitié restant le jour d'usage de la propriété
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
                 <div class="card shadow-sm p-4 mb-4">
                     <h5 class="mb-4" style="color: #f35525">Récapitulatif de votre panier</h5>
                     <div class="table-responsive">
@@ -75,58 +79,38 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            @forelse($panier as $item)
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/single-property.jpg') }}" alt="Salle" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;">
+                                            <img src="{{ asset($item['image']) }}" alt="Salle" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;">
                                             <div>
-                                                <strong>Bureau Prestige</strong>
-                                                <div class="text-muted small">24 New Street Miami</div>
+                                                <strong>{{ $item['nom'] }}</strong>
+                                                <div class="text-muted small">{{ $item['adresse'] }}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>12/05/2025 09:00</td>
-                                    <td>12/05/2025 18:00</td>
-                                    <td>Bureau équipé</td>
-                                    <td class="fw-bold" style="color:#f35525">20 000 XOF</td>
+                                    <td>{{ $item['date_debut'] }}</td>
+                                    <td>{{ $item['date_fin'] }}</td>
+                                    <td>{{ $item['option'] }}</td>
+                                    <td class="fw-bold" style="color:#f35525">{{ number_format($item['montant'], 0, ',', ' ') }} XOF</td>
                                 </tr>
+                            @empty
                                 <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/deal-02.jpg') }}" alt="Salle" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;">
-                                            <div>
-                                                <strong>Salle de Conférence</strong>
-                                                <div class="text-muted small">Avenue Business City</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>15/05/2025 14:00</td>
-                                    <td>15/05/2025 17:00</td>
-                                    <td>Salle de conférence</td>
-                                    <td class="fw-bold" style="color:#f35525">35 000 XOF</td>
+                                    <td colspan="5" class="text-center">Aucun élément dans le panier.</td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/deal-03.jpg') }}" alt="Salle" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;">
-                                            <div>
-                                                <strong>Salle Coworking</strong>
-                                                <div class="text-muted small">Tech Park, Plateau</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>20/05/2025 08:00</td>
-                                    <td>20/05/2025 18:00</td>
-                                    <td>Coworking</td>
-                                    <td class="fw-bold" style="color:#f35525">15 000 XOF</td>
-                                </tr>
+                            @endforelse
                             </tbody>
+
                         </table>
                     </div>
                     <div class="d-flex justify-content-end align-items-center mt-3">
                         <h5 class="me-3 mb-0">Total :</h5>
-                        <h4 class="mb-0 fw-bold" style="color:#f35525">70 000 XOF</h4>
+                        <h4 class="mb-0 fw-bold" style="color:#f35525">
+                            {{ number_format($total, 0, ',', ' ') }} XOF
+                        </h4>
                     </div>
+
                 </div>
 
                 <!-- Formulaire de paiement FedaPay -->
@@ -150,7 +134,7 @@
                             <input type="tel" class="form-control" id="telephone" name="telephone" required placeholder="ex: 22997000000">
                         </div>
                         <button type="submit" class="btn btn-orange w-100 mt-2" id="fedapay-btn">
-                            Payer 70 000 XOF
+                            Payer maintenant
                         </button>
                     </form>
                     <div class="text-center mt-3">
@@ -183,16 +167,19 @@ function handleFedaPay(event) {
     var nom = document.getElementById('nom').value;
     var email = document.getElementById('email').value;
     var telephone = document.getElementById('telephone').value;
+    var route = "route('payment.callback')";
 
+
+    console.log("route", route)
     // Appel du widget FedaPay (mode test)
     FedaPay.init('#fedapay-btn', {
         public_key: "pk_sandbox_1l6bRH8oSU0oei0VTTB0MvxE", // Remplace par ta clé publique sandbox
         transaction: {
-            amount: 70000,
+            amount: parseFloat("{{ $total }}") / 2,
             currency: {
                 iso: "XOF"
             },
-            description: "Paiement de réservation Space-Co"
+            description: "Paiement de réservation Space-Co",
         },
         customer: {
             firstname: prenom,
@@ -204,6 +191,8 @@ function handleFedaPay(event) {
             }
         }
     });
+
+    console.log("route-1", route)
 }
 </script>
 </body>

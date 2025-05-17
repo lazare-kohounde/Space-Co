@@ -109,7 +109,7 @@
                 <div class="main-content mt-4">
                     <div class="ligne d-flex flex-row align-items-end justify-content-between">
                         <span class="category">{{ $room->category->name ?? 'Catégorie inconnue' }}</span>
-                        <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF</h6>
+                        <h6>{{ number_format($room->price, 0, ',', ' ') }} XOF / h</h6>
                     </div>
                     <h4>{{ $room->name }}</h4>
                     <p>{{ $room->description }}</p>
@@ -121,10 +121,11 @@
                     <h5 class="mb-3" style="color: #f35525">Réserver cette salle</h5>
                     <div class="mb-3">
                         <label class="form-label">Montant</label>
-                        <div class="form-control-plaintext fw-bold" style="font-size:1.2em;">
-                            {{ number_format($room->price, 0, ',', ' ') }} XOF
+                        <div id="montant_affiche" class="form-control-plaintext fw-bold" style="font-size:1.2em;">
+                            0 XOF
                         </div>
                     </div>
+
                     <form action="{{ route('panier.ajouter') }}" method="POST">
                         @csrf
 
@@ -156,7 +157,7 @@
                         <input type="hidden" name="id" value="{{ $room->id }}">
                         <input type="hidden" name="nom" value="{{ $room->name }}">
                         <input type="hidden" name="adresse" value="Arconville / Space-Co">
-                        <input type="hidden" name="montant" value="{{ $room->price }}">
+                        <input type="hidden" name="montant" id="montant" value="0">
                         <input type="hidden" name="image" value="{{ asset($firstImage) }}">
 
                         <button type="submit" class="btn btn-orange w-100">Ajouter au panier</button>
@@ -334,6 +335,48 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('date_fin').setAttribute('min', this.value);
     });
 });
+</script>
+
+<!-- Script de montant -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dateDebut = document.getElementById('date_debut');
+        const dateFin = document.getElementById('date_fin');
+        const montantAffiche = document.getElementById('montant_affiche');
+        const montantInput = document.getElementById('montant');
+
+        const prixParHeure = parseFloat("{{ $room->price }}"); // prix depuis Laravel
+
+        function updateMontant() {
+            const debut = new Date(dateDebut.value);
+            const fin = new Date(dateFin.value);
+
+            if (debut && fin && fin > debut) {
+                const diffMinutes = (fin - debut) / (1000 * 60); // durée en minutes
+                const dureeHeures = diffMinutes / 60; // durée en heures décimales
+
+                if (dureeHeures < 1) {
+                    alert("La réservation doit durer au moins 1 heure.");
+                    dateFin.value = "";
+                    montantAffiche.textContent = "0 XOF";
+                    montantInput.value = 0;
+                    return;
+                }
+
+                const montantTotal = dureeHeures * prixParHeure;
+
+                // Affichage formaté
+                montantAffiche.textContent = `${Math.round(montantTotal).toLocaleString('fr-FR')} XOF`;
+                montantInput.value = Math.round(montantTotal);
+            } else {
+                montantAffiche.textContent = "0 XOF";
+                montantInput.value = 0;
+            }
+        }
+
+        dateDebut.addEventListener('change', updateMontant);
+        dateFin.addEventListener('change', updateMontant);
+    });
 </script>
 
 <script>
