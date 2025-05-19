@@ -93,6 +93,7 @@
                                         <th>Date fin</th>
                                         <th>Montant</th>
                                         <th>Images</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,6 +106,7 @@
                                         <td>{{ \Carbon\Carbon::parse($reservation_el['date_fin'])->format('d/m/Y h:m') }}</td>
                                         <td>{{ number_format($reservation_el['prix'], 0, ',', ' ') }} XOF</td>
                                         <td><img src="{{ asset($reservation_el['img']) }}" alt="ceec" style="width: 60px; height: 60px; object-fit:cover; border-radius:8px; margin-right:10px;" class="img-thumbnail m-1"></td>
+                                        <td><a href="{{ route('salledetails', ['id' => $reservation_el['roomid']]) }}" class="btn btn-sm btn-orange">Réserver la même salle</a></td>
                                     </tr>
                                     @endforeach
 

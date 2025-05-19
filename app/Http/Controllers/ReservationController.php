@@ -46,6 +46,7 @@ class ReservationController extends Controller
             $rooms= Room::where('id',$reservation_element->room_id)->get();
             //Parcourir les sales 
             foreach($rooms as $room){
+               
                 $formated_data = [
                     'reservation_id' => $id,
                     'room_name'  => $room->name,
@@ -54,8 +55,10 @@ class ReservationController extends Controller
                     'prix' => $reservation_element->price,
                     'img'  => json_decode($room->image)[0],
                 ];
+                
             }
             $reservation_details_info[]=  $formated_data;
+            
         }
         return view('admin.page.reservation.detail',compact('reservation_details_info','reservation'));
     }
@@ -89,6 +92,7 @@ class ReservationController extends Controller
                     'date_fin' => $reservation_element->end_date,
                     'prix' => $reservation_element->price,
                     'img'  => json_decode($room->image)[0],
+                    'roomid'  => $room->id,
                 ];
             }
             $reservation_details_info[]=  $formated_data;
