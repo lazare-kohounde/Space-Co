@@ -112,16 +112,15 @@
                             </table>
                         </div><!--end table-responsive-->
                         @if ($reservation['status'] =='pending')
-                        <div class="pt-3 border-top text-right">
-                            <form method="POST" action="{{ route('reservation.cancelled', $reservation['id']) }}" onsubmit="return confirmCancel();">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="list-group-item text-danger" style="font-weight:600;">
-                                    <i class="fa fa-ban text-danger me-2"></i> Annuler la réservation
-                                </button>
-                            </form>
+                            <div class="pt-3 border-top text-right">
+                                <form method="POST" action="{{ route('reservation.cancelled', $reservation['id']) }}" onsubmit="return confirmCancel();">
+                                    @csrf
+                                    <button type="submit" class="list-group-item text-danger" style="font-weight:600;">
+                                        <i class="fa fa-ban text-danger me-2"></i> Annuler la réservation
+                                    </button>
+                                </form>
 
-                        </div>
+                            </div>
                         @endif
                     </div>
 
