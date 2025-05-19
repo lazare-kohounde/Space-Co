@@ -85,18 +85,18 @@ https://templatemo.com/tm-591-villa-agency
           </div>
         </div>
         <div class="col-lg-6">
-          <form id="contact-form" action="" method="post">
+          <form id="contact-form" action="https://formspree.io/f/xjkwljwb" method="post">
             <div class="row">
               <div class="col-lg-12">
                 <fieldset>
                   <label for="name">Nom complet</label>
-                  <input type="name" name="name" id="name" placeholder="Ton nom et prénom..." autocomplete="on" required>
+                  <input type="name" name="name" id="name" placeholder="Votre nom et prénom..." autocomplete="on" required>
                 </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
                   <label for="email">Adresse Email</label>
-                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Ton E-mail..." required="">
+                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Votre e-mail..." required="">
                 </fieldset>
               </div>
               <div class="col-lg-12">
@@ -108,7 +108,7 @@ https://templatemo.com/tm-591-villa-agency
               <div class="col-lg-12">
                 <fieldset>
                   <label for="message">Message</label>
-                  <textarea name="message" id="message" placeholder="Ton Message"></textarea>
+                  <textarea name="message" id="message" placeholder="Votre Message"></textarea>
                 </fieldset>
               </div>
               <div class="col-lg-12">

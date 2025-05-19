@@ -76,8 +76,8 @@
                                                                 <i class="fas fa-calendar-alt text-gradient-danger"></i>
                                                             </div>
                                                             <div class="col-10 text-right">
-                                                                <h5 class="mt-0 mb-1">190</h5>
-                                                                <p class="mb-0 font-12 text-muted">Réservation</p>
+                                                            <h5 class="mt-0 mb-1" id="reservations-count">0</h5>
+                                                            <p class="mb-0 font-12 text-muted">Réservation</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -93,8 +93,8 @@
                                                                 <i class="far fa-building text-gradient-success"></i>
                                                             </div>
                                                             <div class="col-10 text-right">
-                                                                <h5 class="mt-0 mb-1">12</h5>
-                                                                <p class="mb-0 font-12 text-muted">Salles</p>
+                                                            <h5 class="mt-0 mb-1" id="rooms-count">0</h5>
+                                                            <p class="mb-0 font-12 text-muted">Salles</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -110,8 +110,8 @@
                                                                 <i class="fas fa-layer-group text-gradient-warning"></i>
                                                             </div>
                                                             <div class="col-10 text-right">
-                                                                <h5 class="mt-0 mb-1">4</h5>
-                                                                <p class="mb-0 font-12 text-muted">Catégories</p>
+                                                            <h5 class="mt-0 mb-1" id="categories-count">0</h5>
+                                                            <p class="mb-0 font-12 text-muted">Catégories</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -127,8 +127,9 @@
                                                                 <i class="fas fa-dollar-sign text-gradient-primary"></i>
                                                             </div>
                                                             <div class="col-10 text-right">
-                                                                <h5 class="mt-0 mb-1">315562 <span>XOF</span></h5>
-                                                                <p class="mb-0 font-12 text-muted">Recette Globales</p>
+                                                            <h5 class="mt-0 mb-1"><span id="revenue-count">0</span> <span>XOF</span></h5>
+                                                            <p class="mb-0 font-12 text-muted">Recette Globales</p>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -307,6 +308,28 @@
 
     </div>
     <!-- END wrapper -->
+    <!-- scripte pour les données comptées pour le dashboard -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('{{ route("dashboard.stats") }}')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('reservations-count').textContent = data.reservations;
+                document.getElementById('rooms-count').textContent = data.rooms;
+                document.getElementById('categories-count').textContent = data.categories;
+                document.getElementById('revenue-count').textContent = Number(data.revenue).toLocaleString('fr-FR');
+            })
+            .catch(() => {
+                document.getElementById('reservations-count').textContent = '...';
+                document.getElementById('rooms-count').textContent = '...';
+                document.getElementById('categories-count').textContent = '...';
+                document.getElementById('revenue-count').textContent = '...';
+            });
+    });
+    </script>
+
+
 
     <!-- jQuery  -->
     <script src={{ asset('admin/assets/js/jquery.min.js') }}></script>

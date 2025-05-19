@@ -53,7 +53,11 @@
                                             <li class="breadcrumb-item"></li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Categorie</h4>
+                                    <div class="d-flex justify-content-star mr-4 align-items-center mb-3">
+                                        <h5 class="header-title mb-0 mr-4">Listes des catégories</h5>
+                                        <input type="text" id="searchInput" class="form-control w-auto" placeholder="Rechercher une catégorie..." style="min-width: 250px;">
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -61,16 +65,16 @@
 
                         <!-- Messages Laravel -->
                         @if(session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
+                        <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
                         @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                         @endif
 
                         <!-- Contenu proprement dit -->
@@ -91,7 +95,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                     @foreach($categories as $category)
                                                     <tr>
                                                         <td>{{ $category->name }}</td>
@@ -115,41 +119,41 @@
                                                         </td>
                                                     </tr>
 
-                                                    <!-- Edit Modal -->
-                                                    <div class="modal fade" id="editCategoryModal{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel{{ $category->id }}" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="editCategoryModalLabel{{ $category->id }}">Modifier la catégorie</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form action="{{ route('categories.update', $category->id) }}" method="POST">
-                                                                        @csrf
-                                                                        @method('PUT')
-                                                                        <div class="form-group">
-                                                                            <label>Nom</label>
-                                                                            <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label>Description</label>
-                                                                            <textarea name="description" class="form-control" rows="5" required>{{ $category->description }}</textarea>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                                                            <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div><!--end table-responsive-->
                                         <div class="pt-3 border-top text-right">
                                             <a href="#" class="text-primary">Tous voir <i class="mdi mdi-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Edit Modal -->
+                            <div class="modal fade" id="editCategoryModal{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel{{ $category->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editCategoryModalLabel{{ $category->id }}">Modifier la catégorie</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('categories.update', $category->id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="form-group">
+                                                    <label>Nom</label>
+                                                    <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <textarea name="description" class="form-control" rows="5" required>{{ $category->description }}</textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -204,6 +208,41 @@
 
     </div>
     <!-- END wrapper -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const tableBody = document.querySelector('table tbody');
+
+            searchInput.addEventListener('keyup', function() {
+                const filter = this.value.toLowerCase();
+                const rows = tableBody.querySelectorAll('tr');
+                let visibleCount = 0;
+
+                rows.forEach(row => {
+                    const cellsText = row.textContent.toLowerCase();
+                    if (cellsText.includes(filter)) {
+                        row.style.display = '';
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                // Optionnel : afficher un message si aucun résultat
+                let noResultRow = document.getElementById('noResultRow');
+                if (visibleCount === 0) {
+                    if (!noResultRow) {
+                        noResultRow = document.createElement('tr');
+                        noResultRow.id = 'noResultRow';
+                        noResultRow.innerHTML = `<td colspan="3" class="text-center">Aucun résultat trouvé</td>`;
+                        tableBody.appendChild(noResultRow);
+                    }
+                } else if (noResultRow) {
+                    noResultRow.remove();
+                }
+            });
+        });
+    </script>
 
     <!-- jQuery  -->
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>

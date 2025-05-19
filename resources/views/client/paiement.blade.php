@@ -169,13 +169,29 @@ function handleFedaPay(event) {
     var telephone = document.getElementById('telephone').value;
     var route = "route('payment.callback')";
 
+    // let total = parseFloat("{{ $total }}") || 0;
+    // let amount = total / 2;
 
-    console.log("route", route)
+    // if (amount <= 0) {
+    // alert("Le montant est invalide ou trop bas.");
+    // }
+
+    // console.log("Montant total :", "{{ $total }}");
+
+
+    // console.log("route", route)
     // Appel du widget FedaPay (mode test)
+
+        let total = parseFloat("{{ $total ?? 0 }}");
+    let amount = Math.round(total / 2);
+
+    if (amount <= 0) {
+        alert("Montant invalide. Impossible de créer la transaction.");
+    } else {
     FedaPay.init('#fedapay-btn', {
         public_key: "pk_sandbox_1l6bRH8oSU0oei0VTTB0MvxE", // Remplace par ta clé publique sandbox
         transaction: {
-            amount: parseFloat("{{ $total }}") / 2,
+            amount: amount,
             currency: {
                 iso: "XOF"
             },
@@ -191,7 +207,7 @@ function handleFedaPay(event) {
             }
         }
     });
-
+    }
     console.log("route-1", route)
 }
 </script>

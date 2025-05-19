@@ -28,7 +28,7 @@ class RoomController extends Controller
         $categoryId = $request->query('category');
         $rooms = Room::when($categoryId, function ($query, $categoryId) {
             return $query->where('category_id', $categoryId);
-        })->paginate(6); // Ici tu ajoutes la pagination
+        })->paginate(15); // Ici tu ajoutes la pagination
 
         return view('client.salle', compact('rooms', 'categories', 'categoryId'));
     }

@@ -111,7 +111,7 @@ https://templatemo.com/tm-591-villa-agency
       <div class="row">
         <div class="col-lg-4">
           <div class="left-image">
-            <img src="assets/images/featured.jpg" alt="">
+            <img src={{asset("assets/images/featured.jpg")}} alt="">
           </div>
         </div>
         <div class="col-lg-5">
@@ -172,19 +172,19 @@ https://templatemo.com/tm-591-villa-agency
           <div class="info-table">
             <ul>
               <li>
-                <img src="assets/images/info-icon-01.png" alt="" style="max-width: 52px;">
+                <img src={{asset("assets/images/info-icon-01.png")}} alt="" style="max-width: 52px;">
                 <h4>250 m2<br><span>Surface totale de</span></h4>
               </li>
               <li>
-                <img src="assets/images/info-icon-02.png" alt="" style="max-width: 52px;">
+                <img src={{asset("assets/images/info-icon-02.png")}} alt="" style="max-width: 52px;">
                 <h4>Contrat<br><span>Contrat pret</span></h4>
               </li>
               <li>
-                <img src="assets/images/info-icon-03.png" alt="" style="max-width: 52px;">
+                <img src={{asset("assets/images/info-icon-03.png")}} alt="" style="max-width: 52px;">
                 <h4>Paiement<br><span>Moyen de paiement</span></h4>
               </li>
               <li>
-                <img src="assets/images/info-icon-04.png" alt="" style="max-width: 52px;">
+                <img src={{asset("assets/images/info-icon-04.png")}} alt="" style="max-width: 52px;">
                 <h4>Sécurité<br><span>sous contrôle 24h/7</span></h4>
               </li>
             </ul>
@@ -212,7 +212,7 @@ https://templatemo.com/tm-591-villa-agency
       <div class="row">
         <div class="col-lg-10 offset-lg-1">
           <div class="video-frame">
-            <img src="assets/images/video-frame.jpg" alt="">
+            <img src={{asset("assets/images/video-frame.jpg")}} alt="">
             <a href="https://youtube.com" target="_blank"><i class="fa fa-play"></i></a>
           </div>
         </div>
@@ -287,7 +287,7 @@ https://templatemo.com/tm-591-villa-agency
                       </div>
                     </div>
                     <div class="col-lg-6">
-                      <img src="assets/images/deal-01.jpg" alt="">
+                      <img src={{ asset("assets/images/deal-01.jpg")}} alt="">
                     </div>
                     <div class="col-lg-3">
                       <h4>Informations supplémentaires sur le Bureau</h4>
@@ -312,7 +312,7 @@ https://templatemo.com/tm-591-villa-agency
                       </div>
                     </div>
                     <div class="col-lg-6">
-                      <img src="assets/images/deal-02.jpg" alt="">
+                      <img src={{asset("assets/images/deal-02.jpg")}} alt="">
                     </div>
                     <div class="col-lg-3">
                         <h4>Informations supplémentaires sur la salle de conférence</h4>
@@ -337,7 +337,7 @@ https://templatemo.com/tm-591-villa-agency
                       </div>
                     </div>
                     <div class="col-lg-6">
-                      <img src="assets/images/deal-03.jpg" alt="">
+                      <img src={{asset("assets/images/deal-03.jpg")}} alt="">
                     </div>
                     <div class="col-lg-3">
                         <h4>Informations supplémentaires sur la salle de Coworking</h4>

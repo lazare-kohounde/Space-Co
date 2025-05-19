@@ -27,7 +27,7 @@
             <li class="list-inline-item">
                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                     @csrf
-                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline" data-toggle="tooltip" data-placement="top" title="Deconnexion" >
+                    <button type="submit" class="btn btn-link p-0 m-0 align-baseline" data-toggle="tooltip" data-placement="top" title="Deconnexion">
                         <i class="dripicons-power text-danger" style="cursor:pointer;"></i>
                     </button>
                 </form>
@@ -49,11 +49,14 @@
                         <i class="fab fa-buromobelexperte"></i>Catégorie
                     </a>
                 </li>
+                <!-- {{-- Ce menu ne s'affiche que si l'utilisateur n'est PAS un "manager" --}} -->
+                @if (auth()->user()->usertype !== 'manager')
                 <li class="has-submenu">
                     <a href="{{ route('gestionnaire') }}" class="waves-effect">
                         <i class="mdi mdi-account-key"></i>Gestionnaire
                     </a>
                 </li>
+                @endif
                 <li class="has-submenu">
                     <a href="{{ route('reservation') }}" class="waves-effect">
                         <i class="mdi mdi-calendar-plus"></i>Reservation

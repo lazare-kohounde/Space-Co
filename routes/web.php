@@ -41,6 +41,9 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::get('/log-admin/categorie', [CategorieController::class, 'index'])->name('categorie');
     Route::get('/log-admin/gestionnaire', [ManagerController::class, 'index'])->name('gestionnaire');
     Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');
+    Route::get('/log-admin/detail-reservation/{id}', [ReservationController::class, 'detailReservation'])->name('reservation.detail');
+    Route::post('/log-admin/approved-reservation/{id}', [ReservationController::class, 'approuveReservation'])->name('reservation.approved');
+
     Route::get('/log-admin/salle', [RoomController::class, 'index'])->name('salleAdmin');
     
 
@@ -96,13 +99,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
     Route::get('/payment/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
     // Route::get('/paiement', [PaiementController::class, 'callback'])->name('payment.callback');
+    Route::get('/dashboard/stats', [adminController::class, 'stats'])->name('dashboard.stats');
 
-    // Page détail réservation
-    Route::get('/reservations/{reservation}', [ReservationController::class, 'show'])->name('reservations.details');
-    // Action pour annuler la réservation
-    Route::post('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
+    // // Page détail réservation
+    // Route::get('/reservations/{reservation}', [ReservationController::class, 'show'])->name('reservations.details');
+    // // Action pour annuler la réservation
+    // Route::post('/reservations/{reservation}/cancel', [ReservationController::class, 'cancel'])->name('reservations.cancel');
 
     Route::get('/membre', [clientController::class, 'membre'])->name('membre');
+    Route::get('/historique-reservation', [clientController::class, 'historiqueReservation'])->name('historique.reservation');
+    Route::get('/detail-reservation/{id}', [ReservationController::class, 'detailReservationClient'])->name('detail.reservation');
+    
+    Route::post('/cancelled-reservation/{id}', [ReservationController::class, 'annuleReservation'])->name('reservation.cancelled');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

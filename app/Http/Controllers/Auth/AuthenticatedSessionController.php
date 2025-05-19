@@ -31,6 +31,9 @@ class AuthenticatedSessionController extends Controller
         if ($request->user()->usertype === 'admin') {
             # code...
             return redirect()->intended(route('dashboard', absolute: false));
+        }elseif ($request->user()->usertype === 'manager') {
+            # code...
+            return redirect()->intended(route('dashboard', absolute: false));
         }
 
         return redirect()->intended(route('accueil', absolute: false));
@@ -51,7 +54,7 @@ class AuthenticatedSessionController extends Controller
     $request->session()->regenerateToken();
 
     // Redirection selon le type d'utilisateur
-    if ($user && in_array($user->usertype, ['admin', 'superadmin'])) {
+    if ($user && in_array($user->usertype, ['admin', 'manager'])) {
         return redirect()->route('connexion');
     }
 
