@@ -36,7 +36,7 @@
 
 
         <!-- Start right Content here -->
-        <div class="content-page" >
+        <div class="content-page">
             <!-- Start content -->
             <div class="content">
 
@@ -80,33 +80,33 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                    
-                                                @foreach($reservations as $index => $reservation)
-                                                <tr>
-                                                    <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
-                                                    <td>{{ $reservation['user_name'] ?? 'Utilisateur inconnu' }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($reservation['reservation_date'])->format('d/m/Y') }}</td>
-                                                    <td>{{ number_format($reservation['total_amount'], 0, ',', ' ') }} XOF</td>
-                                                    <td>
-                                                        <!-- <span class="badge badge-boxed badge-soft-warning p-2"> -->
-                                                        @if ($reservation['status'] =='pending')
+
+                                                    @foreach($reservations as $index => $reservation)
+                                                    <tr>
+                                                        <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
+                                                        <td>{{ $reservation['user_name'] ?? 'Utilisateur inconnu' }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($reservation['reservation_date'])->format('d/m/Y h:m') }}</td>
+                                                        <td>{{ number_format($reservation['total_amount'], 0, ',', ' ') }} XOF</td>
+                                                        <td>
+                                                            <!-- <span class="badge badge-boxed badge-soft-warning p-2"> -->
+                                                            @if ($reservation['status'] =='pending')
                                                             <span class="badge badge-boxed badge-soft-primary p-2">
-                                                                {{ ucfirst($reservation['status']) }}
+                                                                En attente
                                                             </span>
-                                                        @elseif ($reservation['status'] =='cancelled')
+                                                            @elseif ($reservation['status'] =='cancelled')
                                                             <span class="badge badge-boxed badge-soft-pink p-2">
-                                                                {{ ucfirst($reservation['status']) }}
+                                                                Annulée
                                                             </span>
-                                                        @elseif ($reservation['status'] =='approved')
-                                                            <span class="badge badge-boxed badge-soft-success p-2">
-                                                                {{ ucfirst($reservation['status']) }}
-                                                            </span>  
-                                                        @endif
-                                                        
-                                                    </td>
-                                                    <td><a href="{{ route('reservation.detail',$reservation['id']) }}" style="height: 3cm;"><i class="dripicons-view-list"></i></a></td>
-                                                </tr>
-                                                @endforeach
+                                                            @elseif ($reservation['status'] =='approved')
+                                                            <span class="badge badge-boxed badge-soft-success p-2" style="color: black;">
+                                                                Approuvée
+                                                            </span>
+                                                            @endif
+
+                                                        </td>
+                                                        <td><a href="{{ route('reservation.detail',$reservation['id']) }}" style="height: 3cm;"><i class="dripicons-view-list"></i></a></td>
+                                                    </tr>
+                                                    @endforeach
 
                                                 </tbody>
                                             </table>

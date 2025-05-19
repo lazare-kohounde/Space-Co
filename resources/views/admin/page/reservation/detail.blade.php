@@ -97,9 +97,9 @@
                                         </div><!--end table-responsive-->
                                         @if ($reservation['status'] =='pending')      
                                         <div class="pt-3 border-top text-right">
-                                         <form method="POST" action="{{ route('reservation.approved',$reservation['id']) }}">
+                                         <form method="POST" action="{{ route('reservation.approved',$reservation['id']) }}" onsubmit="return confirmCancel();">
                                                 @csrf
-                                                <button type="submit" class="list-group-item text-danger" style="font-weight:600;">
+                                                <button type="submit" class="list-group-item text-danger" style="font-weight:600;" >
                                                 <i class="fa fa-sign me-2"></i> Approuver
                                                 </button>
                                             </form>
@@ -132,6 +132,7 @@
     </div>
     <!-- END wrapper -->
 
+    
     <!-- jQuery  -->
     <script src={{ asset('admin/assets/js/jquery.min.js') }}></script>
     <script src={{ asset('admin/assets/js/popper.min.js') }}></script>
@@ -150,6 +151,22 @@
 
     <!-- App js -->
     <script src={{ asset('admin/assets/js/app.js') }}></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Empêche l'envoi immédiat
+
+                    if (confirm('Voulez-vous vraiment supprimer cette salle du panier ?')) {
+                        // Soumettre le formulaire parent
+                        this.closest('form').submit();
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

@@ -94,16 +94,16 @@
                             </thead>
                             <tbody>
                                 @if($reservations->count() > 0)
-                                    @foreach($reservations as $reservation)
+                                    @foreach($reservations as $index => $reservation)
                                     <tr>
-                                        <td>#{{ $reservation->id }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('d/m/Y') }}</td>
+                                        <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td>{{-- Affiche 001, 002, etc. --}}
+                                        <td>{{ \Carbon\Carbon::parse($reservation->ceated_at)->format('d/m/Y h:m') }}</td>
                                         <td>{{ number_format($reservation->total_amount, 0, ',', ' ') }} XOF</td>
                                         <td>
                                         @if($reservation->status == 'pending')
                                             <span class="badge bg-warning text-dark">En attente</span>
-                                        @elseif($reservation->status == 'completed')
-                                            <span class="badge bg-success">Terminée</span>
+                                        @elseif($reservation->status == 'approved')
+                                            <span class="badge bg-success">Approuvée</span>
                                         @elseif($reservation->status == 'cancelled')
                                             <span class="badge bg-secondary">Annulée</span>
                                         @else
@@ -111,7 +111,7 @@
                                         @endif
                                         </td>
                                         <td>
-                                        <a href="#" class="btn btn-sm btn-orange">Détails</a>
+                                        <a href="{{ route('detail.reservation',$reservation['id']) }}" class="btn btn-sm btn-orange">Détails</a>
                                         </td>
                                     </tr>
                                     @endforeach

@@ -108,6 +108,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/membre', [clientController::class, 'membre'])->name('membre');
     Route::get('/historique-reservation', [clientController::class, 'historiqueReservation'])->name('historique.reservation');
+    Route::get('/detail-reservation/{id}', [ReservationController::class, 'detailReservationClient'])->name('detail.reservation');
+    
+    Route::post('/cancelled-reservation/{id}', [ReservationController::class, 'annuleReservation'])->name('reservation.cancelled');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

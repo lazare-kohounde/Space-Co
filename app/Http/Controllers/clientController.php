@@ -129,6 +129,7 @@ class clientController extends Controller
         return view('client.paiement', compact('panier', 'total'));
     }
 
+    
 
     public function membre () {
 
