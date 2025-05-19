@@ -237,7 +237,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <img src="assets/images/deal-02.jpg" alt="">
+                                        <img src={{asset("assets/images/deal-02.jpg")}} alt="">
                                     </div>
                                     <div class="col-lg-3">
                                         <h4>Informations supplémentaires sur la salle de conférence</h4>
@@ -263,7 +263,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <img src="assets/images/deal-03.jpg" alt="">
+                                        <img src={{asset("assets/images/deal-03.jpg")}} alt="">
                                     </div>
                                     <div class="col-lg-3">
                                         <h4>Informations supplémentaires sur la salle de Coworking</h4>

@@ -112,12 +112,10 @@
               <button class="list-group-item active" data-bs-target="#profilContent" type="button" role="tab" aria-selected="true" aria-controls="profilContent">
                 <i class="fa fa-user me-2"></i> Mon Profil
               </button>
-              <button class="list-group-item" data-bs-target="#historiqueContent" type="button" role="tab" aria-selected="false" aria-controls="historiqueContent">
-                <i class="fa fa-history me-2"></i> Historique Réservations
-              </button>
+              
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="list-group-item text-danger" style="font-weight:600;">
+                <button type="submit" class="list-group-item" style="font-weight:600; ">
                   <i class="fa fa-sign-out-alt me-2"></i> Déconnexion
                 </button>
               </form>
@@ -198,52 +196,7 @@
             </form>
           </div>
 
-          <!-- Historique -->
-          <div class="dashboard-content d-none" id="historiqueContent" role="tabpanel" tabindex="0">
-            <h4 class="mb-4" style="color: #f35525">Historique des réservations</h4>
-            <div class="table-responsive">
-              <table class="table align-middle">
-                <thead>
-                  <tr>
-                    <th>ID Réservation</th>
-                    <th>Date</th>
-                    <th>Montant</th>
-                    <th>Statut</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @if($reservations->count() > 0)
-                    @foreach($reservations as $reservation)
-                      <tr>
-                        <td>#{{ $reservation->id }}</td>
-                        <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('d/m/Y') }}</td>
-                        <td>{{ number_format($reservation->total_amount, 0, ',', ' ') }} XOF</td>
-                        <td>
-                          @if($reservation->status == 'pending')
-                            <span class="badge bg-warning text-dark">En attente</span>
-                          @elseif($reservation->status == 'completed')
-                            <span class="badge bg-success">Terminée</span>
-                          @elseif($reservation->status == 'cancelled')
-                            <span class="badge bg-secondary">Annulée</span>
-                          @else
-                            <span class="badge bg-info">{{ $reservation->status }}</span>
-                          @endif
-                        </td>
-                        <td>
-                          <a href="#" class="btn btn-sm btn-orange">Détails</a>
-                        </td>
-                      </tr>
-                    @endforeach
-                  @else
-                    <tr>
-                      <td colspan="5" class="text-center">Aucune réservation trouvée</td>
-                    </tr>
-                  @endif
-                </tbody>
-              </table>
-            </div>
-          </div>
+         
 
         </div>
       </div>

@@ -92,11 +92,8 @@
                 @endforelse
             </div>
             <!-- Pagination -->
-            <div class="row">
-                <div class="">
-                    {{ $rooms->appends(['category' => $categoryId])->links() }}
-                </div>
-            </div>
+            {{ $rooms->appends(['category' => $categoryId])->links() }}
+            
         </div>
     </div>
 

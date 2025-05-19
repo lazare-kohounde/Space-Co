@@ -65,7 +65,7 @@ class clientController extends Controller
             $user = Auth::user();            
 
             // 2. Récupérer le statut et infos paiement depuis FedaPay (callback)
-            $amountPaid = array_sum(array_column($panier, 'montant')); // ou récupéré depuis la session 
+            $amountPaid = array_sum(array_column($panier, 'montant')) / 2; // ou récupéré depuis la session 
             $paymentMethod = 'FEDAPay';
             
             // 3. Calculer le total du panier si besoin
@@ -113,7 +113,7 @@ class clientController extends Controller
 
 
                 // Rediriger vers le profil avec un message de succès
-                return redirect()->route('membre')->with('success', 'Paiement réussi, cliquez sur Historique Réservations pour autres actions. , ' . $prenom . ' !');
+                return redirect()->route('historique.reservation')->with('success', 'Paiement réussi, cliquez sur Historique Réservations pour autres actions. , ' . $prenom . ' !');
 
                 } catch (\Exception $e) {
                     DB::rollBack();
@@ -133,19 +133,24 @@ class clientController extends Controller
     public function membre () {
 
         // Récupérer l'utilisateur connecté
-        $user = Auth::user();
+        
         
         // Récupérer ses réservations (triées par date de création, les plus récentes d'abord)
-        $reservations = \App\Models\Reservation::where('user_id', $user->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('client.membre', compact('user', 'reservations'));
+        
+        return view('client.membre');
     }
 
     //
     public function login_register () {
 
         return view('client.login_register');
+    }
+
+    public function historiqueReservation () {
+        $user = Auth::user();
+        $reservations = \App\Models\Reservation::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('client.historique', compact('user', 'reservations'));
     }
 }

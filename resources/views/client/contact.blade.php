@@ -85,7 +85,7 @@ https://templatemo.com/tm-591-villa-agency
           </div>
         </div>
         <div class="col-lg-6">
-          <form id="contact-form" action="" method="post">
+          <form id="contact-form" action="https://formspree.io/f/xjkwljwb" method="post">
             <div class="row">
               <div class="col-lg-12">
                 <fieldset>

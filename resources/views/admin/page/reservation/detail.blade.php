@@ -51,7 +51,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Réservation</h4>
+                                    <h4 class="page-title">Réservation @if ($reservation['status'] =='pending') en cours @elseif ($reservation['status'] =='cancelled') annulée @elseif ($reservation['status'] =='approved') approuvée  @endif</h4>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="flex justify-between">
-                                            <h5 class="header-title pb-3 mt-0">Listes des réservations
+                                            <h5 class="header-title pb-3 mt-0">Les details de la réservation
                                             </h5>
 
                                         </div>
@@ -71,50 +71,40 @@
                                             <table class="table table-hover mb-0">
                                                 <thead>
                                                     <tr class="align-self-center">
-                                                        <th>Réservation</th>
-                                                        <th>Auteur</th>
-                                                        <th>Date de la réservation</th>
+                                                        <th>#</th>
+                                                        <th>Salle</th>
+                                                        <th>Date début</th>
+                                                        <th>Date fin</th>
                                                         <th>Montant</th>
-                                                        <th>Etat</th>
-                                                        <th>Action</th>
+                                                        <th>Images</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                     
-                                                @foreach($reservations as $index => $reservation)
+                                                @foreach($reservation_details_info as $index => $reservation_el)
                                                 <tr>
                                                     <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
-                                                    <td>{{ $reservation['user_name'] ?? 'Utilisateur inconnu' }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($reservation['reservation_date'])->format('d/m/Y') }}</td>
-                                                    <td>{{ number_format($reservation['total_amount'], 0, ',', ' ') }} XOF</td>
-                                                    <td>
-                                                        <!-- <span class="badge badge-boxed badge-soft-warning p-2"> -->
-                                                        @if ($reservation['status'] =='pending')
-                                                            <span class="badge badge-boxed badge-soft-primary p-2">
-                                                                {{ ucfirst($reservation['status']) }}
-                                                            </span>
-                                                        @elseif ($reservation['status'] =='cancelled')
-                                                            <span class="badge badge-boxed badge-soft-pink p-2">
-                                                                {{ ucfirst($reservation['status']) }}
-                                                            </span>
-                                                        @elseif ($reservation['status'] =='approved')
-                                                            <span class="badge badge-boxed badge-soft-success p-2">
-                                                                {{ ucfirst($reservation['status']) }}
-                                                            </span>  
-                                                        @endif
-                                                        
-                                                    </td>
-                                                    <td><a href="{{ route('reservation.detail',$reservation['id']) }}" style="height: 3cm;"><i class="dripicons-view-list"></i></a></td>
+                                                    <td>{{ $reservation_el['room_name'] ?? 'Salle inconnu' }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($reservation_el['date_debut'])->format('d/m/Y  h:m') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($reservation_el['date_fin'])->format('d/m/Y h:m') }}</td>
+                                                    <td>{{ number_format($reservation_el['prix'], 0, ',', ' ') }} XOF</td>
+                                                    <td><img src="{{ asset($reservation_el['img']) }}" alt="ceec" width="50" class="img-thumbnail m-1"></td>
                                                 </tr>
                                                 @endforeach
 
                                                 </tbody>
                                             </table>
                                         </div><!--end table-responsive-->
+                                        @if ($reservation['status'] =='pending')      
                                         <div class="pt-3 border-top text-right">
-                                            <a href="#" class="text-primary">Tous voir <i
-                                                    class="mdi mdi-arrow-right"></i></a>
+                                         <form method="POST" action="{{ route('reservation.approved',$reservation['id']) }}">
+                                                @csrf
+                                                <button type="submit" class="list-group-item text-danger" style="font-weight:600;">
+                                                <i class="fa fa-sign me-2"></i> Approuver
+                                                </button>
+                                            </form>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
