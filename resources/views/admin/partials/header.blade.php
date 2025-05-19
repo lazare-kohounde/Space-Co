@@ -103,7 +103,7 @@
                 </button>
             </li>
             <li class="hide-phone app-search ">
-            <h6 class="header-title mb-2 pt-1 ms-2">Version 1.0</h6>
+            <h6 class="header-title mb-2 pt-1 ms-2">Version 1.2.0</h6>
             </li>
         </ul>
 

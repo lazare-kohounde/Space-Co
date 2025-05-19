@@ -18,6 +18,8 @@ class IsAdmin
         // Vérifie si l'utilisateur est connecté et est admin
         if (auth()->check() && auth()->user()->usertype === 'admin') {
             return $next($request);
+        }elseif (auth()->check() && auth()->user()->usertype === 'manager') {
+            return $next($request);
         }
     
         // Déconnecte l'utilisateur (optionnel)

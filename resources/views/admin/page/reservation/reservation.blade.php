@@ -63,103 +63,141 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="flex justify-between">
-                                            <h5 class="header-title pb-3 mt-0">Listes des réservations
-                                            </h5>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-star mr-4 align-items-center mb-3">
+                                                    <h5 class="header-title mb-0 mr-4">Listes des réservations</h5>
+                                                    <input type="text" id="searchInput" class="form-control w-auto" placeholder="Rechercher une réservations..." style="min-width: 250px;">
+                                                </div>
 
-                                        </div>
-                                        <div class="table-responsive">
-                                            <table class="table table-hover mb-0">
-                                                <thead>
-                                                    <tr class="align-self-center">
-                                                        <th>Réservation</th>
-                                                        <th>Auteur</th>
-                                                        <th>Date de la réservation</th>
-                                                        <th>Montant</th>
-                                                        <th>Etat</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover mb-0">
+                                                    <thead>
+                                                        <tr class="align-self-center">
+                                                            <th>Réservation</th>
+                                                            <th>Auteur</th>
+                                                            <th>Date de la réservation</th>
+                                                            <th>Montant</th>
+                                                            <th>Etat</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
 
-                                                    @foreach($reservations as $index => $reservation)
-                                                    <tr>
-                                                        <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
-                                                        <td>{{ $reservation['user_name'] ?? 'Utilisateur inconnu' }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($reservation['reservation_date'])->format('d/m/Y h:m') }}</td>
-                                                        <td>{{ number_format($reservation['total_amount'], 0, ',', ' ') }} XOF</td>
-                                                        <td>
-                                                            <!-- <span class="badge badge-boxed badge-soft-warning p-2"> -->
-                                                            @if ($reservation['status'] =='pending')
-                                                            <span class="badge badge-boxed badge-soft-primary p-2">
-                                                                En attente
-                                                            </span>
-                                                            @elseif ($reservation['status'] =='cancelled')
-                                                            <span class="badge badge-boxed badge-soft-pink p-2">
-                                                                Annulée
-                                                            </span>
-                                                            @elseif ($reservation['status'] =='approved')
-                                                            <span class="badge badge-boxed badge-soft-success p-2" style="color: black;">
-                                                                Approuvée
-                                                            </span>
-                                                            @endif
+                                                        @foreach($reservations as $index => $reservation)
+                                                        <tr>
+                                                            <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
+                                                            <td>{{ $reservation['user_name'] ?? 'Utilisateur inconnu' }}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($reservation['reservation_date'])->format('d/m/Y h:m') }}</td>
+                                                            <td>{{ number_format($reservation['total_amount'], 0, ',', ' ') }} XOF</td>
+                                                            <td>
+                                                                <!-- <span class="badge badge-boxed badge-soft-warning p-2"> -->
+                                                                @if ($reservation['status'] =='pending')
+                                                                <span class="badge badge-boxed badge-soft-primary p-2">
+                                                                    En attente
+                                                                </span>
+                                                                @elseif ($reservation['status'] =='cancelled')
+                                                                <span class="badge badge-boxed badge-soft-pink p-2">
+                                                                    Annulée
+                                                                </span>
+                                                                @elseif ($reservation['status'] =='approved')
+                                                                <span class="badge badge-boxed badge-soft-success p-2" style="color: black;">
+                                                                    Approuvée
+                                                                </span>
+                                                                @endif
 
-                                                        </td>
-                                                        <td><a href="{{ route('reservation.detail',$reservation['id']) }}" style="height: 3cm;"><i class="dripicons-view-list"></i></a></td>
-                                                    </tr>
-                                                    @endforeach
+                                                            </td>
+                                                            <td><a href="{{ route('reservation.detail',$reservation['id']) }}" style="height: 3cm;"><i class="dripicons-view-list"></i></a></td>
+                                                        </tr>
+                                                        @endforeach
 
-                                                </tbody>
-                                            </table>
-                                        </div><!--end table-responsive-->
-                                        <div class="pt-3 border-top text-right">
-                                            <a href="#" class="text-primary">Tous voir <i
-                                                    class="mdi mdi-arrow-right"></i></a>
+                                                    </tbody>
+                                                </table>
+                                            </div><!--end table-responsive-->
+                                            <div class="pt-3 border-top text-right">
+                                                <a href="#" class="text-primary">Tous voir <i
+                                                        class="mdi mdi-arrow-right"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Contenu proprement dit -->
+                            <!-- Contenu proprement dit -->
 
+                        </div>
+                        <!-- container -->
                     </div>
-                    <!-- container -->
+                    <!-- Page content Wrapper -->
+
                 </div>
-                <!-- Page content Wrapper -->
+                <!-- content -->
+
+
+
+                {{-- footer --}}
+                @include ('admin.partials.footer')
+                {{-- footer --}}
 
             </div>
-            <!-- content -->
+            <!-- End Right content here -->
 
-
-
-            {{-- footer --}}
-            @include ('admin.partials.footer')
-            {{-- footer --}}
 
         </div>
-        <!-- End Right content here -->
+        <!-- END wrapper -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('searchInput');
+                const tableBody = document.querySelector('table tbody');
 
+                searchInput.addEventListener('keyup', function() {
+                    const filter = this.value.toLowerCase();
+                    const rows = tableBody.querySelectorAll('tr');
+                    let visibleCount = 0;
 
-    </div>
-    <!-- END wrapper -->
+                    rows.forEach(row => {
+                        const cellsText = row.textContent.toLowerCase();
+                        if (cellsText.includes(filter)) {
+                            row.style.display = '';
+                            visibleCount++;
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
 
-    <!-- jQuery  -->
-    <script src={{ asset('admin/assets/js/jquery.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/popper.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/bootstrap.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/modernizr.min.js') }}></script>
-    <script src={{ asset('admin/assets/js/waves.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.slimscroll.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.nicescroll.js') }}></script>
-    <script src={{ asset('admin/assets/js/jquery.scrollTo.min.js') }}></script>
+                    // Optionnel : afficher un message si aucun résultat
+                    let noResultRow = document.getElementById('noResultRow');
+                    if (visibleCount === 0) {
+                        if (!noResultRow) {
+                            noResultRow = document.createElement('tr');
+                            noResultRow.id = 'noResultRow';
+                            noResultRow.innerHTML = `<td colspan="3" class="text-center">Aucun résultat trouvé</td>`;
+                            tableBody.appendChild(noResultRow);
+                        }
+                    } else if (noResultRow) {
+                        noResultRow.remove();
+                    }
+                });
+            });
+        </script>
 
-    <!-- KNOB JS -->
-    <script src={{ asset('admin/assets/plugins/jquery-knob/excanvas.js') }}></script>
-    <script src={{ asset('admin/assets/plugins/jquery-knob/jquery.knob.js') }}></script>
-    <script src={{ asset('admin/assets/plugins/chart.js/chart.min.js') }}></script>
-    <script src={{ asset('admin/assets/pages/dashboard.js') }}></script>
+        <!-- jQuery  -->
+        <script src={{ asset('admin/assets/js/jquery.min.js') }}></script>
+        <script src={{ asset('admin/assets/js/popper.min.js') }}></script>
+        <script src={{ asset('admin/assets/js/bootstrap.min.js') }}></script>
+        <script src={{ asset('admin/assets/js/modernizr.min.js') }}></script>
+        <script src={{ asset('admin/assets/js/waves.js') }}></script>
+        <script src={{ asset('admin/assets/js/jquery.slimscroll.js') }}></script>
+        <script src={{ asset('admin/assets/js/jquery.nicescroll.js') }}></script>
+        <script src={{ asset('admin/assets/js/jquery.scrollTo.min.js') }}></script>
 
-    <!-- App js -->
-    <script src={{ asset('admin/assets/js/app.js') }}></script>
+        <!-- KNOB JS -->
+        <script src={{ asset('admin/assets/plugins/jquery-knob/excanvas.js') }}></script>
+        <script src={{ asset('admin/assets/plugins/jquery-knob/jquery.knob.js') }}></script>
+        <script src={{ asset('admin/assets/plugins/chart.js/chart.min.js') }}></script>
+        <script src={{ asset('admin/assets/pages/dashboard.js') }}></script>
+
+        <!-- App js -->
+        <script src={{ asset('admin/assets/js/app.js') }}></script>
 
 </body>
 

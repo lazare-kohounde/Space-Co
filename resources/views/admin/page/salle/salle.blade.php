@@ -76,16 +76,16 @@
 
                         <!-- Messages Laravel -->
                         @if (session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
+                        <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
                         @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                         @endif
 
                         <!-- Contenu proprement dit -->
@@ -93,7 +93,14 @@
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="header-title pb-3 mt-0">Listes des salles</h5>
+                                        
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-star mr-4 align-items-center mb-3">
+                                                <h5 class="header-title mb-0 mr-4">Listes des salles</h5>
+                                                <input type="text" id="searchInput" class="form-control w-auto" placeholder="Rechercher une salles..." style="min-width: 250px;">
+                                            </div>
+
+                                        </div>
                                         <div class="table-responsive">
                                             <table class="table table-hover mb-0">
                                                 <thead>
@@ -108,215 +115,215 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($rooms as $room)
-                                                        <tr>
-                                                            <td>{{ $room->name }}</td>
-                                                            <td>{{ $room->category->name }}</td>
-                                                            <td>{{ number_format($room->price, 2, ',', ' ') }} XOF</td>
-                                                            <td>
-                                                                @if ($room->options === 'oui')
-                                                                    Oui
-                                                                @elseif($room->options === 'non')
-                                                                    Non
-                                                                @else
-                                                                    Aucun
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                @if ($room->image)
-                                                                    <a href="#" data-toggle="modal"
-                                                                        data-target="#carouselModal{{ $room->id }}">
-                                                                        @foreach (json_decode($room->image) as $image)
-                                                                            <img src="{{ asset($image) }}"
-                                                                                width="50"
-                                                                                class="img-thumbnail m-1">
-                                                                        @endforeach
-                                                                    </a>
+                                                    <tr>
+                                                        <td>{{ $room->name }}</td>
+                                                        <td>{{ $room->category->name }}</td>
+                                                        <td>{{ number_format($room->price, 2, ',', ' ') }} XOF</td>
+                                                        <td>
+                                                            @if ($room->options === 'oui')
+                                                            Oui
+                                                            @elseif($room->options === 'non')
+                                                            Non
+                                                            @else
+                                                            Aucun
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($room->image)
+                                                            <a href="#" data-toggle="modal"
+                                                                data-target="#carouselModal{{ $room->id }}">
+                                                                @foreach (json_decode($room->image) as $image)
+                                                                <img src="{{ asset($image) }}"
+                                                                    width="50"
+                                                                    class="img-thumbnail m-1">
+                                                                @endforeach
+                                                            </a>
 
-                                                                    <!-- Modal avec Carousel -->
-                                                                    <div class="modal fade"
-                                                                        id="carouselModal{{ $room->id }}"
-                                                                        tabindex="-1" role="dialog"
-                                                                        aria-labelledby="carouselLabel{{ $room->id }}"
-                                                                        aria-hidden="true">
-                                                                        <div class="modal-dialog modal-lg"
-                                                                            role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title">Images de la
-                                                                                        salle : {{ $room->name }}
-                                                                                    </h5>
-                                                                                    <button type="button"
-                                                                                        class="close"
-                                                                                        data-dismiss="modal"
-                                                                                        aria-label="Fermer">
-                                                                                        <span
-                                                                                            aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <div id="carousel{{ $room->id }}"
-                                                                                        class="carousel slide"
-                                                                                        data-ride="carousel">
-                                                                                        <div class="carousel-inner">
-                                                                                            @foreach (json_decode($room->image) as $key => $image)
-                                                                                                <div
-                                                                                                    class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                                                                                    <img class="d-block w-100"
-                                                                                                        src="{{ asset($image) }}"
-                                                                                                        alt="Image {{ $key + 1 }}">
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        </div>
-                                                                                        <a class="carousel-control-prev"
-                                                                                            href="#carousel{{ $room->id }}"
-                                                                                            role="button"
-                                                                                            data-slide="prev">
-                                                                                            <span
-                                                                                                class="carousel-control-prev-icon"
-                                                                                                aria-hidden="true"></span>
-                                                                                            <span
-                                                                                                class="sr-only">Précédent</span>
-                                                                                        </a>
-                                                                                        <a class="carousel-control-next"
-                                                                                            href="#carousel{{ $room->id }}"
-                                                                                            role="button"
-                                                                                            data-slide="next">
-                                                                                            <span
-                                                                                                class="carousel-control-next-icon"
-                                                                                                aria-hidden="true"></span>
-                                                                                            <span
-                                                                                                class="sr-only">Suivant</span>
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                @else
-                                                                    Aucune image
-                                                                @endif
-                                                            </td>
-
-
-                                                            <td>
-                                                                <button type="button" class="btn btn-sm btn-success"
-                                                                    data-toggle="modal"
-                                                                    data-target="#editModal{{ $room->id }}">
-                                                                    <i class="fas fa-edit"></i>
-                                                                </button>
-                                                                <form action="{{ route('rooms.destroy', $room->id) }}"
-                                                                    method="POST" style="display:inline">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-sm btn-danger"
-                                                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')">
-                                                                        <i class="fas fa-trash-alt"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-
-                                                        <!-- Edit Modal -->
-                                                        <div class="modal fade" id="editModal{{ $room->id }}"
-                                                            tabindex="-1" role="dialog" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title">Modifier la salle</h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal"
-                                                                            aria-hidden="true">×</button>
-                                                                    </div>
-                                                                    <form
-                                                                        action="{{ route('rooms.update', $room->id) }}"
-                                                                        method="POST" enctype="multipart/form-data">
-                                                                        @csrf
-                                                                        @method('PUT')
-                                                                        <div class="modal-body">
-                                                                            <div class="form-group">
-                                                                                <label>Nom</label>
-                                                                                <input type="text" name="name"
-                                                                                    class="form-control"
-                                                                                    value="{{ $room->name }}"
-                                                                                    required>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <label>Catégorie</label>
-                                                                                <select name="category_id"
-                                                                                    class="form-control" required>
-                                                                                    @foreach (App\Models\Categorie::all() as $category)
-                                                                                        <option
-                                                                                            value="{{ $category->id }}"
-                                                                                            {{ $room->category_id == $category->id ? 'selected' : '' }}>
-                                                                                            {{ $category->name }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <label>Prix</label>
-                                                                                <input type="number" step="0.01"
-                                                                                    name="price"
-                                                                                    class="form-control"
-                                                                                    value="{{ $room->price }}"
-                                                                                    required>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <label>Équipements</label>
-                                                                                <select name="options"
-                                                                                    class="form-control" required>
-                                                                                    <option value="oui"
-                                                                                        {{ $room->options === 'oui' ? 'selected' : '' }}>
-                                                                                        Oui</option>
-                                                                                    <option value="non"
-                                                                                        {{ $room->options === 'non' ? 'selected' : '' }}>
-                                                                                        Non</option>
-                                                                                </select>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <label>Description</label>
-                                                                                <textarea name="description" class="form-control" rows="3" required>{{ $room->description }}</textarea>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <label>Images actuelles</label>
-                                                                                <div class="row">
-                                                                                    @if ($room->image)
-                                                                                        @foreach (json_decode($room->image) as $image)
-                                                                                            <div class="col-md-3 mb-2">
-                                                                                                <img src="{{ $image }}"
-                                                                                                    class="img-fluid">
-                                                                                            </div>
-                                                                                        @endforeach
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <label>Nouvelles images (laisser vide
-                                                                                    pour conserver les images
-                                                                                    actuelles)</label>
-                                                                                <input type="file" name="images[]"
-                                                                                    class="form-control-file" multiple>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
+                                                            <!-- Modal avec Carousel -->
+                                                            <div class="modal fade"
+                                                                id="carouselModal{{ $room->id }}"
+                                                                tabindex="-1" role="dialog"
+                                                                aria-labelledby="carouselLabel{{ $room->id }}"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg"
+                                                                    role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title">Images de la
+                                                                                salle : {{ $room->name }}
+                                                                            </h5>
                                                                             <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-dismiss="modal">Annuler</button>
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">Mettre à
-                                                                                jour</button>
+                                                                                class="close"
+                                                                                data-dismiss="modal"
+                                                                                aria-label="Fermer">
+                                                                                <span
+                                                                                    aria-hidden="true">&times;</span>
+                                                                            </button>
                                                                         </div>
-                                                                    </form>
+                                                                        <div class="modal-body">
+                                                                            <div id="carousel{{ $room->id }}"
+                                                                                class="carousel slide"
+                                                                                data-ride="carousel">
+                                                                                <div class="carousel-inner">
+                                                                                    @foreach (json_decode($room->image) as $key => $image)
+                                                                                    <div
+                                                                                        class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                                                                                        <img class="d-block w-100"
+                                                                                            src="{{ asset($image) }}"
+                                                                                            alt="Image {{ $key + 1 }}">
+                                                                                    </div>
+                                                                                    @endforeach
+                                                                                </div>
+                                                                                <a class="carousel-control-prev"
+                                                                                    href="#carousel{{ $room->id }}"
+                                                                                    role="button"
+                                                                                    data-slide="prev">
+                                                                                    <span
+                                                                                        class="carousel-control-prev-icon"
+                                                                                        aria-hidden="true"></span>
+                                                                                    <span
+                                                                                        class="sr-only">Précédent</span>
+                                                                                </a>
+                                                                                <a class="carousel-control-next"
+                                                                                    href="#carousel{{ $room->id }}"
+                                                                                    role="button"
+                                                                                    data-slide="next">
+                                                                                    <span
+                                                                                        class="carousel-control-next-icon"
+                                                                                        aria-hidden="true"></span>
+                                                                                    <span
+                                                                                        class="sr-only">Suivant</span>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                            @else
+                                                            Aucune image
+                                                            @endif
+                                                        </td>
+
+
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-success"
+                                                                data-toggle="modal"
+                                                                data-target="#editModal{{ $room->id }}">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <form action="{{ route('rooms.destroy', $room->id) }}"
+                                                                method="POST" style="display:inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-danger"
+                                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- Edit Modal -->
+                                                    <div class="modal fade" id="editModal{{ $room->id }}"
+                                                        tabindex="-1" role="dialog" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Modifier la salle</h5>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal"
+                                                                        aria-hidden="true">×</button>
+                                                                </div>
+                                                                <form
+                                                                    action="{{ route('rooms.update', $room->id) }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group">
+                                                                            <label>Nom</label>
+                                                                            <input type="text" name="name"
+                                                                                class="form-control"
+                                                                                value="{{ $room->name }}"
+                                                                                required>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Catégorie</label>
+                                                                            <select name="category_id"
+                                                                                class="form-control" required>
+                                                                                @foreach (App\Models\Categorie::all() as $category)
+                                                                                <option
+                                                                                    value="{{ $category->id }}"
+                                                                                    {{ $room->category_id == $category->id ? 'selected' : '' }}>
+                                                                                    {{ $category->name }}
+                                                                                </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Prix</label>
+                                                                            <input type="number" step="0.01"
+                                                                                name="price"
+                                                                                class="form-control"
+                                                                                value="{{ $room->price }}"
+                                                                                required>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Équipements</label>
+                                                                            <select name="options"
+                                                                                class="form-control" required>
+                                                                                <option value="oui"
+                                                                                    {{ $room->options === 'oui' ? 'selected' : '' }}>
+                                                                                    Oui</option>
+                                                                                <option value="non"
+                                                                                    {{ $room->options === 'non' ? 'selected' : '' }}>
+                                                                                    Non</option>
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Description</label>
+                                                                            <textarea name="description" class="form-control" rows="3" required>{{ $room->description }}</textarea>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Images actuelles</label>
+                                                                            <div class="row">
+                                                                                @if ($room->image)
+                                                                                @foreach (json_decode($room->image) as $image)
+                                                                                <div class="col-md-3 mb-2">
+                                                                                    <img src="{{ $image }}"
+                                                                                        class="img-fluid">
+                                                                                </div>
+                                                                                @endforeach
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label>Nouvelles images (laisser vide
+                                                                                pour conserver les images
+                                                                                actuelles)</label>
+                                                                            <input type="file" name="images[]"
+                                                                                class="form-control-file" multiple>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary"
+                                                                            data-dismiss="modal">Annuler</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Mettre à
+                                                                            jour</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
                                                         </div>
+                                                    </div>
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -355,8 +362,8 @@
                                                         <option value="">-- Sélectionnez une catégorie --
                                                         </option>
                                                         @foreach (App\Models\Categorie::all() as $category)
-                                                            <option value="{{ $category->id }}">{{ $category->name }}
-                                                            </option>
+                                                        <option value="{{ $category->id }}">{{ $category->name }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -407,6 +414,43 @@
             @include ('admin.partials.footer')
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const tableBody = document.querySelector('table tbody');
+
+            searchInput.addEventListener('keyup', function() {
+                const filter = this.value.toLowerCase();
+                const rows = tableBody.querySelectorAll('tr');
+                let visibleCount = 0;
+
+                rows.forEach(row => {
+                    const cellsText = row.textContent.toLowerCase();
+                    if (cellsText.includes(filter)) {
+                        row.style.display = '';
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                // Optionnel : afficher un message si aucun résultat
+                let noResultRow = document.getElementById('noResultRow');
+                if (visibleCount === 0) {
+                    if (!noResultRow) {
+                        noResultRow = document.createElement('tr');
+                        noResultRow.id = 'noResultRow';
+                        noResultRow.innerHTML = `<td colspan="3" class="text-center">Aucun résultat trouvé</td>`;
+                        tableBody.appendChild(noResultRow);
+                    }
+                } else if (noResultRow) {
+                    noResultRow.remove();
+                }
+            });
+        });
+    </script>
+
 
     <!-- JS -->
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>

@@ -52,23 +52,26 @@
 
                         <!-- Messages Laravel -->
                         @if(session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
+                        <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
                         @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                         @endif
 
                         <div class="row mt-2">
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="header-title pb-3 mt-0">Listes des gestionnaires</h5>
+                                        <div class="d-flex justify-content-star mr-4 align-items-center mb-3">
+                                        <h5 class="header-title mb-0 mr-4">Listes des gestionnaires</h5>
+                                        <input type="text" id="searchInput" class="form-control w-auto" placeholder="Rechercher un gestionnaires..." style="min-width: 250px;">
+                                    </div>
                                         <div class="table-responsive">
                                             <table class="table table-hover mb-0">
                                                 <thead>
@@ -140,7 +143,7 @@
                                                                             <input type="text" name="phone" class="form-control" value="{{ $manager->phone }}" required>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label>Usertype</label>
+                                                                            <label>Type</label>
                                                                             <select name="usertype" class="form-control" required>
                                                                                 <option value="manager" {{ $manager->usertype == 'manager' ? 'selected' : '' }}>Manager</option>
                                                                                 <option value="user" {{ $manager->usertype == 'user' ? 'selected' : '' }}>User</option>
@@ -168,8 +171,8 @@
                                                 </tbody>
                                             </table>
                                             <div class="pt-3 border-top text-right">
-                                            <a href="#" class="text-primary">Tous voir <i class="mdi mdi-arrow-right"></i></a>
-                                        </div>
+                                                <a href="#" class="text-primary">Tous voir <i class="mdi mdi-arrow-right"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +210,7 @@
                                                     <input type="text" name="phone" class="form-control" required placeholder="Numéro de téléphone">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Usertype</label>
+                                                    <label>Type</label>
                                                     <select name="usertype" class="form-control" required>
                                                         <option value="">-- Sélectionnez --</option>
                                                         <option value="manager" selected>Manager</option>
@@ -241,6 +244,43 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const tableBody = document.querySelector('table tbody');
+
+            searchInput.addEventListener('keyup', function() {
+                const filter = this.value.toLowerCase();
+                const rows = tableBody.querySelectorAll('tr');
+                let visibleCount = 0;
+
+                rows.forEach(row => {
+                    const cellsText = row.textContent.toLowerCase();
+                    if (cellsText.includes(filter)) {
+                        row.style.display = '';
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                // Optionnel : afficher un message si aucun résultat
+                let noResultRow = document.getElementById('noResultRow');
+                if (visibleCount === 0) {
+                    if (!noResultRow) {
+                        noResultRow = document.createElement('tr');
+                        noResultRow.id = 'noResultRow';
+                        noResultRow.innerHTML = `<td colspan="3" class="text-center">Aucun résultat trouvé</td>`;
+                        tableBody.appendChild(noResultRow);
+                    }
+                } else if (noResultRow) {
+                    noResultRow.remove();
+                }
+            });
+        });
+    </script>
+
+
     <!-- JS -->
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/popper.min.js') }}"></script>
@@ -257,4 +297,5 @@
     <script src="{{ asset('admin/assets/js/app.js') }}"></script>
 
 </body>
+
 </html>
