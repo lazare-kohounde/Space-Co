@@ -97,7 +97,7 @@
                                     @foreach($reservations as $index => $reservation)
                                     <tr>
                                         <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td>{{-- Affiche 001, 002, etc. --}}
-                                        <td>{{ \Carbon\Carbon::parse($reservation->ceated_at)->format('d/m/Y h:m') }}</td>
+                                        <td>{{ $reservation->created_at }}</td>
                                         <td>{{ number_format($reservation->total_amount, 0, ',', ' ') }} XOF</td>
                                         <td>
                                         @if($reservation->status == 'pending')

@@ -88,7 +88,7 @@
                                                         <tr>
                                                             <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
                                                             <td>{{ $reservation['user_name'] ?? 'Utilisateur inconnu' }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($reservation['reservation_date'])->format('d/m/Y h:m') }}</td>
+                                                            <td>{{ $reservation['reservation_date'] }}</td>
                                                             <td>{{ number_format($reservation['total_amount'], 0, ',', ' ') }} XOF</td>
                                                             <td>
                                                                 <!-- <span class="badge badge-boxed badge-soft-warning p-2"> -->

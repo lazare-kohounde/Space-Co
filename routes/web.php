@@ -26,6 +26,9 @@ Route::get('/paniers', [clientController::class, 'panier'])->name('panier');
 Route::get('/connexion', [clientController::class, 'connexion'])->name('connexion');
 Route::get('/salles/{id}', [RoomController::class, 'salledetail'])->name('salledetails');
 
+Route::get('/rooms/{room}/reserved-slots', [ReservationController::class, 'getReservedSlots']);
+
+
 
 Route::get('/panier', [PanierController::class, 'index'])->name('panier');
 Route::post('/panier/ajouter', [PanierController::class, 'ajouterAuPanier'])->name('panier.ajouter');
