@@ -93,7 +93,7 @@
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        
+
                                         <div class="card-body">
                                             <div class="d-flex justify-content-star mr-4 align-items-center mb-3">
                                                 <h5 class="header-title mb-0 mr-4">Listes des salles</h5>
