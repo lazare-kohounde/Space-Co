@@ -97,6 +97,8 @@
                                                 <tbody>
 
                                                     @foreach($categories as $category)
+                                                    
+                                                    
                                                     <tr>
                                                         <td>{{ $category->name }}</td>
                                                         <td>{{ $category->description }}</td>
@@ -119,41 +121,41 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- Edit Modal -->
+                                                    <div class="modal fade" id="editCategoryModal{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel{{ $category->id }}" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="editCategoryModalLabel{{ $category->id }}">Modifier la catégorie</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form action="{{ route('categories.update', $category->id) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <div class="form-group">
+                                                                            <label>Nom</label>
+                                                                            <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Description</label>
+                                                                            <textarea name="description" class="form-control" rows="5" required>{{ $category->description }}</textarea>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                                            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div><!--end table-responsive-->
                                         <div class="pt-3 border-top text-right">
                                             <a href="#" class="text-primary">Tous voir <i class="mdi mdi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Edit Modal -->
-                            <div class="modal fade" id="editCategoryModal{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel{{ $category->id }}" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="editCategoryModalLabel{{ $category->id }}">Modifier la catégorie</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ route('categories.update', $category->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="form-group">
-                                                    <label>Nom</label>
-                                                    <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Description</label>
-                                                    <textarea name="description" class="form-control" rows="5" required>{{ $category->description }}</textarea>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                                                </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
