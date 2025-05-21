@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -27,32 +27,35 @@ class PanierController extends Controller
                 'montant' => 'required|numeric',
                 'image' => 'required|string',
             ]);
-
+            // dd($request);
             $panier = session()->get('panier', []);
-
+            
             $panier[] = [
                 'id' => $request->id,
                 'nom' => $request->nom,
                 'adresse' => $request->adresse,
-                'date_debut' => $request->date_debut,
-                'date_fin' => $request->date_fin,
+                'date_debut' => Carbon::parse($request->date_debut)->format('Y-m-d H:i'),
+                'date_fin'   => Carbon::parse($request->date_fin)->format('Y-m-d H:i'),
                 'option' => $request->option,
                 'montant' => $request->montant,
                 'image' => $request->image,
             ];
-
+            
             session()->put('panier', $panier);
-
+            
             return redirect()->route('panier')->with('success', 'Salle ajoutée au panier.');
+            
         }
-
-    public function supprimer($id)
-    {
-        $panier = Session::get('panier', []);
-        $panier = array_filter($panier, fn ($item) => $item['id'] != $id);
-
-        Session::put('panier', $panier);
-
-        return redirect()->route('panier')->with('success', 'Salle retirée du panier.');
+        
+        public function supprimer($id)
+        {
+            $panier = Session::get('panier', []);
+            $panier = array_filter($panier, fn ($item) => $item['id'] != $id);
+            
+            Session::put('panier', $panier);
+            
+            return redirect()->route('panier')->with('success', 'Salle retirée du panier.');
+        }
     }
-}
+    
+    
