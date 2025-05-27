@@ -89,6 +89,7 @@
                                             <table class="table table-hover mb-0">
                                                 <thead>
                                                     <tr class="align-self-center">
+                                                        <th>Catégorie</th>
                                                         <th>Nom</th>
                                                         <th>Description</th>
                                                         <th>Actions</th>
