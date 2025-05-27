@@ -85,8 +85,8 @@
                                                 <tr>
                                                     <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
                                                     <td>{{ $reservation_el['room_name'] ?? 'Salle inconnu' }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($reservation_el['date_debut'])->format('d/m/Y  h:m') }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($reservation_el['date_fin'])->format('d/m/Y h:m') }}</td>
+                                                    <td>{{$reservation_el['date_debut'] }}</td>
+                                                    <td>{{$reservation_el['date_fin'] }}</td>
                                                     <td>{{ number_format($reservation_el['prix'], 0, ',', ' ') }} XOF</td>
                                                     <td><img src="{{ asset($reservation_el['img']) }}" alt="ceec" width="50" class="img-thumbnail m-1"></td>
                                                 </tr>

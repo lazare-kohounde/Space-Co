@@ -17,25 +17,25 @@ class PanierController extends Controller
 
     public function ajouterAuPanier(Request $request)
         {
+            // dd(gettype($request->date_debut));
             $request->validate([
-                'id' => 'required|integer',
+                'id' => 'required',
                 'nom' => 'required|string',
                 'adresse' => 'required|string',
-                'date_debut' => 'required|date',
-                'date_fin' => 'required|date|after:date_debut',
+                'date_debut' => 'required|string',
+                'date_fin' => 'required|string',
                 'option' => 'required|string',
                 'montant' => 'required|numeric',
                 'image' => 'required|string',
             ]);
-            // dd($request);
             $panier = session()->get('panier', []);
             
             $panier[] = [
                 'id' => $request->id,
                 'nom' => $request->nom,
                 'adresse' => $request->adresse,
-                'date_debut' => Carbon::parse($request->date_debut)->format('Y-m-d H:i'),
-                'date_fin'   => Carbon::parse($request->date_fin)->format('Y-m-d H:i'),
+                'date_debut' => Carbon::createFromFormat('d/m/Y H:i', $request->date_debut)->format('Y-m-d H:i'),
+                'date_fin'   => Carbon::createFromFormat('d/m/Y H:i', $request->date_fin)->format('Y-m-d H:i'),                
                 'option' => $request->option,
                 'montant' => $request->montant,
                 'image' => $request->image,
