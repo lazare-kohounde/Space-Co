@@ -34,6 +34,13 @@
         }
     </style>
 
+    <style>
+        .hidden-row {
+            display: none;
+        }
+    </style>
+
+
 </head>
 
 <body class="fixed-left">
@@ -105,6 +112,7 @@
                                             <table class="table table-hover mb-0">
                                                 <thead>
                                                     <tr class="align-self-center">
+                                                        <th>Salle</th>
                                                         <th>Nom</th>
                                                         <th>Catégorie</th>
                                                         <th>Prix</th>
@@ -114,8 +122,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($rooms as $room)
-                                                    <tr>
+                                                    @foreach ($rooms as $index => $room)
+                                                    <tr class="{{ $index >= 10 ? 'hidden-row' : '' }}">
+                                                        <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td>
                                                         <td>{{ $room->name }}</td>
                                                         <td>{{ $room->category->name }}</td>
                                                         <td>{{ number_format($room->price, 2, ',', ' ') }} XOF</td>
@@ -328,10 +337,11 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        @if(count($rooms) > 10)
                                         <div class="pt-3 border-top text-right">
-                                            <a href="#" class="text-primary">Tous voir <i
-                                                    class="mdi mdi-arrow-right"></i></a>
+                                            <button id="showAllBtn" class="btn btn-primary">Voir tout</button>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -448,6 +458,18 @@
                     noResultRow.remove();
                 }
             });
+
+            // Gestion du bouton "Voir tout"
+            const showAllBtn = document.getElementById('showAllBtn');
+            if (showAllBtn) {
+                showAllBtn.addEventListener('click', function() {
+                    const hiddenRows = document.querySelectorAll('tr.hidden-row');
+                    hiddenRows.forEach(row => {
+                        row.classList.remove('hidden-row');
+                    });
+                    this.style.display = 'none';
+                });
+            }
         });
     </script>
 

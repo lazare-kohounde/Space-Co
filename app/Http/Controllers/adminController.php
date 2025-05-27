@@ -44,6 +44,17 @@ class adminController extends Controller
      
         return view("admin.page.reservation.reservation",compact('reservations'));
     }
+
+
+    public function dashboard()
+    {
+        $reservations = (new ReservationController())->getReservations();
+     
+        return view("admin.index",compact('reservations'));
+    }
+
+
+
     public function Salle(){
         return view("admin.page.salle.salle");
     }

@@ -170,9 +170,7 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                            <div class="pt-3 border-top text-right">
-                                                <a href="#" class="text-primary">Tous voir <i class="mdi mdi-arrow-right"></i></a>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
