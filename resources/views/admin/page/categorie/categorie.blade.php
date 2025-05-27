@@ -96,10 +96,9 @@
                                                 </thead>
                                                 <tbody>
 
-                                                    @foreach($categories as $category)
-                                                    
-                                                    
-                                                    <tr>
+                                                    @foreach($categories as $index => $category)
+                                                    <tr class="{{ $index >= 10 ? 'hidden-row' : '' }}">
+                                                        <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td>
                                                         <td>{{ $category->name }}</td>
                                                         <td>{{ $category->description }}</td>
                                                         <td>
