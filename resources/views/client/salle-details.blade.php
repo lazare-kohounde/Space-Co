@@ -429,216 +429,257 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const roomId = "{{ $room->id }}";
-    const roomPrice = "{{ $room->price }}";
-    let reservedSlots = [];
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const roomId = "{{ $room->id }}";
+            const roomPrice = "{{ $room->price }}";
+            let reservedSlots = [];
 
-    const serviceStart = 6, serviceEnd = 19; // Heures de service
+            const serviceStart = 6,
+                serviceEnd = 19; // Heures de service
 
-    let selection = {
-        date: null,
-        heure_debut: null,
-        heure_fin: null
-    };
+            let selection = {
+                date: null,
+                heure_debut: null,
+                heure_fin: null
+            };
 
-    // Format jj/mm/aaaa hh:mm
-    function formatDateTime(date, hour) {
-        const d = new Date(date);
-        const [h, m] = hour.split(':');
-        d.setHours(parseInt(h), parseInt(m));
-        return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()} ${h}:${m}`;
-    }
+            // Format jj/mm/aaaa hh:mm
+            function formatDateTime(date, hour) {
+                const d = new Date(date);
+                const [h, m] = hour.split(':');
+                d.setHours(parseInt(h), parseInt(m));
+                return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()} ${h}:${m}`;
+            }
 
-    function parseDateTime(str) {
-        const [date, time] = str.split(' ');
-        const [d, m, y] = date.split('/');
-        const [h, min] = time.split(':');
-        return new Date(`${y}-${m}-${d}T${h}:${min}:00`);
-    }
+            function parseDateTime(str) {
+                const [date, time] = str.split(' ');
+                const [d, m, y] = date.split('/');
+                const [h, min] = time.split(':');
+                return new Date(`${y}-${m}-${d}T${h}:${min}:00`);
+            }
 
-    // Récupère les créneaux réservés
-    fetch(`/rooms/${roomId}/reserved-slots`)
-        .then(res => res.json())
-        .then(slots => {
-            reservedSlots = slots.map(slot => ({
-                start: new Date(slot.start_date),
-                end: new Date(slot.end_date)
-            }));
-            renderCalendarStart();
-        });
+            // Récupère les créneaux réservés
+            fetch(`/rooms/${roomId}/reserved-slots`)
+                .then(res => res.json())
+                .then(slots => {
+                    reservedSlots = slots.map(slot => ({
+                        start: new Date(slot.start_date),
+                        end: new Date(slot.end_date)
+                    }));
+                    renderCalendarStart();
+                });
 
-    // Retourne les heures disponibles pour une date, à partir de minHour (par défaut serviceStart)
-    function getAvailableHours(date, minHour = serviceStart) {
-        let available = [];
-        for(let h = serviceStart; h < serviceEnd; h++) {
-            if (h < minHour) continue;
-            let dStart = new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, 0, 0);
-            let dEnd = new Date(date.getFullYear(), date.getMonth(), date.getDate(), h + 1, 0, 0);
-            let taken = reservedSlots.some(slot => dStart < slot.end && dEnd > slot.start);
-            if (!taken) available.push(`${h.toString().padStart(2,'0')}:00`);
-        }
-        return available;
-    }
-
-    // Affiche calendrier date début
-    function renderCalendarStart() {
-        flatpickr("#calendarStart", {
-            inline: true,
-            minDate: "today",
-            dateFormat: "Y-m-d",
-            disable: [
-                function(date) {
-                    return getAvailableHours(date).length === 0;
+            // Retourne les heures disponibles pour une date, à partir de minHour (par défaut serviceStart)
+            function getAvailableHours(date, minHour = serviceStart) {
+                let available = [];
+                for (let h = serviceStart; h < serviceEnd; h++) {
+                    if (h < minHour) continue;
+                    let dStart = new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, 0, 0);
+                    let dEnd = new Date(date.getFullYear(), date.getMonth(), date.getDate(), h + 1, 0, 0);
+                    let taken = reservedSlots.some(slot => dStart < slot.end && dEnd > slot.start);
+                    if (!taken) available.push(`${h.toString().padStart(2,'0')}:00`);
                 }
-            ],
-            onChange: function(selectedDates) {
-                if (selectedDates.length) {
-                    selection.date = selectedDates[0];
-                    selection.heure_debut = null;
-                    selection.heure_fin = null;
-                    document.getElementById('date_debut').value = '';
-                    document.getElementById('date_fin').value = '';
-                    document.getElementById('montant').value = 0;
+                return available;
+            }
+
+            // Affiche calendrier date début
+            function renderCalendarStart() {
+                flatpickr("#calendarStart", {
+                    inline: true,
+                    minDate: "today",
+                    dateFormat: "Y-m-d",
+                    disable: [
+                        function(date) {
+                            return getAvailableHours(date).length === 0;
+                        }
+                    ],
+                    onChange: function(selectedDates) {
+                        if (selectedDates.length) {
+                            selection.date = selectedDates[0];
+                            selection.heure_debut = null;
+                            selection.heure_fin = null;
+                            document.getElementById('date_debut').value = '';
+                            document.getElementById('date_fin').value = '';
+                            document.getElementById('montant').value = 0;
+                            document.getElementById('montant_affiche').textContent = "0 XOF";
+                            renderHoursStart();
+                            clearHoursEnd();
+                        }
+                    }
+                });
+            }
+
+            // Affiche heures début
+            function renderHoursStart() {
+                const container = document.getElementById('hoursStart');
+                container.innerHTML = '';
+                if (!selection.date) return;
+
+                let availableHours = getAvailableHours(selection.date);
+                if (availableHours.length === 0) {
+                    container.innerHTML = "<span class='text-danger'>Aucune heure disponible ce jour</span>";
+                    return;
+                }
+
+                let ul = document.createElement('ul');
+                ul.className = "list-group list-group-horizontal flex-wrap";
+
+                availableHours.forEach(hour => {
+                    let li = document.createElement('li');
+                    li.className = "list-group-item m-1";
+                    li.style.cursor = "pointer";
+                    li.textContent = hour;
+                    li.onclick = () => {
+                        selection.heure_debut = hour;
+                        document.getElementById('date_debut').value = formatDateTime(selection.date, hour);
+                        Array.from(ul.children).forEach(c => c.classList.remove('active', 'bg-success', 'text-white'));
+                        li.classList.add('active', 'bg-success', 'text-white');
+                        renderHoursEnd();
+                        document.getElementById('date_fin').value = ''; // Reset fin
+                        selection.heure_fin = null;
+                        document.getElementById('montant').value = 0;
+                        document.getElementById('montant_affiche').textContent = "0 XOF";
+                    };
+                    ul.appendChild(li);
+                });
+
+                container.appendChild(ul);
+            }
+
+            // Vide les heures de fin
+            function clearHoursEnd() {
+                const container = document.getElementById('hoursEnd');
+                container.innerHTML = '';
+            }
+
+            // Affiche heures fin (même date, heure fin > heure début, sans chevauchement)
+            function renderHoursEnd() {
+                const container = document.getElementById('hoursEnd');
+                container.innerHTML = '';
+                if (!selection.date || !selection.heure_debut) return;
+
+                const minHour = parseInt(selection.heure_debut.split(':')[0]) + 1;
+                const maxHour = serviceEnd;
+
+                let availableHours = [];
+                let stop = false;
+                let nextReservationStartHour = null;
+
+                // Cherche la prochaine réservation après l'heure de début sélectionnée
+                let dateDay = selection.date;
+                let heureDebutNum = parseInt(selection.heure_debut.split(':')[0]);
+
+                // Trouver la réservation suivante qui commence après heureDebutNum sur la même date
+                let nextSlot = reservedSlots
+                    .filter(slot =>
+                        slot.start.getFullYear() === dateDay.getFullYear() &&
+                        slot.start.getMonth() === dateDay.getMonth() &&
+                        slot.start.getDate() === dateDay.getDate() &&
+                        slot.start.getHours() > heureDebutNum
+                    )
+                    .sort((a, b) => a.start - b.start)[0];
+
+                if (nextSlot) {
+                    nextReservationStartHour = nextSlot.start.getHours();
+                }
+
+                // Parcours les heures possibles jusqu'à serviceEnd ou début prochaine réservation
+                for (let h = minHour; h <= maxHour; h++) {
+                    if (stop) break;
+
+                    // Si on a une réservation suivante, on ne doit pas dépasser son heure de début
+                    if (nextReservationStartHour !== null && h > nextReservationStartHour) break;
+
+                    // Vérifie si le créneau [h, h+1) est pris
+                    let dStart = new Date(dateDay.getFullYear(), dateDay.getMonth(), dateDay.getDate(), h, 0, 0);
+                    let dEnd = new Date(dateDay.getFullYear(), dateDay.getMonth(), dateDay.getDate(), h + 1, 0, 0);
+                    let taken = reservedSlots.some(slot => dStart < slot.end && dEnd > slot.start);
+
+                    if (taken) {
+                        // On ne propose pas cette heure, mais on ne coupe pas la liste car on peut avoir un créneau libre avant la prochaine réservation
+                        stop = true; // On arrête ici car pas possible de continuer après un créneau pris
+                    } else {
+                        availableHours.push(`${h.toString().padStart(2,'0')}:00`);
+                    }
+                }
+
+                // Si on a une réservation suivante et qu'elle commence exactement à nextReservationStartHour,
+                // on ajoute cette heure comme heure de fin possible (pour permettre de finir pile avant)
+                if (nextReservationStartHour !== null) {
+                    let lastAvailable = availableHours.length > 0 ? parseInt(availableHours[availableHours.length - 1].split(':')[0]) : minHour - 1;
+                    if (nextReservationStartHour > lastAvailable) {
+                        availableHours.push(`${nextReservationStartHour.toString().padStart(2,'0')}:00`);
+                    }
+                }
+
+                if (availableHours.length === 0) {
+                    container.innerHTML = "<span class='text-danger'>Aucune heure de fin disponible</span>";
+                    return;
+                }
+
+                let ul = document.createElement('ul');
+                ul.className = "list-group list-group-horizontal flex-wrap";
+
+                availableHours.forEach(hour => {
+                    let li = document.createElement('li');
+                    li.className = "list-group-item m-1";
+                    li.style.cursor = "pointer";
+                    li.textContent = hour;
+                    li.onclick = () => {
+                        selection.heure_fin = hour;
+                        document.getElementById('date_fin').value = formatDateTime(selection.date, hour);
+                        Array.from(ul.children).forEach(c => c.classList.remove('active', 'bg-success', 'text-white'));
+                        li.classList.add('active', 'bg-success', 'text-white');
+                        calculerMontant();
+                    };
+                    ul.appendChild(li);
+                });
+
+                container.appendChild(ul);
+            }
+
+
+            // Calcul montant
+            function calculerMontant() {
+                const debutStr = document.getElementById('date_debut').value;
+                const finStr = document.getElementById('date_fin').value;
+                if (debutStr && finStr) {
+                    const debut = parseDateTime(debutStr);
+                    const fin = parseDateTime(finStr);
+                    let diff = (fin - debut) / 1000 / 60 / 60; // heures
+                    if (diff < 1) {
+                        document.getElementById('montant_affiche').textContent = "Durée minimale : 1 heure";
+                        document.getElementById('montant').value = 0;
+                        return;
+                    }
+                    diff = Math.ceil(diff);
+                    const montant = diff * roomPrice;
+                    document.getElementById('montant_affiche').textContent = `${montant.toLocaleString()} XOF`;
+                    document.getElementById('montant').value = montant;
+                } else {
                     document.getElementById('montant_affiche').textContent = "0 XOF";
-                    renderHoursStart();
-                    clearHoursEnd();
+                    document.getElementById('montant').value = 0;
                 }
             }
+
+            // Validation soumission
+            document.getElementById('reservationForm').addEventListener('submit', function(e) {
+                const formElements = this.querySelectorAll('[name]');
+                const formData = {};
+                formElements.forEach(el => {
+                    if ((el.type === 'checkbox' || el.type === 'radio') && !el.checked) return;
+                    formData[el.name] = el.value;
+                });
+                console.log("Données envoyées au backend :", formData);
+
+                if (!formData.date_debut || !formData.date_fin || formData.montant == 0) {
+                    e.preventDefault();
+                    alert("Veuillez sélectionner une date et une heure de début et de fin valides, et respecter une durée minimale de 1 heure.");
+                }
+            });
         });
-    }
-
-    // Affiche heures début
-    function renderHoursStart() {
-        const container = document.getElementById('hoursStart');
-        container.innerHTML = '';
-        if (!selection.date) return;
-
-        let availableHours = getAvailableHours(selection.date);
-        if (availableHours.length === 0) {
-            container.innerHTML = "<span class='text-danger'>Aucune heure disponible ce jour</span>";
-            return;
-        }
-
-        let ul = document.createElement('ul');
-        ul.className = "list-group list-group-horizontal flex-wrap";
-
-        availableHours.forEach(hour => {
-            let li = document.createElement('li');
-            li.className = "list-group-item m-1";
-            li.style.cursor = "pointer";
-            li.textContent = hour;
-            li.onclick = () => {
-                selection.heure_debut = hour;
-                document.getElementById('date_debut').value = formatDateTime(selection.date, hour);
-                Array.from(ul.children).forEach(c => c.classList.remove('active','bg-success','text-white'));
-                li.classList.add('active','bg-success','text-white');
-                renderHoursEnd();
-                document.getElementById('date_fin').value = ''; // Reset fin
-                selection.heure_fin = null;
-                document.getElementById('montant').value = 0;
-                document.getElementById('montant_affiche').textContent = "0 XOF";
-            };
-            ul.appendChild(li);
-        });
-
-        container.appendChild(ul);
-    }
-
-    // Vide les heures de fin
-    function clearHoursEnd() {
-        const container = document.getElementById('hoursEnd');
-        container.innerHTML = '';
-    }
-
-    // Affiche heures fin (même date, heure fin > heure début, sans chevauchement)
-    function renderHoursEnd() {
-        const container = document.getElementById('hoursEnd');
-        container.innerHTML = '';
-        if (!selection.date || !selection.heure_debut) return;
-
-        const minHour = parseInt(selection.heure_debut.split(':')[0]) + 1;
-        let availableHours = [];
-        let stop = false;
-        for (let h = minHour; h < serviceEnd; h++) {
-            if (stop) break;
-            let dStart = new Date(selection.date.getFullYear(), selection.date.getMonth(), selection.date.getDate(), h, 0, 0);
-            let dEnd = new Date(selection.date.getFullYear(), selection.date.getMonth(), selection.date.getDate(), h + 1, 0, 0);
-            let taken = reservedSlots.some(slot => dStart < slot.end && dEnd > slot.start);
-            if (taken) {
-                stop = true;
-            } else {
-                availableHours.push(`${h.toString().padStart(2,'0')}:00`);
-            }
-        }
-
-        if (availableHours.length === 0) {
-            container.innerHTML = "<span class='text-danger'>Aucune heure de fin disponible</span>";
-            return;
-        }
-
-        let ul = document.createElement('ul');
-        ul.className = "list-group list-group-horizontal flex-wrap";
-
-        availableHours.forEach(hour => {
-            let li = document.createElement('li');
-            li.className = "list-group-item m-1";
-            li.style.cursor = "pointer";
-            li.textContent = hour;
-            li.onclick = () => {
-                selection.heure_fin = hour;
-                document.getElementById('date_fin').value = formatDateTime(selection.date, hour);
-                Array.from(ul.children).forEach(c => c.classList.remove('active','bg-success','text-white'));
-                li.classList.add('active','bg-success','text-white');
-                calculerMontant();
-            };
-            ul.appendChild(li);
-        });
-
-        container.appendChild(ul);
-    }
-
-    // Calcul montant
-    function calculerMontant() {
-        const debutStr = document.getElementById('date_debut').value;
-        const finStr = document.getElementById('date_fin').value;
-        if (debutStr && finStr) {
-            const debut = parseDateTime(debutStr);
-            const fin = parseDateTime(finStr);
-            let diff = (fin - debut) / 1000 / 60 / 60; // heures
-            if (diff < 1) {
-                document.getElementById('montant_affiche').textContent = "Durée minimale : 1 heure";
-                document.getElementById('montant').value = 0;
-                return;
-            }
-            diff = Math.ceil(diff);
-            const montant = diff * roomPrice;
-            document.getElementById('montant_affiche').textContent = `${montant.toLocaleString()} XOF`;
-            document.getElementById('montant').value = montant;
-        } else {
-            document.getElementById('montant_affiche').textContent = "0 XOF";
-            document.getElementById('montant').value = 0;
-        }
-    }
-
-    // Validation soumission
-    document.getElementById('reservationForm').addEventListener('submit', function(e) {
-        const formElements = this.querySelectorAll('[name]');
-        const formData = {};
-        formElements.forEach(el => {
-            if ((el.type === 'checkbox' || el.type === 'radio') && !el.checked) return;
-            formData[el.name] = el.value;
-        });
-        console.log("Données envoyées au backend :", formData);
-
-        if (!formData.date_debut || !formData.date_fin || formData.montant == 0) {
-            e.preventDefault();
-            alert("Veuillez sélectionner une date et une heure de début et de fin valides, et respecter une durée minimale de 1 heure.");
-        }
-    });
-});
-</script>
+    </script>
 
 
 </body>
