@@ -66,7 +66,7 @@ https://templatemo.com/tm-591-villa-agency
         <div class="col-lg-6">
           <div class="section-heading">
             <h6>Contact</h6>
-            <h2>Contactez notre agents</h2>
+            <h2>Contactez nous</h2>
           </div>
           <p>Contactez notre équipe pour toute demande d'information ou assistance. Que vous souhaitiez réserver un espace de travail, poser une question sur nos services ou obtenir des détails supplémentaires, nos agents sont là pour vous aider. Remplissez le formulaire ci-dessous ou contactez-nous directement par téléphone ou par email, et nous vous répondrons dans les plus brefs délais.</p>
           <div class="row">

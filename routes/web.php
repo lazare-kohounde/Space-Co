@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\ProfileController;
 
 use Illuminate\Support\Facades\Route;
@@ -39,7 +40,9 @@ Route::delete('/panier/supprimer/{id}', [PanierController::class, 'supprimer'])-
 // roote admin
 
 Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
-    Route::get('/log-admin/profil', function () { return view('admin.profil'); })->name('profil');
+    Route::get('/log-admin/profil', function () {
+        return view('admin.profil');
+    })->name('profil');
 
     Route::get('/log-admin/categorie', [CategorieController::class, 'index'])->name('categorie');
     Route::get('/log-admin/gestionnaire', [ManagerController::class, 'index'])->name('gestionnaire');
@@ -48,22 +51,22 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::post('/log-admin/approved-reservation/{id}', [ReservationController::class, 'approuveReservation'])->name('reservation.approved');
 
     Route::get('/log-admin/salle', [RoomController::class, 'index'])->name('salleAdmin');
-    
 
-    
+
+
 
     Route::get('/categories', [CategorieController::class, 'index'])->name('categories.index');
     Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
     Route::put('/categories/{id}', [CategorieController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategorieController::class, 'destroy'])->name('categories.destroy');
 
-    
+
     Route::get('/managers', [ManagerController::class, 'index'])->name('managers.index');
     Route::post('/managers', [ManagerController::class, 'store'])->name('managers.store');
     Route::put('/managers/{id}', [ManagerController::class, 'update'])->name('managers.update');
     Route::delete('/managers/{id}', [ManagerController::class, 'destroy'])->name('managers.destroy');
 
-    
+
 
     // CRUD complet pour les salles
 
@@ -79,11 +82,6 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
 
     // Supprimer une salle
     Route::delete('/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
-
-
-
-    
-
 });
 
 
@@ -94,9 +92,9 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
 //    return view('welcome');
 //});
 
-Route::get('/log-admin', function () {
-    return view('admin.index');
-})->middleware(['auth', 'verified', 'is_admin'])->name('dashboard');
+Route::get('/log-admin', [AdminController::class, 'dashboard'])
+    ->middleware(['auth', 'verified', 'is_admin'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/paiement', [clientController::class, 'paiement'])->name('paiement');
@@ -112,11 +110,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/membre', [clientController::class, 'membre'])->name('membre');
     Route::get('/historique-reservation', [clientController::class, 'historiqueReservation'])->name('historique.reservation');
     Route::get('/detail-reservation/{id}', [ReservationController::class, 'detailReservationClient'])->name('detail.reservation');
-    
+
     Route::post('/cancelled-reservation/{id}', [ReservationController::class, 'annuleReservation'])->name('reservation.cancelled');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

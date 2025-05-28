@@ -89,6 +89,7 @@
                                             <table class="table table-hover mb-0">
                                                 <thead>
                                                     <tr class="align-self-center">
+                                                        <th>Catégorie</th>
                                                         <th>Nom</th>
                                                         <th>Description</th>
                                                         <th>Actions</th>
@@ -96,10 +97,9 @@
                                                 </thead>
                                                 <tbody>
 
-                                                    @foreach($categories as $category)
-                                                    
-                                                    
-                                                    <tr>
+                                                    @foreach($categories as $index => $category)
+                                                    <tr class="{{ $index >= 10 ? 'hidden-row' : '' }}">
+                                                        <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td>
                                                         <td>{{ $category->name }}</td>
                                                         <td>{{ $category->description }}</td>
                                                         <td>
@@ -154,9 +154,7 @@
                                                 </tbody>
                                             </table>
                                         </div><!--end table-responsive-->
-                                        <div class="pt-3 border-top text-right">
-                                            <a href="#" class="text-primary">Tous voir <i class="mdi mdi-arrow-right"></i></a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
