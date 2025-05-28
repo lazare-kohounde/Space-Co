@@ -100,7 +100,7 @@ https://templatemo.com/tm-591-villa-agency
       <div class="item item-3">
         <div class="header-text" style="margin-top: -2cm;">
           <span class="category">Calavi, <em>Arconville</em></span>
-          <div style="font-size: 55px; color: white; font-family: Bradley Hand, cursive; font-style: italic; font-weight: 700;">A voutre goût !<br>Votre bureau privé personnalisé, prêt à l’emploi !</div>
+          <div style="font-size: 55px; color: white; font-family: Bradley Hand, cursive; font-style: italic; font-weight: 700;">A votre goût !<br>Votre bureau privé personnalisé, prêt à l’emploi !</div>
         </div>
       </div>
     </div>
