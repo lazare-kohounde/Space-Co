@@ -122,7 +122,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($rooms as $index => $room)
+                                                    @foreach($rooms->sortByDesc('created_at')->values() as $index => $room)
                                                     <tr class="{{ $index >= 10 ? 'hidden-row' : '' }}">
                                                         <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td>
                                                         <td>{{ $room->name }}</td>

@@ -86,7 +86,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($paiements as $index => $paiement)
+                                                        @foreach($paiements->sortByDesc('created_at')->values() as $index => $paiement)
                                                         <tr class="{{ $index >= 10 ? 'hidden-row' : '' }}">
                                                             <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td>
                                                             <td>{{ $paiement['author'] ?? 'Utilisateur inconnu' }}</td>
