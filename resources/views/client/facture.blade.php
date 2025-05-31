@@ -34,6 +34,7 @@
 </head>
 
 <body>
+    
     <h1>Facture de Réservation</h1>
     <p><strong>Date :</strong> {{ now()->format('d/m/Y') }}</p>
     <p><strong>Réservation N° :</strong> {{ $reservation->id }}</p>
