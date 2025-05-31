@@ -102,6 +102,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
     // Route::get('/paiement', [PaiementController::class, 'callback'])->name('payment.callback');
     Route::get('/dashboard/stats', [adminController::class, 'stats'])->name('dashboard.stats');
+    Route::get('/reservation/{id}/facture', [ReservationController::class, 'generateFacture'])->name('reservation.facture');
+
 
     // // Page détail réservation
     // Route::get('/reservations/{reservation}', [ReservationController::class, 'show'])->name('reservations.details');

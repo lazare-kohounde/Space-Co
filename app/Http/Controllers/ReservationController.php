@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
@@ -41,6 +41,7 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::where('id', $id)->first();
         $reservation_details = DetailReservation::where('reservation_id', $id)->get();
+        $payment = Payment::where('reservation_id', $id)->first(); // ✅ On récupère le paiement
 
         $reservation_details_info = [];
         $total_price = 0; // Initialisation du total
@@ -62,7 +63,7 @@ class ReservationController extends Controller
             $total_price += $reservation_element->price; // Ajout du prix à chaque itération
             $reservation_details_info[] =  $formated_data;
         }
-        return view('admin.page.reservation.detail', compact('reservation_details_info', 'reservation'));
+        return view('admin.page.reservation.detail', compact('reservation_details_info', 'reservation', 'payment'));
     }
 
 
@@ -146,6 +147,21 @@ class ReservationController extends Controller
     }
 
 
+
+    public function generateFacture($id)
+{
+    $reservation = Reservation::findOrFail($id);
+    $details = DetailReservation::where('reservation_id', $id)->get();
+    $payment = Payment::where('reservation_id', $id)->first();
+
+    $pdf = Pdf::loadView('client.facture', [
+        'reservation' => $reservation,
+        'details' => $details,
+        'payment' => $payment,
+    ]);
+
+    return $pdf->stream('facture_reservation_' . $reservation->id . '.pdf');
+}
 
 
     /**

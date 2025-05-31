@@ -80,7 +80,16 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="card shadow-sm p-4">
-                        <h5 class="mb-4" style="color: #f35525">Les détails</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 style="color: #f35525">Les détails</h5>
+                            @if (in_array($reservation['status'], ['pending', 'approved']))
+                            <a href="{{ route('reservation.facture', $reservation->id) }}" class="btn btn-orange">
+                                Télécharger la facture PDF
+                            </a>
+                            @endif
+                        </div>
+
+
 
 
                         <div class="table-responsive">
@@ -126,28 +135,28 @@
                         @endif
                     </div>
                     <br>
+                    @if (in_array($reservation['status'], ['pending', 'approved']))
                     <h5>Paiement</h5>
+                            @if ($payment)
+                            @if ($payment->status === 'pending')
+                            <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
+                            <p>Status : En attente</p>
+                            <p><strong>Rappel :</strong> Vous avez effectué un paiement partiel. Pour confirmer définitivement votre réservation, merci de régler le reste du montant.</p>
+                            @elseif ($payment->status === 'approved')
+                            <p><strong>Paiement soldé ✅</strong></p>
+                            <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
+                            <p>Status : Approuvé</p>
+                            <p>Approuvé par : {{ $payment->manager }}</p>
+                            <p>Date du 1er paiement (via FedaPay) : {{ $payment->created_at}}</p>
+                            <p>Date du paiement final : {{ $payment->updated_at }}</p>
+                            @else
+                            <p>Status de paiement inconnu.</p>
+                            @endif
+                            @else
+                            <p>Aucun paiement enregistré pour cette réservation.</p>
+                            @endif
 
-                    @if ($payment)
-                    @if ($payment->status === 'pending')
-                    <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
-                    <p>Status : En attente</p>
-                    <p><strong>Rappel :</strong> Vous avez effectué un paiement partiel. Pour confirmer définitivement votre réservation, merci de régler le reste du montant.</p>
-                    @elseif ($payment->status === 'approved')
-                    <p><strong>Paiement soldé ✅</strong></p>
-                    <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
-                    <p>Status : Approuvé</p>
-                    <p>Approuvé par : {{ $payment->manager }}</p>
-                    <p>Date du 1er paiement (via FedaPay) : {{ $payment->created_at}}</p>
-                    <p>Date du paiement final : {{ $payment->updated_at }}</p>
-                    @else
-                    <p>Status de paiement inconnu.</p>
-                    @endif
-                    @else
-                    <p>Aucun paiement enregistré pour cette réservation.</p>
-                    @endif
-
-
+                     @endif
 
                 </div>
             </div>

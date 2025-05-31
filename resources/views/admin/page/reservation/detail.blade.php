@@ -36,7 +36,7 @@
 
 
         <!-- Start right Content here -->
-        <div class="content-page" >
+        <div class="content-page">
             <!-- Start content -->
             <div class="content">
 
@@ -51,7 +51,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Réservation @if ($reservation['status'] =='pending') en cours @elseif ($reservation['status'] =='cancelled') annulée @elseif ($reservation['status'] =='approved') approuvée  @endif</h4>
+                                    <h4 class="page-title">Réservation @if ($reservation['status'] =='pending') en cours @elseif ($reservation['status'] =='cancelled') annulée @elseif ($reservation['status'] =='approved') approuvée @endif</h4>
                                 </div>
                             </div>
                         </div>
@@ -63,9 +63,15 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="flex justify-between">
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
                                             <h5 class="header-title pb-3 mt-0">Les details de la réservation
                                             </h5>
-
+                                            @if (in_array($reservation['status'], ['pending', 'approved']))
+                                            <a href="{{ route('reservation.facture', $reservation->id) }}" class="btn btn-primary waves-effect waves-light">
+                                                Télécharger la facture PDF
+                                            </a>
+                                            @endif
+                                        </div>
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table table-hover mb-0">
@@ -80,34 +86,56 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                    
-                                                @foreach($reservation_details_info as $index => $reservation_el)
-                                                <tr>
-                                                    <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
-                                                    <td>{{ $reservation_el['room_name'] ?? 'Salle inconnu' }}</td>
-                                                    <td>{{$reservation_el['date_debut'] }}</td>
-                                                    <td>{{$reservation_el['date_fin'] }}</td>
-                                                    <td>{{ number_format($reservation_el['prix'], 0, ',', ' ') }} XOF</td>
-                                                    <td><img src="{{ asset($reservation_el['img']) }}" alt="ceec" width="50" class="img-thumbnail m-1"></td>
-                                                </tr>
-                                                @endforeach
+
+                                                    @foreach($reservation_details_info as $index => $reservation_el)
+                                                    <tr>
+                                                        <td>{{ str_pad($index + 1, 3, '0', STR_PAD_LEFT) }}</td> {{-- Affiche 001, 002, etc. --}}
+                                                        <td>{{ $reservation_el['room_name'] ?? 'Salle inconnu' }}</td>
+                                                        <td>{{$reservation_el['date_debut'] }}</td>
+                                                        <td>{{$reservation_el['date_fin'] }}</td>
+                                                        <td>{{ number_format($reservation_el['prix'], 0, ',', ' ') }} XOF</td>
+                                                        <td><img src="{{ asset($reservation_el['img']) }}" alt="ceec" width="50" class="img-thumbnail m-1"></td>
+                                                    </tr>
+                                                    @endforeach
 
                                                 </tbody>
                                             </table>
                                         </div><!--end table-responsive-->
-                                        @if ($reservation['status'] =='pending')      
+                                        @if ($reservation['status'] =='pending')
                                         <div class="pt-3 border-top text-right">
-                                         <form method="POST" action="{{ route('reservation.approved',$reservation['id']) }}" onsubmit="return confirmCancel();">
+                                            <form method="POST" action="{{ route('reservation.approved',$reservation['id']) }}" onsubmit="return confirmCancel();">
                                                 @csrf
-                                                <button type="submit" class="list-group-item text-danger" style="font-weight:600;" >
-                                                <i class="fa fa-sign me-2"></i> Approuver
+                                                <button type="submit" class="list-group-item text-danger" style="font-weight:600;">
+                                                    <i class="fa fa-sign me-2"></i> Approuver
                                                 </button>
                                             </form>
                                         </div>
                                         @endif
+
+
                                     </div>
                                 </div>
+                                @if (in_array($reservation['status'], ['pending', 'approved']))
+                                        @if ($payment)
+                                        @if ($payment->status === 'pending')
+                                        <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
+                                        <p>Status : En attente</p>
+                                        @elseif ($payment->status === 'approved')
+                                        <p><strong>Paiement soldé ✅</strong></p>
+                                        <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
+                                        <p>Status : Approuvé</p>
+                                        <p>Approuvé par : {{ $payment->manager }}</p>
+                                        <p>Date du 1er paiement (via FedaPay) : {{ $payment->created_at}}</p>
+                                        <p>Date du paiement final : {{ $payment->updated_at }}</p>
+                                        @else
+                                        <p>Status de paiement inconnu.</p>
+                                        @endif
+                                        @else
+                                        <p>Aucun paiement enregistré pour cette réservation.</p>
+                                        @endif
+                                @endif
                             </div>
+
                         </div>
                         <!-- Contenu proprement dit -->
 
@@ -132,7 +160,7 @@
     </div>
     <!-- END wrapper -->
 
-    
+
     <!-- jQuery  -->
     <script src={{ asset('admin/assets/js/jquery.min.js') }}></script>
     <script src={{ asset('admin/assets/js/popper.min.js') }}></script>
