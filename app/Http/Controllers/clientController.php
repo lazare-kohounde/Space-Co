@@ -103,8 +103,9 @@ class clientController extends Controller
                 // c. Créer le paiement
                 Payment::create([
                     'reservation_id' => $reservation->id,
+                    'author'         => $user->name,
                     'amount_paid'    => $amountPaid,
-                    'status'         => $status,
+                    'status'         => "pending",
                     'payment_method' => $paymentMethod,
                     'payment_date'   => Carbon::now(),
                 ]);
@@ -122,6 +123,7 @@ class clientController extends Controller
                 // Rediriger vers le profil avec un message de succès
                 return redirect()->route('historique.reservation')->with('success', 'Paiement réussi, cliquez sur Historique Réservations pour autres actions. , ' . $prenom . ' !');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 DB::rollBack();
             }
         }

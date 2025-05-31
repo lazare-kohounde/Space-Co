@@ -9,6 +9,7 @@ class Payment extends Model
     //
     protected $fillable = [
         'reservation_id',
+        'author', // 👈 ajoute ceci
         'amount_paid',
         'status',
         'payment_date',

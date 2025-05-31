@@ -63,6 +63,11 @@
                     </a>
                 </li>
                 <li class="has-submenu">
+                    <a href="{{ route('paiement-index') }}" class="waves-effect">
+                        <i class="mdi mdi-calendar-plus"></i>Paiement
+                    </a>
+                </li>
+                <li class="has-submenu">
                     <a href="{{ route('salleAdmin') }}" class="waves-effect">
                         <i class="mdi mdi-home-variant"></i>Salle
                     </a>

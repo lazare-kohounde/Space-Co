@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Room;
 use App\Models\Categorie;
+use App\Models\Payment;
 class adminController extends Controller
 {
     public function index(){
@@ -43,6 +44,14 @@ class adminController extends Controller
         $reservations = (new ReservationController())->getReservations();
      
         return view("admin.page.reservation.reservation",compact('reservations'));
+    }
+
+    
+
+    public function Paiement()
+    {
+        $paiements = Payment::all();
+        return view('admin.page.paiement.paiement-liste', compact('paiements'));
     }
 
 

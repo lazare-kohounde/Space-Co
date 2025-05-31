@@ -125,6 +125,28 @@
                         </div>
                         @endif
                     </div>
+                    <br>
+                    <h5>Paiement</h5>
+
+                    @if ($payment)
+                    @if ($payment->status === 'pending')
+                    <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
+                    <p>Status : En attente</p>
+                    <p><strong>Rappel :</strong> Vous avez effectué un paiement partiel. Pour confirmer définitivement votre réservation, merci de régler le reste du montant.</p>
+                    @elseif ($payment->status === 'approved')
+                    <p><strong>Paiement soldé ✅</strong></p>
+                    <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
+                    <p>Status : Approuvé</p>
+                    <p>Approuvé par : {{ $payment->manager }}</p>
+                    <p>Date du 1er paiement (via FedaPay) : {{ $payment->created_at}}</p>
+                    <p>Date du paiement final : {{ $payment->updated_at }}</p>
+                    @else
+                    <p>Status de paiement inconnu.</p>
+                    @endif
+                    @else
+                    <p>Aucun paiement enregistré pour cette réservation.</p>
+                    @endif
+
 
 
                 </div>

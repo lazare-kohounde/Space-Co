@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::get('/log-admin/categorie', [CategorieController::class, 'index'])->name('categorie');
     Route::get('/log-admin/gestionnaire', [ManagerController::class, 'index'])->name('gestionnaire');
     Route::get('/log-admin/reservation', [adminController::class, 'reservation'])->name('reservation');
+    Route::get('/log-admin/paiement', [adminController::class, 'paiement'])->name('paiement-index');
     Route::get('/log-admin/detail-reservation/{id}', [ReservationController::class, 'detailReservation'])->name('reservation.detail');
     Route::post('/log-admin/approved-reservation/{id}', [ReservationController::class, 'approuveReservation'])->name('reservation.approved');
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
+use App\Models\Payment;
 use App\Models\DetailReservation;
 use App\Models\Room;
 
@@ -41,6 +43,7 @@ class ReservationController extends Controller
         $reservation_details = DetailReservation::where('reservation_id', $id)->get();
 
         $reservation_details_info = [];
+        $total_price = 0; // Initialisation du total
 
         foreach ($reservation_details as $reservation_element) {
             $rooms = Room::where('id', $reservation_element->room_id)->get();
@@ -56,6 +59,7 @@ class ReservationController extends Controller
                     'img'  => json_decode($room->image)[0],
                 ];
             }
+            $total_price += $reservation_element->price; // Ajout du prix à chaque itération
             $reservation_details_info[] =  $formated_data;
         }
         return view('admin.page.reservation.detail', compact('reservation_details_info', 'reservation'));
@@ -64,10 +68,28 @@ class ReservationController extends Controller
 
     public function approuveReservation($id)
     {
+        $user = Auth::user();
+
         $reservation = Reservation::find($id);
+        if (!$reservation) {
+            return redirect()->back()->with('error', 'Réservation introuvable.');
+        }
+
+
+        // Mise à jour du statut de la réservation
         $reservation->status = 'approved';
         $reservation->save();
-        return redirect()->back();
+
+        // Mise à jour du champ manager dans la table payments
+        $payment = Payment::where('reservation_id', $reservation->id)->first();
+        if ($payment) {
+            $payment->manager = $user->name;
+            $payment->status = 'approved';
+            $payment->amount_paid = $reservation->total_amount;
+            $payment->save();
+        }
+
+        return redirect()->back()->with('success', 'Réservation approuvée et paiement mis à jour.');
     }
 
 
@@ -77,12 +99,12 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::where('id', $id)->first();
         $reservation_details = DetailReservation::where('reservation_id', $id)->get();
+        $payment = Payment::where('reservation_id', $id)->first(); // ✅ On récupère le paiement
 
         $reservation_details_info = [];
 
         foreach ($reservation_details as $reservation_element) {
             $rooms = Room::where('id', $reservation_element->room_id)->get();
-            //Parcourir les sales 
             foreach ($rooms as $room) {
                 $formated_data = [
                     'reservation_id' => $id,
@@ -94,10 +116,13 @@ class ReservationController extends Controller
                     'roomid'  => $room->id,
                 ];
             }
-            $reservation_details_info[] =  $formated_data;
+            $reservation_details_info[] = $formated_data;
         }
-        return view('client.detailReservation', compact('reservation_details_info', 'reservation'));
+
+        // ✅ On envoie aussi le paiement à la vue
+        return view('client.detailReservation', compact('reservation_details_info', 'reservation', 'payment'));
     }
+
 
 
 
