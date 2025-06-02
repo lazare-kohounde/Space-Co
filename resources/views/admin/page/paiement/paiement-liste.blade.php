@@ -81,6 +81,7 @@
                                                             <th>Date de la transaction (fedapay)</th>
                                                             <th>Date du règlement</th>
                                                             <th>Montant</th>
+                                                            <th>Transaction ID</th>
                                                             <th>Etat</th>
                                                             <th>Gestionnaire</th>
                                                         </tr>
@@ -93,6 +94,7 @@
                                                             <td>{{ $paiement['created_at'] }}</td>
                                                             <td>{{ $paiement['updated_at'] }}</td>
                                                             <td>{{ number_format($paiement['amount_paid'], 0, ',', ' ') }} XOF</td>
+                                                            <td>{{ $paiement['transaction_id'] }}</td>
                                                             <td>
                                                                 @if ($paiement['status'] =='pending')
                                                                 <span class="badge badge-boxed badge-soft-primary p-2">

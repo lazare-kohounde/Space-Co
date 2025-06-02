@@ -64,7 +64,7 @@
                 </li>
                 <li class="has-submenu">
                     <a href="{{ route('paiement-index') }}" class="waves-effect">
-                        <i class="mdi mdi-calendar-plus"></i>Paiement
+                        <i class="mdi mdi-cash"></i>Paiement
                     </a>
                 </li>
                 <li class="has-submenu">

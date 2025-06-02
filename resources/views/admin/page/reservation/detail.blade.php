@@ -118,11 +118,11 @@
                                 @if (in_array($reservation['status'], ['pending', 'approved']))
                                         @if ($payment)
                                         @if ($payment->status === 'pending')
-                                        <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
+                                        <p>Montant payé (via FedaPay) : {{ $payment->amount_paid }} F CFA | Transaction ID : {{ $payment->transaction_id}}</p>
                                         <p>Status : En attente</p>
                                         @elseif ($payment->status === 'approved')
                                         <p><strong>Paiement soldé ✅</strong></p>
-                                        <p>Montant payé : {{ $payment->amount_paid }} F CFA</p>
+                                        <p>Montant payé : {{ $payment->amount_paid }} F CFA | Transaction ID : {{ $payment->transaction_id}}</p>
                                         <p>Status : Approuvé</p>
                                         <p>Approuvé par : {{ $payment->manager }}</p>
                                         <p>Date du 1er paiement (via FedaPay) : {{ $payment->created_at}}</p>

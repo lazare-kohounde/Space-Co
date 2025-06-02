@@ -59,7 +59,7 @@ class clientController extends Controller
         $nom = $request->query('nom');
         $email = $request->query('email');
         $telephone = $request->query('telephone');
-
+        $transactionId = $request->query('transaction-id');
         // Debug facultatif
         // logger()->info('Callback reçu', $request->all());
 
@@ -107,6 +107,7 @@ class clientController extends Controller
                     'amount_paid'    => $amountPaid,
                     'status'         => "pending",
                     'payment_method' => $paymentMethod,
+                    'transaction_id' => $transactionId,
                     'payment_date'   => Carbon::now(),
                 ]);
 
